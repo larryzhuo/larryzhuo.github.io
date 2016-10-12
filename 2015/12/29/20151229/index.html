@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>移动设备中的点击事件 | vanquish blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近接触了几个移动web活动页面的制作，不算复杂，用不上类似angular的框架，自己决定使用哪些js库，很自由。说一下为此了解的几个问题。
+click事件在移动设备上click事件在web页面中有300ms的延迟，原因和历史大家知道，当初iphone流行时考虑到双指点击缩放的问题，需要等待300ms来确定用户是单击还是双击，因此造成的延迟在设备上还是比较明显12345678910111213va">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动设备中的点击事件">
+<meta property="og:url" content="http://yoursite.com/2015/12/29/20151229/index.html">
+<meta property="og:site_name" content="vanquish blog">
+<meta property="og:description" content="最近接触了几个移动web活动页面的制作，不算复杂，用不上类似angular的框架，自己决定使用哪些js库，很自由。说一下为此了解的几个问题。
+click事件在移动设备上click事件在web页面中有300ms的延迟，原因和历史大家知道，当初iphone流行时考虑到双指点击缩放的问题，需要等待300ms来确定用户是单击还是双击，因此造成的延迟在设备上还是比较明显12345678910111213va">
+<meta property="og:updated_time" content="2016-10-12T15:08:12.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动设备中的点击事件">
+<meta name="twitter:description" content="最近接触了几个移动web活动页面的制作，不算复杂，用不上类似angular的框架，自己决定使用哪些js库，很自由。说一下为此了解的几个问题。
+click事件在移动设备上click事件在web页面中有300ms的延迟，原因和历史大家知道，当初iphone流行时考虑到双指点击缩放的问题，需要等待300ms来确定用户是单击还是双击，因此造成的延迟在设备上还是比较明显12345678910111213va">
+  
+    <link rel="alternative" href="/atom.xml" title="vanquish blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">vanquish blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">make progress every day</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-20151229" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/29/20151229/" class="article-date">
+  <time datetime="2015-12-28T16:00:00.000Z" itemprop="datePublished">2015-12-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/进阶/">进阶</a>►<a class="article-category-link" href="/categories/进阶/js/">js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      移动设备中的点击事件
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近接触了几个移动web活动页面的制作，不算复杂，用不上类似angular的框架，自己决定使用哪些js库，很自由。说一下为此了解的几个问题。</p>
+<h2 id="click事件在移动设备上"><a href="#click事件在移动设备上" class="headerlink" title="click事件在移动设备上"></a>click事件在移动设备上</h2><p>click事件在web页面中有300ms的延迟，原因和历史大家知道，当初iphone流行时考虑到双指点击缩放的问题，需要等待300ms来确定用户是单击还是双击，因此造成的延迟在设备上还是比较明显<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var body = document.querySelector(<span class="string">'body'</span>);</div><div class="line">var st,et,ct;</div><div class="line">body.addEventListener(<span class="string">'touchstart'</span>, <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	st = Date.now();</div><div class="line">&#125;);</div><div class="line">body.addEventListener(<span class="string">'touchend'</span>, <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	et = Date.now();</div><div class="line">&#125;);</div><div class="line">body.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	ct = Date.now();</div><div class="line">	console.log(<span class="string">"touchstart gap: "</span> + (ct-st));	//301</div><div class="line">	console.log(<span class="string">"touchend gap: "</span> + (ct-et));	//173</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h2 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h2><h3 id="zepto-touch"><a href="#zepto-touch" class="headerlink" title="zepto touch"></a>zepto touch</h3><p>页面用使用zepto的话，建议使用touch模块中的tap方法，此模块还提供了’swipe’, ‘swipeLeft’, ‘swipeRight’, ‘swipeUp’, ‘swipeDown’,’doubleTap’, ‘tap’, ‘singleTap’, ‘longTap’等方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">touchTimeout = <span class="built_in">set</span>Timeout(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">                  touchTimeout = null</div><div class="line">                  <span class="keyword">if</span> (touch.el) touch.el.trigger(<span class="string">'singleTap'</span>)</div><div class="line">                  touch = &#123;&#125;</div><div class="line">                &#125;, 250)</div></pre></td></tr></table></figure></p>
+<p>以上是部分源码，它是通过添加touchstart[touchstart MSPointerDown pointerdown],    touchmove[touchmove MSPointerMove pointermove]    touchend[touchend MSPointerUp pointerup]事件监听，激发Tap事件条件可能有两个：<br>1.没有激发touchmove事件则直接激发<br>2.激发了touchmove事件则要在移动误差deltaX和deltaY小于30<br>实测效果可以，但依赖zepto</p>
+<p>另外还有一个很严重的问题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$(document)</div><div class="line">    .bind(<span class="string">'MSGestureEnd'</span>, <span class="keyword">function</span>(e)&#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>touch模块中将所有的事件都代理到document上</p>
+<h3 id="fastclick"><a href="#fastclick" class="headerlink" title="fastclick"></a>fastclick</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">FastClick.attach(document.body);</div><div class="line"></div><div class="line">var body = document.querySelector(<span class="string">'body'</span>);</div><div class="line">	var st,et,ct;</div><div class="line">	body.addEventListener(<span class="string">'touchstart'</span>, <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">		st = Date.now();</div><div class="line">	&#125;);</div><div class="line">	body.addEventListener(<span class="string">'touchend'</span>, <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">		et = Date.now();</div><div class="line">	&#125;);</div><div class="line">	body.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">		ct = Date.now();</div><div class="line">		console.log(<span class="string">"touchstart gap: "</span> + (ct-st));	//130</div><div class="line">		console.log(<span class="string">"touchend gap: "</span> + (ct-et));	//NaN</div><div class="line">	&#125;);</div></pre></td></tr></table></figure>
+<p>基本上touchend之后立即触发，另外fastclick相比于tap还有如下优点：<a href="http://www.cnblogs.com/yexiaochai/p/3442220.html" target="_blank" rel="external">fastclick与zepto tap对比</a></p>
+<h3 id="自定义点击事件"><a href="#自定义点击事件" class="headerlink" title="自定义点击事件"></a>自定义点击事件</h3><p>如果要做的页面很少，想想fastclick 26k的大小，还是不想用，另外业务需求，要加入点击效果，so想想还是自定义一个吧<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">window.Tap = <span class="keyword">function</span>(p)&#123;</div><div class="line">        this.target = p.target ;</div><div class="line">        this.tapCallBack = p.tapCallBack || <span class="function"><span class="title">function</span></span>()&#123;&#125;;</div><div class="line">        this.startCallBack = p.startCallBack || <span class="function"><span class="title">function</span></span>()&#123;&#125;;</div><div class="line">        this.endCallBack = p.endCallBack || <span class="function"><span class="title">function</span></span>()&#123;&#125;;</div><div class="line">        this.cancelCallBack = p.cancelCallBack || <span class="function"><span class="title">function</span></span>()&#123;&#125;;</div><div class="line">    &#125;;</div><div class="line">    Tap.prototype.addTapEvent = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">        var touch = &#123;&#125;;</div><div class="line">        this.target.addEventListener(<span class="string">'touchstart'</span>, <span class="keyword">function</span>(e)&#123;</div><div class="line">            this.startCallBack(this.target);</div><div class="line">            touch.x1 = e.touches[0].pageX;</div><div class="line">            touch.y1 = e.touches[0].pageY;</div><div class="line">            touch.last = Date.now();</div><div class="line">        &#125;.bind(this));</div><div class="line"></div><div class="line">        this.target.addEventListener(<span class="string">'touchmove'</span>, <span class="keyword">function</span>(e)&#123;</div><div class="line">            touch.x2 = e.touches[0].pageX;</div><div class="line">            touch.y2 = e.touches[0].pageY;</div><div class="line">        &#125;.bind(this));</div><div class="line"></div><div class="line">        this.target.addEventListener(<span class="string">'touchend'</span>, <span class="keyword">function</span>(e)&#123;</div><div class="line">            this.endCallBack(this.target);</div><div class="line">            /*模拟zepto tap事件, 分为touchmove激发和不激发两种情况*/</div><div class="line">            <span class="keyword">if</span>( (Date.now() - touch.last &lt; 250) )&#123;</div><div class="line">                <span class="keyword">if</span>(touch.x2 &amp;&amp; touch.y2)&#123;</div><div class="line">                    <span class="keyword">if</span>( Math.abs(touch.x1 - touch.x2) &lt; 30 &amp;&amp; Math.abs(touch.y1 - touch.y2) &lt; 30 )&#123;</div><div class="line">                        this.tapCallBack(this.target);</div><div class="line">                    &#125;</div><div class="line">                &#125;<span class="keyword">else</span>&#123;</div><div class="line">                    this.tapCallBack(this.target);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            touch = &#123;&#125;;</div><div class="line">        &#125;.bind(this));</div><div class="line"></div><div class="line">        this.target.addEventListener(<span class="string">'touchcancel'</span>, <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">            touch = &#123;&#125;;</div><div class="line">            this.cancelCallBack(this.target);</div><div class="line">        &#125;.bind(this));</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>定义了按下回调，弹起回调，点击回调和取消回调几个函数；考虑到会被多次调用，必须私有化这几个变量，所以定义在构造函数中，其他模拟zepto tap，但将点击直接绑定在元素本身，为了保证在事件回调函数中访问到外面的this, 利用bind关键字改变函数this上下文，这是bind常用的地方。<br>实测效果不错，自定义效果运行正常，</p>
+<p>注意touch事件的流程<br>1.touchstart -》 touchend<br>2.touchstart -》 touchmove -》touchend<br>3.touchstart -》 touchcancel<br>4.2.touchstart -》 touchmove -》touchcancel<br>也就是说当touch事件被打断，touchcancel被触发时(如弹出复制选框)，touchend事件不会被执行。所以在cancel事件中要恢复样式。或者在touchstart事件中调用e.preventDefault()使得不会触发touchCancel。样式会自动返回。但这样会造成一系列问题：如果绑定的click事件不会被执行。不推荐这么做</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/12/29/20151229/" data-id="ciu72xg7z0005ecdlprizttzm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/点击/">点击</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动/">移动</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/31/20151231/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          css盒子模型
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/12/10/20151210/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">单页应用中的路由控制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/单页应用中的按需加载/">单页应用中的按需加载</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/">算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/排序算法/">排序算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/爬虫/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/进阶/">进阶</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/">基础</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/基础/css/">css</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/js/">js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/">进阶</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/css/">css</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/js/">js</a><span class="category-list-count">4</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3d动画/">3d动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/">angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientHeight/">clientHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientLeft/">clientLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientTop/">clientTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetHeight/">offsetHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetLeft/">offsetLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetTop/">offsetTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollHeight/">scrollHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollLeft/">scrollLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollTop/">scrollTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spa/">spa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/切图/">切图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动画/">动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/瀑布流/">瀑布流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点击/">点击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/盒子模型/">盒子模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动/">移动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/路由/">路由</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3d动画/" style="font-size: 10px;">3d动画</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/clientHeight/" style="font-size: 10px;">clientHeight</a> <a href="/tags/clientLeft/" style="font-size: 10px;">clientLeft</a> <a href="/tags/clientTop/" style="font-size: 10px;">clientTop</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/offsetHeight/" style="font-size: 10px;">offsetHeight</a> <a href="/tags/offsetLeft/" style="font-size: 10px;">offsetLeft</a> <a href="/tags/offsetTop/" style="font-size: 10px;">offsetTop</a> <a href="/tags/scrollHeight/" style="font-size: 10px;">scrollHeight</a> <a href="/tags/scrollLeft/" style="font-size: 10px;">scrollLeft</a> <a href="/tags/scrollTop/" style="font-size: 10px;">scrollTop</a> <a href="/tags/spa/" style="font-size: 10px;">spa</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/切图/" style="font-size: 10px;">切图</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/瀑布流/" style="font-size: 10px;">瀑布流</a> <a href="/tags/点击/" style="font-size: 10px;">点击</a> <a href="/tags/盒子模型/" style="font-size: 10px;">盒子模型</a> <a href="/tags/移动/" style="font-size: 10px;">移动</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/路由/" style="font-size: 10px;">路由</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/12/20161012/">node实现爬虫抓取淘宝商品图文详情</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/07/20160707/">几种基本排序算法的理解</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/30/20160530/">单页应用中的按需加载</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/02/20160402/">js实现图片切图</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/15/20160215/">offsetHeight,clientHeight和scrollHeight的区别</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 卓凌云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

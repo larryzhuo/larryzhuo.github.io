@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>几种基本排序算法的理解 | vanquish blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="算下毕业一年零一个月了，闲下来回顾下大学基础知识，以后才能更上一层楼，顺着手头抄起从大学带到现在都很少翻过的算法导论看了起来。
+1.插入排序左侧维持为一个有序数组，从右侧添加新的排序数值，在左侧找到其位置插入，这样始终保持左侧数组是一个有序数组12345678910111213141516171819202122232425262728293031function insertSort(arr,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="几种基本排序算法的理解">
+<meta property="og:url" content="http://yoursite.com/2016/07/07/20160707/index.html">
+<meta property="og:site_name" content="vanquish blog">
+<meta property="og:description" content="算下毕业一年零一个月了，闲下来回顾下大学基础知识，以后才能更上一层楼，顺着手头抄起从大学带到现在都很少翻过的算法导论看了起来。
+1.插入排序左侧维持为一个有序数组，从右侧添加新的排序数值，在左侧找到其位置插入，这样始终保持左侧数组是一个有序数组12345678910111213141516171819202122232425262728293031function insertSort(arr,">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201108/22/0_1314014706gZqn.gif">
+<meta property="og:updated_time" content="2016-10-12T15:08:12.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="几种基本排序算法的理解">
+<meta name="twitter:description" content="算下毕业一年零一个月了，闲下来回顾下大学基础知识，以后才能更上一层楼，顺着手头抄起从大学带到现在都很少翻过的算法导论看了起来。
+1.插入排序左侧维持为一个有序数组，从右侧添加新的排序数值，在左侧找到其位置插入，这样始终保持左侧数组是一个有序数组12345678910111213141516171819202122232425262728293031function insertSort(arr,">
+<meta name="twitter:image" content="http://hi.csdn.net/attachment/201108/22/0_1314014706gZqn.gif">
+  
+    <link rel="alternative" href="/atom.xml" title="vanquish blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">vanquish blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">make progress every day</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-20160707" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/07/20160707/" class="article-date">
+  <time datetime="2016-07-06T16:00:00.000Z" itemprop="datePublished">2016-07-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/js/">js</a>►<a class="article-category-link" href="/categories/js/算法/">算法</a>►<a class="article-category-link" href="/categories/js/算法/排序算法/">排序算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      几种基本排序算法的理解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>算下毕业一年零一个月了，闲下来回顾下大学基础知识，以后才能更上一层楼，顺着手头抄起从大学带到现在都很少翻过的算法导论看了起来。</p>
+<h3 id="1-插入排序"><a href="#1-插入排序" class="headerlink" title="1.插入排序"></a>1.插入排序</h3><p>左侧维持为一个有序数组，从右侧添加新的排序数值，在左侧找到其位置插入，这样始终保持左侧数组是一个有序数组<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> insertSort(arr, ascend)&#123;</div><div class="line">	ascend = (ascend == undefined ? <span class="literal">true</span> : ascend);		 </div><div class="line">	var i,ilen,j,key;</div><div class="line">	<span class="keyword">if</span>(ascend)&#123;</div><div class="line">		<span class="keyword">for</span>(i=1,ilen=arr.length; i&lt;ilen; i++)&#123;</div><div class="line">			key = arr[i];</div><div class="line">			<span class="keyword">for</span>(j=i-1; j&gt;=0; j--)&#123;</div><div class="line">				<span class="keyword">if</span>(arr[j] &gt; key)&#123;</div><div class="line">					arr[j+1] = arr[j];</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="built_in">break</span>;		//左侧为有序数组，j比较之后如果小，则左侧都小</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			arr[j+1] = key;</div><div class="line">		&#125;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">for</span>(i=1,ilen=arr.length; i&lt;ilen; i++)&#123;</div><div class="line">			key = arr[i];</div><div class="line">			<span class="keyword">for</span>(j=i-1; j&gt;=0; j--)&#123;</div><div class="line">				<span class="keyword">if</span>(arr[j] &lt; key)&#123;</div><div class="line">					arr[j+1] = arr[j];</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="built_in">break</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			arr[j+1] = key;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">return</span> arr;</div><div class="line">&#125;</div><div class="line">var ar = insertSort([1,4,2,8,6,9,7])</div></pre></td></tr></table></figure></p>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>循环一般找出最小，和第一个元素交换，第二次循环找出第二小元素和第二个元素替换，这就是选择排序的思想<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> chooseSort(arr)&#123;</div><div class="line">	var temp, min;</div><div class="line">	<span class="keyword">for</span>(var i=0,ilen=arr.length; i&lt;ilen; i++)&#123;</div><div class="line">		min = i;</div><div class="line">		<span class="keyword">for</span>(var j=i+1,jlen=arr.length; j&lt;jlen; j++)&#123;</div><div class="line">			<span class="keyword">if</span>(arr[j] &lt; arr[min])</div><div class="line">				min = j;</div><div class="line">		&#125;</div><div class="line">		temp = arr[i];</div><div class="line">		arr[i] = arr[min];</div><div class="line">		arr[min] = temp;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">return</span> arr;</div><div class="line">&#125;</div><div class="line">var ar = chooseSort([5,1,4,2,8,6,9,7])</div></pre></td></tr></table></figure></p>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>每个元素和相邻元素比较，如何符合a1<a2，则不处理，如果不符合则交换元素，一次循环下来可以确定当前的最小值，这一点和选择排序类似 <figure="" class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> bubbleSort(arr)&#123;</div><div class="line">	var temp;</div><div class="line">	<span class="keyword">for</span>(var i=0,ilen=arr.length; i&lt;ilen; i++)&#123;</div><div class="line">		<span class="keyword">for</span>(var j=i; j&lt;arr.length-i; j++)&#123;</div><div class="line">			<span class="keyword">if</span>(arr[j]&gt;arr[j+1])&#123;</div><div class="line">				temp=arr[j+1];</div><div class="line">				arr[j+1] = arr[j];</div><div class="line">				arr[j] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">return</span> arr;</div><div class="line">&#125; </div><div class="line">var ar = bubbleSort([5,1,4,2,8,6,9,7])</div></pre></td></tr></table></a2，则不处理，如果不符合则交换元素，一次循环下来可以确定当前的最小值，这一点和选择排序类似></p>
+<p>以上三种排序，想法很常规，也比较容易实现，但时间复杂度都很差，都在n^2;</p>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>快排和归并排序一样都用到了divide and conquer； 选中一个分界点（pvito），将小于这个元素的元素放到其左侧，大于这个元素的放到右侧。一次循环之后，可以得到左右两个数组，之后以同样的方法递归左后两个数组，等到递归结束的时候，数组就已经是有序的了<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> quickSort(arr, start, end)&#123;</div><div class="line">	var pivot = arr[end], temp;</div><div class="line">	var i = start-1;</div><div class="line">	<span class="keyword">for</span>(var j=start; j&lt;=end; j++)&#123;</div><div class="line">		<span class="keyword">if</span>(arr[j] &lt; pivot)&#123;</div><div class="line">			i++;</div><div class="line">			temp = arr[i];</div><div class="line">			arr[i] = arr[j];</div><div class="line">			arr[j] = temp;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	arr[i+1] = pivot;</div><div class="line">	quickSort(arr, start, i);</div><div class="line">	quickSort(arr, i+1, end);</div><div class="line">	<span class="built_in">return</span> arr;</div><div class="line">&#125;</div><div class="line">var ar = chooseSort([5,1,4,2,8,6,9,7], 0, 7);</div></pre></td></tr></table></figure></p>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>归并排序是典型的divide and conquer的思想。首先递归将数组分割成单个元素，之后按顺序逐渐合并成一个个有顺序的数组，直到成为一个完整的数组。分割的过程其实没有时间复杂度，merge的过程才需要时间<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">var tempArr = [];</div><div class="line"><span class="keyword">function</span> merge(arr, start, middle, end)&#123;</div><div class="line">	var i = start, j=middle+1;</div><div class="line">	<span class="keyword">while</span>(i&lt;=middle &amp;&amp; j&lt;=end)&#123;</div><div class="line">		<span class="keyword">if</span>(arr[i] &lt; arr[j])&#123;</div><div class="line">			tempArr.push(arr[i]);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			tempArr.push(arr[j]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span>(i&gt;=middle)&#123;</div><div class="line">		<span class="keyword">while</span>(j&lt;=end)&#123;</div><div class="line">			tempArr.push(a[j]);</div><div class="line">		&#125;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span>(j&gt;=end)&#123;</div><div class="line">		<span class="keyword">while</span>(i&lt;=middle)&#123;</div><div class="line">			tempArr.push(a[i]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	arr = tempArr;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">function</span> mergeSort(arr, start, end)&#123;</div><div class="line">	var middle;</div><div class="line">	<span class="keyword">if</span>(start &lt; end)&#123;</div><div class="line">		middle = Math.floor(start+end)/2;</div><div class="line">		mergeSort(arr, start, middle);</div><div class="line">		mergeSort(arr, middle+1, end);</div><div class="line">		merge(arr, start, middle, end);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">var ar = chooseSort([5,1,4,2,8,6,9,7], 0, 7);</div></pre></td></tr></table></figure></p>
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><p>堆排涉及到堆这种数据结构，代码确实也是看得懂但难写出来。堆排如果希望升序可以使用大根堆，降序则使用小根堆。堆是一种完全二叉树（只有叶子节点一级节点个数可以少于两个，并且节点一定是先有左节点后有右节点的数）。堆排的思想就是<br>1.存储堆结构。盗用一张网上的图<br><img src="http://hi.csdn.net/attachment/201108/22/0_1314014706gZqn.gif"><br>可见堆的存储并不复杂。以广度优先遍历的顺序来存储在数组中即可。这一步没有时间复杂度。</p>
+<p>2.构建大根堆。<br>得益于堆是一个完全二叉树。所以非叶子节点最大的下标为 arr.length/2向下取整。  对于一个有父节点p，假设有两个子节点pc1和pc2两个子节点。将p和p1，p2依次比较。如果如果子节点中较大的大于p。则交换p和该子节点。并记录下这个较大节点的index为largest。这是p，p1，p2这个堆就是个大根堆了。<br>但是调换之后。largest及其子节点就有可能不是大根堆了。所以递归调用，将这相连的子节点都变成大根堆。<br>由于父节点共有0-arr.length/2个；    所以需要遍历这些父节点<br>遍历完成之后。最大的元素就一定是根元素。</p>
+<p>3.交换根节点与末尾节点<br>这样将选出的最大元素保留到最后。并将堆的大小heapSize-1;    重新执行上面构建大根堆的流程。直到heapSize为0；这时整个堆中每一个小堆都是大根堆，整个存储数组也是有序的了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">var i,j;</div><div class="line">Array.prototype.swap=<span class="keyword">function</span>(i,j)&#123;</div><div class="line">	var tmp=this[i];</div><div class="line">	this[i]=this[j];</div><div class="line">	this[j]=tmp;</div><div class="line">&#125;;</div><div class="line">Array.prototype.heapAdjust=<span class="keyword">function</span>(i,j)&#123;</div><div class="line">	var largest=i;</div><div class="line">	var left=2*i+1;</div><div class="line">	var right=2*i+2;</div><div class="line">	 </div><div class="line">	<span class="keyword">if</span>(left&lt;j&amp;&amp;this[largest]&lt;this[left])&#123;</div><div class="line">		largest=left;</div><div class="line">	&#125;</div><div class="line">	 </div><div class="line">	<span class="keyword">if</span>(right&lt;j&amp;&amp;this[largest]&lt;this[right])&#123;</div><div class="line">		largest=right;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span>(largest!=i)&#123;</div><div class="line">		this.swap(i,largest);</div><div class="line">		this.heapAdjust(largest,j);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line">Array.prototype.buildMaxHeap=<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	<span class="keyword">for</span>(var i=Math.floor(this.length/2)-1;i&gt;=0;i--)&#123;</div><div class="line">		this.heapAdjust(i,this.length);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line">Array.prototype.heapSort=<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	this.buildMaxHeap();</div><div class="line">	<span class="keyword">for</span>(vari=this.length-1;i&gt;0;i--)&#123;</div><div class="line">		this.swap(0,i);</div><div class="line">		this.heapAdjust(0,i);</div><div class="line">	&#125;</div><div class="line">	 </div><div class="line">	<span class="built_in">return</span> this;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>归并排序，快排， 堆排的时间复杂度都控制在nlgn。但归并排序是稳定排序，另外两种都不是稳定排序</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/07/20160707/" data-id="ciu72xg8z000lecdl6pk0bqab" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/12/20161012/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          node实现爬虫抓取淘宝商品图文详情
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/30/20160530/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">单页应用中的按需加载</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/单页应用中的按需加载/">单页应用中的按需加载</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/">算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/排序算法/">排序算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/爬虫/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/进阶/">进阶</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/">基础</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/基础/css/">css</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/js/">js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/">进阶</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/css/">css</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/js/">js</a><span class="category-list-count">4</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3d动画/">3d动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/">angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientHeight/">clientHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientLeft/">clientLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientTop/">clientTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetHeight/">offsetHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetLeft/">offsetLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetTop/">offsetTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollHeight/">scrollHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollLeft/">scrollLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollTop/">scrollTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spa/">spa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/切图/">切图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动画/">动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/瀑布流/">瀑布流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点击/">点击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/盒子模型/">盒子模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动/">移动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/路由/">路由</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3d动画/" style="font-size: 10px;">3d动画</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/clientHeight/" style="font-size: 10px;">clientHeight</a> <a href="/tags/clientLeft/" style="font-size: 10px;">clientLeft</a> <a href="/tags/clientTop/" style="font-size: 10px;">clientTop</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/offsetHeight/" style="font-size: 10px;">offsetHeight</a> <a href="/tags/offsetLeft/" style="font-size: 10px;">offsetLeft</a> <a href="/tags/offsetTop/" style="font-size: 10px;">offsetTop</a> <a href="/tags/scrollHeight/" style="font-size: 10px;">scrollHeight</a> <a href="/tags/scrollLeft/" style="font-size: 10px;">scrollLeft</a> <a href="/tags/scrollTop/" style="font-size: 10px;">scrollTop</a> <a href="/tags/spa/" style="font-size: 10px;">spa</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/切图/" style="font-size: 10px;">切图</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/瀑布流/" style="font-size: 10px;">瀑布流</a> <a href="/tags/点击/" style="font-size: 10px;">点击</a> <a href="/tags/盒子模型/" style="font-size: 10px;">盒子模型</a> <a href="/tags/移动/" style="font-size: 10px;">移动</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/路由/" style="font-size: 10px;">路由</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/12/20161012/">node实现爬虫抓取淘宝商品图文详情</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/07/20160707/">几种基本排序算法的理解</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/30/20160530/">单页应用中的按需加载</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/02/20160402/">js实现图片切图</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/15/20160215/">offsetHeight,clientHeight和scrollHeight的区别</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 卓凌云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

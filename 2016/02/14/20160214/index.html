@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>瀑布流布局插件的实现 | vanquish blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近看taobaoued的一篇博客关于瀑布流布局,之前也看过同学公司的网站用的这种布局，很新颖但不知道是什么名字，为提升实践能力，我就打算写一个瀑布流插件，弄了一天，现在放在github waterfallplugin上了。 Pinterest最早开始使用这种布局，后来国内的蘑菇街之类的网站开始跟风。这种布局明显适合那种大量图片显示的网站
+实现方式一.多列浮动 使用这种方式的网站有： 蘑菇街，我同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="瀑布流布局插件的实现">
+<meta property="og:url" content="http://yoursite.com/2016/02/14/20160214/index.html">
+<meta property="og:site_name" content="vanquish blog">
+<meta property="og:description" content="最近看taobaoued的一篇博客关于瀑布流布局,之前也看过同学公司的网站用的这种布局，很新颖但不知道是什么名字，为提升实践能力，我就打算写一个瀑布流插件，弄了一天，现在放在github waterfallplugin上了。 Pinterest最早开始使用这种布局，后来国内的蘑菇街之类的网站开始跟风。这种布局明显适合那种大量图片显示的网站
+实现方式一.多列浮动 使用这种方式的网站有： 蘑菇街，我同">
+<meta property="og:image" content="http://img02.taobaocdn.com/tps/i2/T1zXGoXdVpXXXXXXXX-600-452.png">
+<meta property="og:image" content="http://i11.tietuku.com/819e18f3fbe4ec08.png">
+<meta property="og:image" content="http://i11.tietuku.com/4bd7ecf0cb342c7c.png">
+<meta property="og:image" content="http://i11.tietuku.com/d2f0e2752f098c43.png">
+<meta property="og:updated_time" content="2016-10-12T15:08:12.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="瀑布流布局插件的实现">
+<meta name="twitter:description" content="最近看taobaoued的一篇博客关于瀑布流布局,之前也看过同学公司的网站用的这种布局，很新颖但不知道是什么名字，为提升实践能力，我就打算写一个瀑布流插件，弄了一天，现在放在github waterfallplugin上了。 Pinterest最早开始使用这种布局，后来国内的蘑菇街之类的网站开始跟风。这种布局明显适合那种大量图片显示的网站
+实现方式一.多列浮动 使用这种方式的网站有： 蘑菇街，我同">
+<meta name="twitter:image" content="http://img02.taobaocdn.com/tps/i2/T1zXGoXdVpXXXXXXXX-600-452.png">
+  
+    <link rel="alternative" href="/atom.xml" title="vanquish blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">vanquish blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">make progress every day</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-20160214" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/14/20160214/" class="article-date">
+  <time datetime="2016-02-13T16:00:00.000Z" itemprop="datePublished">2016-02-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/进阶/">进阶</a>►<a class="article-category-link" href="/categories/进阶/js/">js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      瀑布流布局插件的实现
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近看taobaoued的一篇博客关于<a href="http://ued.taobao.org/blog/2011/09/waterfall/" target="_blank" rel="external">瀑布流布局</a>,之前也看过<a href="http://www.l99.com/media_index.action" target="_blank" rel="external">同学公司的网站</a>用的这种布局，很新颖但不知道是什么名字，为提升实践能力，我就打算写一个瀑布流插件，弄了一天，现在放在<a href="https://github.com/uniquezhuo/WaterFallPlugin" target="_blank" rel="external">github waterfallplugin</a>上了。<br> Pinterest最早开始使用这种布局，后来国内的蘑菇街之类的网站开始跟风。这种布局明显适合那种大量图片显示的网站</p>
+<h1 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h1><h2 id="一-多列浮动"><a href="#一-多列浮动" class="headerlink" title="一.多列浮动"></a>一.多列浮动</h2><p> 使用这种方式的网站有：<br> 蘑菇街，我同事的公司网站</p>
+<p> 这种方式最容易想到，让几个div float在一个container中，每次加载出新内容时按计算结果向不同div中添加新的模块<br> <img src="http://img02.taobaocdn.com/tps/i2/T1zXGoXdVpXXXXXXXX-600-452.png"></p>
+<p>优点：</p>
+<ol>
+<li>简单易实现</li>
+<li>不用明确知道数据块高度，当数据块中有图片时，就不需要指定图片高度。（这一点很重要）<br>缺点：</li>
+<li>列数固定，当浏览器窗口变化时，只能固定n列，出现滚动条</li>
+</ol>
+<h2 id="二-css3多栏布局"><a href="#二-css3多栏布局" class="headerlink" title="二.css3多栏布局"></a>二.css3多栏布局</h2><p>可查询column-count了解不多叙述。</p>
+<p>优点:</p>
+<ol>
+<li>简单不用写代码<br>缺点：</li>
+<li>css3兼容性问题</li>
+</ol>
+<h2 id="三-绝对定位"><a href="#三-绝对定位" class="headerlink" title="三.绝对定位"></a>三.绝对定位</h2><p>这种方式很高端，有难度，我写的插件也是采用的这种方式。使用这种方式的有：Pinterest， KISSY<br>使用我的WaterFall需要一句初始化代码即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">new WaterFall(&#123;</div><div class="line">          container: <span class="string">"#main-container"</span>,   //父容器</div><div class="line">          minColumn: 2,    //resize window时保留的最小列数</div><div class="line">          colWidth: 208,   //每列宽度，当前列数就去 max(container.width/(colWidth+colGap), minColumn)</div><div class="line">          colGap: 10,     //单元格列间距</div><div class="line">          rowGap: 10,     //单元格行坚决</div><div class="line">          load: <span class="keyword">function</span>(successCallBack)&#123;    //每次加载固定数据的函数，success为调整位置的函数</div><div class="line">              $.ajax(&#123;</div><div class="line">                  url: <span class="string">'items.json'</span>,</div><div class="line">                  data: &#123;&#125;,</div><div class="line">                  <span class="built_in">type</span>: <span class="string">'get'</span>,</div><div class="line">                  dataType: <span class="string">'json'</span>,</div><div class="line">                  success: <span class="keyword">function</span>(result)&#123;</div><div class="line">                      <span class="keyword">if</span>(result.code == 0)</div><div class="line">                          successCallBack(result.data, <span class="string">'#watertmpl'</span>);</div><div class="line">                  &#125;</div><div class="line">              &#125;);</div><div class="line">          &#125;</div><div class="line">      &#125;)</div></pre></td></tr></table></figure></p>
+<p>从这里也大概可以看出代码的核心：</p>
+<h3 id="1-获取列数-用container宽度除以设置的（列宽-列间隙）与设置的最小列数进行比较取最大；-这样保证了可以在window-resize时自动变化列数，同时避免过窄保证有基本的列数"><a href="#1-获取列数-用container宽度除以设置的（列宽-列间隙）与设置的最小列数进行比较取最大；-这样保证了可以在window-resize时自动变化列数，同时避免过窄保证有基本的列数" class="headerlink" title="1. 获取列数,用container宽度除以设置的（列宽+列间隙）与设置的最小列数进行比较取最大； 这样保证了可以在window resize时自动变化列数，同时避免过窄保证有基本的列数"></a>1. 获取列数,用container宽度除以设置的（列宽+列间隙）与设置的最小列数进行比较取最大； 这样保证了可以在window resize时自动变化列数，同时避免过窄保证有基本的列数</h3><h3 id="2-保存每一列的高度，记录最高高度列和最低高度列；在最低高度列中插入新的元素（设置position：absolute-left：index-colWidth-colGap-top-colsHeight-index-）-然后更新整个高度数组，并将容器高度设置为最高高度列的高度；"><a href="#2-保存每一列的高度，记录最高高度列和最低高度列；在最低高度列中插入新的元素（设置position：absolute-left：index-colWidth-colGap-top-colsHeight-index-）-然后更新整个高度数组，并将容器高度设置为最高高度列的高度；" class="headerlink" title="2. 保存每一列的高度，记录最高高度列和最低高度列；在最低高度列中插入新的元素（设置position：absolute; left：index*(colWidth+colGap); top: colsHeight[index]）; 然后更新整个高度数组，并将容器高度设置为最高高度列的高度；"></a>2. 保存每一列的高度，记录最高高度列和最低高度列；在最低高度列中插入新的元素（设置position：absolute; left：index*(colWidth+colGap); top: colsHeight[index]）; 然后更新整个高度数组，并将容器高度设置为最高高度列的高度；</h3><p>有以下几点值得思考:</p>
+<h4 id="1-插入元素没有使用拼接字符串，而是采用doT模板引擎；这样是为了可扩展性，因为不知道在每个item内部dom结构，这个需要用户自己来填写；-限定定了容器id-”main-container”，单个item-class-”waterfall-item”"><a href="#1-插入元素没有使用拼接字符串，而是采用doT模板引擎；这样是为了可扩展性，因为不知道在每个item内部dom结构，这个需要用户自己来填写；-限定定了容器id-”main-container”，单个item-class-”waterfall-item”" class="headerlink" title="(1). 插入元素没有使用拼接字符串，而是采用doT模板引擎；这样是为了可扩展性，因为不知道在每个item内部dom结构，这个需要用户自己来填写；    限定定了容器id=”main-container”，单个item class=”waterfall-item”"></a>(1). 插入元素没有使用拼接字符串，而是采用doT模板引擎；这样是为了可扩展性，因为不知道在每个item内部dom结构，这个需要用户自己来填写；    限定定了容器id=”main-container”，单个item class=”waterfall-item”</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;script id=<span class="string">"watertmpl"</span> <span class="built_in">type</span>=<span class="string">"text/x-dot-template"</span>&gt;</div><div class="line">       &lt;div class=<span class="string">"waterfall-item"</span>&gt;</div><div class="line">           &lt;img src=<span class="string">"&#123;&#123;= it.imgUrl&#125;&#125;"</span>/&gt;</div><div class="line">           &lt;p&gt;&#123;&#123;= it.briefIntro&#125;&#125;&lt;/p&gt;</div><div class="line">       &lt;/div&gt;</div><div class="line">   &lt;/script&gt;</div><div class="line">   &lt;div id=<span class="string">"main-container"</span>&gt;</div><div class="line">   &lt;/div&gt;</div></pre></td></tr></table></figure>
+<h4 id="2-使用模板引擎之后在元素填充到dom之前，需要修改其style定义left和top值将元素插入到相应的列。因为采用了分批加载，每次获得的都是一组数组，所以要对数组数据进行分批处理。"><a href="#2-使用模板引擎之后在元素填充到dom之前，需要修改其style定义left和top值将元素插入到相应的列。因为采用了分批加载，每次获得的都是一组数组，所以要对数组数据进行分批处理。" class="headerlink" title="(2). 使用模板引擎之后在元素填充到dom之前，需要修改其style定义left和top值将元素插入到相应的列。因为采用了分批加载，每次获得的都是一组数组，所以要对数组数据进行分批处理。"></a>(2). 使用模板引擎之后在元素填充到dom之前，需要修改其style定义left和top值将元素插入到相应的列。因为采用了分批加载，每次获得的都是一组数组，所以要对数组数据进行分批处理。</h4><p>这里就出现了一个问题：<br><b style="color:red;">只有在每个元素插入到dom中之后才能获取它实际的高度，进而更新每个列的高度，进而进行下一个元素的插入计算，但如果item中含有图片，则在图片没有加载完之前获取的offsetHeight是不准确的，怎么办???</b><br>解决方法有两个：<br>    一.服务器端返回item中图片的高度。<br>    二.服务器端不支持，客户端在加载一张图片结束之后进行下一个元素的插入。<br>实际效果可想而知，明显第一个方法体验更好，性能更好。<br>但是我的插件这里采用的第二种方法，为了更加独立的完成这个效果：<br>代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">var loadingTag = (<span class="function"><span class="title">function</span></span>()&#123;              //串行渲染标识</div><div class="line">       var isLoading = <span class="literal">false</span>;</div><div class="line">       <span class="built_in">return</span>  <span class="keyword">function</span>(il)&#123;</div><div class="line">           <span class="keyword">if</span>(il != undefined)&#123;</div><div class="line">               isLoading = il;</div><div class="line">           &#125;</div><div class="line">           <span class="built_in">return</span> isLoading;</div><div class="line">       &#125;;</div><div class="line">   &#125;)();</div><div class="line"></div><div class="line">/**</div><div class="line">    * 每次加载一页数据之后，添加到dom中的函数。</div><div class="line">    * 此方法不能并行被调用，即一组数据还没有彻底填充完，另一组数据不能开始填充。这也是由图片高度未知导致的</div><div class="line">    * @param arr</div><div class="line">    * @param tmplId</div><div class="line">    */</div><div class="line">   <span class="keyword">function</span> addItems(arr, tmplSelector)&#123;</div><div class="line">       <span class="keyword">if</span>(!isArray(arr))</div><div class="line">           <span class="built_in">return</span>;</div><div class="line">       var waterTmpl = <span class="keyword">do</span>T.template(document.querySelector(tmplSelector).innerText);</div><div class="line">       addBundleItems(arr, 0, waterTmpl);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">function</span> addBundleItems(arr, i, waterTmpl)&#123;</div><div class="line">       <span class="keyword">if</span>(i &gt;= arr.length)&#123;</div><div class="line">           loadingTag(<span class="literal">false</span>);</div><div class="line">           <span class="built_in">return</span>;</div><div class="line">       &#125;</div><div class="line">       var newItemText = waterTmpl(arr[i]);</div><div class="line">       var posItemText = calculatePosition(newItemText);</div><div class="line">       container.innerHTML += posItemText;</div><div class="line">       var imgs = document.querySelectorAll(<span class="string">'.waterfall-item img'</span>);</div><div class="line">       imgs[imgs.length-1].onload = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">           updateHeight(this.offsetHeight + 30);    //在服务器没有返回图片高度的情况下。之后自己计算高度，等到图片加载完成之后才能确切高度；进行下一个item插入</div><div class="line">           i++;</div><div class="line">           addBundleItems(arr, i, waterTmpl);</div><div class="line">       &#125;</div><div class="line">   &#125;;</div></pre></td></tr></table></figure>
+<p>由于存在onload事件，所以一定会用到递归调用。另外这个方法是不能并行被调用的，即必须在一批数组全部填充到dom中之后才能开始填充下一批数据。这也是由于图片加载完成之前高度未知决定的。所以这里使用了一个标记位。isLoading放到闭包中，避免被误修改。</p>
+<h4 id="3-calculatePosition函数用于向doT渲染出来的html字符串中插入left和top属性值。之后将修改的字符串返回填充到dom中"><a href="#3-calculatePosition函数用于向doT渲染出来的html字符串中插入left和top属性值。之后将修改的字符串返回填充到dom中" class="headerlink" title="(3). calculatePosition函数用于向doT渲染出来的html字符串中插入left和top属性值。之后将修改的字符串返回填充到dom中"></a>(3). calculatePosition函数用于向doT渲染出来的html字符串中插入left和top属性值。之后将修改的字符串返回填充到dom中</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    *将html字符串中加入left和top值</div><div class="line">    * @param newItemText</div><div class="line">    */</div><div class="line">   <span class="keyword">function</span> calculatePosition(newItemText)&#123;</div><div class="line">       var leftStyle = /[^&lt;]*(style\s*=\s*<span class="string">").*waterfall-item[^&gt;]*/ig;</span></div><div class="line">       var rightStyle = /[^&lt;]*waterfall-item.*(style\s*=\s*")[^&gt;]*/ig;</div><div class="line">       var leftResult = leftStyle.exec(newItemText);           //匹配结果：[<span class="string">" div class="</span>waterfall-item<span class="string">" style  =  "</span><span class="string">" "</span>, <span class="string">"style  =  "</span><span class="string">"]</span></div><div class="line">       var rightResult = rightStyle.exec(newItemText);         //匹配结果：[" div class=<span class="string">"waterfall-item"</span> style  =  <span class="string">""</span> <span class="string">", "</span>style  =  <span class="string">""</span>]</div><div class="line">       var leftPos = minIndex * (configs.colWidth + configs.colGap);</div><div class="line">       var topPos = colsHeight[minIndex] + configs.rowGap;</div><div class="line"></div><div class="line">       <span class="keyword">if</span>(!!leftResult &amp;&amp; leftResult.length != 0)&#123;             //style在class左侧</div><div class="line"></div><div class="line">           newItemText = newItemText.replace(leftResult[1].toString(), leftResult[1].toString() + <span class="string">"left:"</span> + leftPos + <span class="string">"px; top:"</span> + topPos + <span class="string">"px; width:"</span> + configs.colWidth + <span class="string">"px;"</span>);</div><div class="line"></div><div class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span>(!!rightResult &amp;&amp; rightResult.length != 0)&#123;    //style在class右侧</div><div class="line"></div><div class="line">           newItemText = newItemText.replace(rightResult[1].toString(), rightResult[1].toString() + <span class="string">"left:"</span> + leftPos + <span class="string">"px; top:"</span> + topPos + <span class="string">"px; width:"</span> + configs.colWidth + <span class="string">"px;"</span>);</div><div class="line"></div><div class="line">       &#125; <span class="keyword">else</span> &#123;                                                //没有style</div><div class="line"></div><div class="line">           var temp = newItemText.match(/[^&lt;]*waterfall-item[^&gt;]*/i)[0];</div><div class="line">           newItemText = newItemText.replace(temp.toString(), temp.toString() + <span class="string">'style = "top:'</span> + topPos + <span class="string">'px; left:'</span> + leftPos + <span class="string">'px; width:'</span> + configs.colWidth + <span class="string">'px;"'</span>);</div><div class="line"></div><div class="line">       &#125;</div><div class="line">       <span class="built_in">return</span> newItemText;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>分为</p>
+<ol>
+<li>class=”waterfall-item” style=””</li>
+<li>style=”” class=”waterfall-item”</li>
+<li>class=”waterfall-item”<br>三种情况进行正则匹配，之后修改style属性值添加left和top属性</li>
+</ol>
+<h4 id="4-updateHeight方法用于在填充dom之后，同步每一列的高度数据。提供给下一次的calculatePosition方法执行调用"><a href="#4-updateHeight方法用于在填充dom之后，同步每一列的高度数据。提供给下一次的calculatePosition方法执行调用" class="headerlink" title="(4). updateHeight方法用于在填充dom之后，同步每一列的高度数据。提供给下一次的calculatePosition方法执行调用"></a>(4). updateHeight方法用于在填充dom之后，同步每一列的高度数据。提供给下一次的calculatePosition方法执行调用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * 更新列高度数组，和最小高度列的下标</div><div class="line">    * @param newItemHeight</div><div class="line">    */</div><div class="line">   <span class="keyword">function</span> updateHeight(newItemHeight)&#123;</div><div class="line">       newItemHeight = newItemHeight || 0;</div><div class="line">       colsHeight[minIndex] += newItemHeight;</div><div class="line">       <span class="keyword">for</span>(var i <span class="keyword">in</span> colsHeight)&#123;</div><div class="line">           colsHeight = colsHeight;   //没有初始化的进行初始化</div><div class="line">           <span class="keyword">if</span>(colsHeight[i] &lt; colsHeight[minIndex])&#123;</div><div class="line">               minIndex = i;</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">if</span>(colsHeight[i] &gt; colsHeight[maxIndex])&#123;</div><div class="line">               maxIndex = i;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       container.style.height = colsHeight[maxIndex] + <span class="string">"px"</span>;      //更改容器高度为所有列中最大</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h3 id="3-设置window-onresize-动态改变列数"><a href="#3-设置window-onresize-动态改变列数" class="headerlink" title="3. 设置window.onresize,动态改变列数"></a>3. 设置window.onresize,动态改变列数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * 窗口变化时，动态改变已有元素排列，只对已有元素</div><div class="line">    */</div><div class="line">   <span class="keyword">function</span> <span class="function"><span class="title">reflow</span></span>()&#123;</div><div class="line">       colNum = Math.max(parseInt(container.offsetWidth/(configs.colWidth+configs.colGap)), configs.minColumn);    //列数</div><div class="line">       colsHeight.length = 0;</div><div class="line">       minIndex = 0;</div><div class="line">       maxIndex = 0;</div><div class="line">       //初始化高度数组都为0</div><div class="line">       <span class="keyword">for</span>(var i=0; i&lt;colNum; i++)&#123;</div><div class="line">           colsHeight[i] = 0;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       var items = document.querySelectorAll(<span class="string">'.waterfall-item'</span>);</div><div class="line">       Array.prototype.forEach.call(items, <span class="keyword">function</span>(item, i)&#123;</div><div class="line">           var leftPos = minIndex * (configs.colWidth + configs.colGap);</div><div class="line">           var topPos = colsHeight[minIndex] + configs.rowGap;</div><div class="line"></div><div class="line">           item.style.left = leftPos + <span class="string">"px"</span>;</div><div class="line">           item.style.top = topPos + <span class="string">"px"</span>;</div><div class="line">           updateHeight(item.offsetHeight);</div><div class="line">       &#125;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   var timer;</div><div class="line">   window.onresize = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">       clearTimeout(timer);</div><div class="line">       timer = <span class="built_in">set</span>Timeout(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">           reflow();</div><div class="line">       &#125;, 300);</div><div class="line">   &#125;;</div></pre></td></tr></table></figure>
+<p>resize时使用setTimeout优化性能；对已有元素重排</p>
+<h3 id="4-设置window-onscroll来控制下一页加载时机"><a href="#4-设置window-onscroll来控制下一页加载时机" class="headerlink" title="4. 设置window.onscroll来控制下一页加载时机"></a>4. 设置window.onscroll来控制下一页加载时机</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * 滚动条是html.clientHeight &lt; html.offsetHeight   所以是由于html过长导致的滚动条出现</div><div class="line">    * @param e</div><div class="line">    */</div><div class="line">   window.onscroll = <span class="keyword">function</span>(e)&#123;</div><div class="line">       var t = document.documentElement.scrollTop || document.body.scrollTop;</div><div class="line">       <span class="keyword">if</span>(!loadingTag() &amp;&amp; t + document.documentElement.clientHeight &gt; container.offsetHeight - configs.loadDistance)&#123;</div><div class="line">           loadingTag(<span class="literal">true</span>);</div><div class="line">           configs.load(addItems);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>普通html页面由于过长产生的滚动条是由于html元素太长在window中显示出的滚动条； </p>
+<h3 id="5-设置首屏加载。注意临界条件的判断"><a href="#5-设置首屏加载。注意临界条件的判断" class="headerlink" title="5. 设置首屏加载。注意临界条件的判断"></a>5. 设置首屏加载。注意临界条件的判断</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">   * 加载第一屏</div><div class="line">   */</div><div class="line">  var firstPageInterval;</div><div class="line">  firstPageInterval = <span class="built_in">set</span>Interval(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">      <span class="keyword">if</span>(!loadingTag() &amp;&amp; container.offsetHeight &lt; document.documentElement.clientHeight) &#123;</div><div class="line">          loadingTag(<span class="literal">true</span>);</div><div class="line">          configs.load(addItems);</div><div class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span>(container.offsetHeight &gt; document.documentElement.clientHeight)&#123;</div><div class="line">          clearInterval(firstPageInterval);</div><div class="line">      &#125;</div><div class="line">  &#125;, 200);</div></pre></td></tr></table></figure>
+<p>以下是最终效果<br><img src="http://i11.tietuku.com/819e18f3fbe4ec08.png"><br><img src="http://i11.tietuku.com/4bd7ecf0cb342c7c.png"><br><img src="http://i11.tietuku.com/d2f0e2752f098c43.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/02/14/20160214/" data-id="ciu72xg8g000cecdlb7hlg78e" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/瀑布流/">瀑布流</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/02/15/20160215/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          offsetHeight,clientHeight和scrollHeight的区别
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/26/20160126/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">angular1回顾</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/单页应用中的按需加载/">单页应用中的按需加载</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/">算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/排序算法/">排序算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/爬虫/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/进阶/">进阶</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/">基础</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/基础/css/">css</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/js/">js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/">进阶</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/css/">css</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/js/">js</a><span class="category-list-count">4</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3d动画/">3d动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/">angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientHeight/">clientHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientLeft/">clientLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientTop/">clientTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetHeight/">offsetHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetLeft/">offsetLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetTop/">offsetTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollHeight/">scrollHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollLeft/">scrollLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollTop/">scrollTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spa/">spa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/切图/">切图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动画/">动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/瀑布流/">瀑布流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点击/">点击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/盒子模型/">盒子模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动/">移动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/路由/">路由</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3d动画/" style="font-size: 10px;">3d动画</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/clientHeight/" style="font-size: 10px;">clientHeight</a> <a href="/tags/clientLeft/" style="font-size: 10px;">clientLeft</a> <a href="/tags/clientTop/" style="font-size: 10px;">clientTop</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/offsetHeight/" style="font-size: 10px;">offsetHeight</a> <a href="/tags/offsetLeft/" style="font-size: 10px;">offsetLeft</a> <a href="/tags/offsetTop/" style="font-size: 10px;">offsetTop</a> <a href="/tags/scrollHeight/" style="font-size: 10px;">scrollHeight</a> <a href="/tags/scrollLeft/" style="font-size: 10px;">scrollLeft</a> <a href="/tags/scrollTop/" style="font-size: 10px;">scrollTop</a> <a href="/tags/spa/" style="font-size: 10px;">spa</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/切图/" style="font-size: 10px;">切图</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/瀑布流/" style="font-size: 10px;">瀑布流</a> <a href="/tags/点击/" style="font-size: 10px;">点击</a> <a href="/tags/盒子模型/" style="font-size: 10px;">盒子模型</a> <a href="/tags/移动/" style="font-size: 10px;">移动</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/路由/" style="font-size: 10px;">路由</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/12/20161012/">node实现爬虫抓取淘宝商品图文详情</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/07/20160707/">几种基本排序算法的理解</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/30/20160530/">单页应用中的按需加载</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/02/20160402/">js实现图片切图</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/15/20160215/">offsetHeight,clientHeight和scrollHeight的区别</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 卓凌云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>vanquish blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="vanquish blog">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+<meta property="og:site_name" content="vanquish blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vanquish blog">
+  
+    <link rel="alternative" href="/atom.xml" title="vanquish blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">vanquish blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">make progress every day</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-20160126" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/26/20160126/" class="article-date">
+  <time datetime="2016-01-25T16:00:00.000Z" itemprop="datePublished">2016-01-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/进阶/">进阶</a>►<a class="article-category-link" href="/categories/进阶/js/">js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/26/20160126/">angular1回顾</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>angular1自2009年出来之后一直很火，但也有不少弊端：比如十分影响性能的dirty check;所以google对angular2的设计可谓是完全颠覆，和vue.js，react.js类似，都跟上了组件化开发的新趋势，angular1确实是处于一种完全尴尬的境地； 这里就只当“温故”吧</p>
+<h3 id="directive"><a href="#directive" class="headerlink" title="directive"></a>directive</h3><p>angular1被人吐槽的一点就是太多新的概念，学习曲线太陡。要说其中最常用也比较难以运用的就是directive了，directive实际上就是一种组件化的思想，一个指令封装dom操作和相应逻辑，达到封装一次，到处使用的目的<br>这个很实用，比如之前做的一个ionic的app。有多个列表页，当时为了赶时间就没有进行指令化，连续写了四个很类似的页面，修改起来也很麻烦。<br>以下贴一个例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'docsTransclusionExample'</span>, [])</div><div class="line">	.controller(<span class="string">'Controller'</span>, [<span class="string">'$scope'</span>, <span class="keyword">function</span>(<span class="variable">$scope</span>) &#123;</div><div class="line">	  <span class="variable">$scope</span>.name = <span class="string">'Tobias'</span>;</div><div class="line">	  <span class="variable">$scope</span>.list = [];</div><div class="line">	&#125;])</div><div class="line">	.directive(<span class="string">'myDialog'</span>, <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">	  <span class="built_in">return</span> &#123;</div><div class="line">	    restrict: <span class="string">'E'</span>,</div><div class="line">	    transclude: <span class="literal">true</span>,</div><div class="line">	    scope: &#123;</div><div class="line">	    	list: <span class="string">'=li'</span>，</div><div class="line">	    	id: <span class="string">'@'</span>,</div><div class="line">	    	onSend: <span class="string">'&amp;'</span></div><div class="line">	    &#125;,</div><div class="line">	    templateUrl: <span class="string">'my-dialog.html'</span>,</div><div class="line">	    link: <span class="keyword">function</span> (scope, element) &#123;</div><div class="line">	      scope.name = <span class="string">'Jeff'</span>;</div><div class="line">	    &#125;,</div><div class="line">	    controller: <span class="string">'SomeController'</span>,</div><div class="line">	    controller: <span class="keyword">function</span>(<span class="variable">$scope</span>, <span class="variable">$element</span>, <span class="variable">$attr</span> <span class="variable">$transclude</span>)&#123;</div><div class="line"></div><div class="line">		&#125;</div><div class="line">	  &#125;;</div><div class="line">	&#125;);</div><div class="line"></div><div class="line"></div><div class="line">//my-dialog.html</div><div class="line">&lt;div class=<span class="string">"alert"</span> ng-transclude&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">//index.html</div><div class="line">&lt;div ng-controller=<span class="string">"Controller"</span>&gt;</div><div class="line">  &lt;my-dialog li=<span class="string">"list"</span> on-send=<span class="string">"sendMail()"</span> from-name=<span class="string">""</span>&gt;Check out the contents, &#123;&#123;name&#125;&#125;!&lt;/my-dialog&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>其中scope就是指令内的作用域，一旦定义scope属性，就隔离了外部作用域。如果不定义这个，那么指令作用域就会自动继承父级作用域，这里就是controller的作用域scope<br>scope中可以用来接收外部传参,’=’是双向绑定，@是单向绑定，&amp;是绑定方法</p>
+<p>transclude的使用也是一个重点。比如上述代码，那么最终会被解析为‘Tobias’，因为transclude：true，和ng-transclude的配合使用使得指令作用域中包含的html拥有了指令外部的作用域（也就是controller作用域）而不是指令内部的作用域。<br>The transclude option changes the way scopes are nested. It makes it so that the contents of a transcluded directive have whatever scope is outside the directive, rather than whatever scope is on the inside.<br>这一点还是改变不了的。其实这是有必要的，因为内部元素要独立出来，证明是想获得外部作用域的，否则完全可以直接放在template模板中</p>
+<p>controller属性可以是一个字符串或者一个函数，如果值为字符串，会以字符串的值为名字来查找注册在应用中的控制器的构造函数，<br>如果为匿名函数则与link函数类似，但link只能在当前指令中定义行为，无法在指令间复用，而<a href="http://docs.angularjs.cn/guide/directive" target="_blank" rel="external">controller却可以复用</a></p>
+<h3 id="config和run"><a href="#config和run" class="headerlink" title="config和run"></a>config和run</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myApp'</span>, [])</div><div class="line">	.config(<span class="keyword">function</span>(<span class="variable">$routeProvider</span>)&#123;</div><div class="line"></div><div class="line">	&#125;)</div><div class="line">	.run(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line"></div><div class="line">	&#125;);</div></pre></td></tr></table></figure>
+<p>config方法是唯一能在应用启动之前修改的部分，config只支持部分的类型注入：provider和constant。这证明只有通过provider自定义的service和.constant声明的常量才能够被注入<br>run方法则是在注入器创建之后被执行。它是angularjs应用中第一个被运行的方法，运行块常用于注册全局的时间监听器</p>
+<h3 id="services"><a href="#services" class="headerlink" title="services"></a>services</h3><p>服务也是angular的重要组成部分，与controller每次被销毁和新建不同，service是单例的，且是懒加载。并且一旦被创建不会被销毁，知道应用结束。<br>除常用的factory创建服务之外，还有：<br>service()<br>constant()<br>value()<br>provider()<br>几种创建服务的方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myApp'</span>)</div><div class="line">	.factory(<span class="string">'indexService'</span>, <span class="keyword">function</span>(<span class="variable">$http</span>)&#123;</div><div class="line">		<span class="built_in">return</span> &#123;</div><div class="line">			getName: <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line"></div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">	&#125;)</div><div class="line"></div><div class="line">	//service可以注册一个支持构造函数的服务</div><div class="line">	.service(<span class="string">'serviceService'</span>, <span class="keyword">function</span>(<span class="variable">$http</span>)&#123;</div><div class="line">		this.getName = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line"></div><div class="line">		&#125;</div><div class="line">	&#125;)</div><div class="line"></div><div class="line">	//provider注册服务必须提供一个<span class="variable">$get</span>方法</div><div class="line">	.provider(<span class="string">'providerService'</span>, &#123;</div><div class="line">		<span class="variable">$get</span>: <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">			<span class="built_in">return</span> &#123;</div><div class="line">				<span class="string">'username'</span>: <span class="string">'auser'</span></div><div class="line">			&#125;;</div><div class="line">		&#125;</div><div class="line">	&#125;);</div></pre></td></tr></table></figure></p>
+<p>factory实际是provider方法注册服务的简写方式。<br>但有一点区别，provider生成的服务可以被注入到config方法中，但是factory则不行</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/26/20160126/" data-id="ciu72xg8o000fecdl4ysvias8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20160118" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/18/20160118/" class="article-date">
+  <time datetime="2016-01-17T16:00:00.000Z" itemprop="datePublished">2016-01-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/进阶/">进阶</a>►<a class="article-category-link" href="/categories/进阶/css/">css</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/18/20160118/">css3复杂连续动画控制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>早一两个月前看到了这个页面<a href="http://h5.m.koudai.com/hd/2015_03_niuren_index/redirectLocalJsp.do?hd_p=platH5&amp;from=timeline&amp;isappinstalled=0" target="_blank" rel="external">某公司招人页面</a>，觉得挺炫，一直想临摹一遍，自己又懒，这周六把它实现了一遍，代码已经上传到我的github上<a href="https://github.com/uniquezhuo/Css3AnimationExample" target="_blank" rel="external">Css3AnimationExample</a>，算是个小战果吧</p>
+<h3 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h3><p><img src="http://i8.tietuku.com/f07d3832fc5742bb.png"><br><img src="http://i8.tietuku.com/43e507fa2bb6e862.png"><br><img src="http://i8.tietuku.com/631a4344b8eeb159.png"><br><img src="http://i8.tietuku.com/00cafa844a127eb0.png"></p>
+<p>静态图，效果看不大出。但基本也就是手势swipe up； swipe down切换页面。但仔细观察会发现:</p>
+<ol>
+<li>每个页面都可归纳出四种动画：swipe up隐藏，swipe up显示，swipe down隐藏，swipe down显示；</li>
+<li>四种动画中页面中元素的动画顺序不固定，速度不固定，动画甚至也不是简单的两种状态（添加和删除同一个class）</li>
+</ol>
+<h3 id="尝试"><a href="#尝试" class="headerlink" title="尝试"></a>尝试</h3><p>我进行了第一个尝试：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;div class=<span class="string">"page page1 active"</span>  style=<span class="string">"z-index:5;"</span>&gt;</div><div class="line">       &lt;div class=<span class="string">"circle-icon"</span> data-sort=<span class="string">"1"</span> has-next=<span class="string">"true"</span>&gt;</div><div class="line">           &lt;div class=<span class="string">"circle"</span>  data-sort=<span class="string">"2"</span>&gt;&lt;/div&gt;</div><div class="line">           &lt;div class=<span class="string">"icon"</span>  data-sort=<span class="string">"3"</span> &gt;&lt;/div&gt;</div><div class="line">       &lt;/div&gt;</div><div class="line">       &lt;div class=<span class="string">"slogan"</span> data-sort=<span class="string">"4"</span>&gt;</div><div class="line">       &lt;/div&gt;</div><div class="line">       &lt;div class=<span class="string">"car-run"</span> data-sort=<span class="string">"5"</span>&gt;</div><div class="line">           &lt;div class=<span class="string">"car-suite"</span>&gt;</div><div class="line">               &lt;div class=<span class="string">"cdj"</span> data-sort=<span class="string">"6"</span>&gt;&lt;/div&gt;</div><div class="line">               &lt;div class=<span class="string">"bmw"</span> data-sort=<span class="string">"7"</span>&gt;&lt;/div&gt;</div><div class="line">               &lt;div class=<span class="string">"bm320"</span> data-sort=<span class="string">"8"</span>&gt;&lt;/div&gt;</div><div class="line">               &lt;div class=<span class="string">"car"</span>&gt;&lt;/div&gt;</div><div class="line">               &lt;div class=<span class="string">"wheel1"</span>&gt;&lt;/div&gt;</div><div class="line">               &lt;div class=<span class="string">"wheel2"</span>&gt;&lt;/div&gt;</div><div class="line">           &lt;/div&gt;</div><div class="line">           &lt;div class=<span class="string">"ground"</span>&gt;&lt;/div&gt;</div><div class="line">       &lt;/div&gt;</div><div class="line">   &lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>在html元素中自定义属性标示出四种动画的元素顺序，之后依次为这些元素加上on或者next( on为动画一级状态，next为动画二级状态，用多个类逐渐添加来解决动画有多个类的问题)<br>但是对于有的元素在第三步时是addClass(‘next’); 有的则是removeClass(‘on’);这个问题怎么办？只有再继续添加标志性的自定义元素has-next了<br>好，怎么控制不同的启动速度，当然也可以继续添加自定义属性，比如什么data-next-time<br>上面问题都解决了，但是很不优雅，也不一目了然。</p>
+<hr>
+<p>我们可以总结出两点：</p>
+<ol>
+<li>css3动画其实就是类的叠加</li>
+<li>我们需要记录动画信息，并能通用的解析出来，提高扩展性</li>
+</ol>
+<p>既然html不行，就换成js吧</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>先上代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">var pages = [</div><div class="line">       &#123;       //page1</div><div class="line">           <span class="string">'upIn'</span>: [<span class="string">'.logo|on|add'</span>, <span class="string">'.circle|on|add'</span>, [<span class="string">'.circle-icon|on|add'</span>,<span class="string">'.icon|on|add'</span>], <span class="string">'.slogan|on|add'</span>, <span class="string">'.car-run|on|add|200'</span>, <span class="string">'.cdj|on|add|200'</span>, <span class="string">'.bmw|on|add|200'</span>, <span class="string">'.bm320|on|add'</span>],</div><div class="line">           <span class="string">'upOut'</span>: [<span class="string">'.circle-icon|next|add'</span>, <span class="string">'.slogan|next|add|200'</span>, <span class="string">'.cdj|on|remove|200'</span>, <span class="string">'.bmw|on|remove|200'</span>, <span class="string">'.bm320|on|remove'</span>, <span class="string">'.car-run|next|add'</span>],</div><div class="line">           <span class="string">'downIn'</span>: [<span class="string">'.car-run|next|remove|100'</span>, <span class="string">'.bm320|on|add|100'</span>, <span class="string">'.bmw|on|add|100'</span>, <span class="string">'.cdj|on|add|100'</span>, <span class="string">'.slogan|next|remove'</span>, <span class="string">'.circle-icon|next|remove'</span>],</div><div class="line">           <span class="string">'downOut'</span>: []</div><div class="line">       &#125;,</div><div class="line">       &#123;       //page2</div><div class="line">           <span class="string">'upIn'</span>: [ <span class="string">'.niu-ren|on|add'</span>, <span class="string">'body|zoom-out|add'</span>, <span class="string">'.mail-icon|on|add'</span>, <span class="string">'.words|on|add'</span>, <span class="string">'.money|on|add'</span>, <span class="string">'body|zoom-out|add'</span> ],</div><div class="line">           <span class="string">'upOut'</span>: [<span class="string">'.niu-ren|next|add'</span>, <span class="string">'.mail-icon|next|add'</span>, <span class="string">'.words|next|add'</span>],</div><div class="line">           <span class="string">'downIn'</span>: [<span class="string">'.words|next|remove'</span>, <span class="string">'.mail-icon|next|remove'</span>, <span class="string">'.niu-ren|next|remove'</span>],</div><div class="line">           <span class="string">'downOut'</span>: [<span class="string">'.words|on|remove'</span>, <span class="string">'.mail-icon|on|remove'</span>, <span class="string">'.niu-ren|on|remove'</span>]</div><div class="line">       &#125;,</div><div class="line">       &#123;       //page3</div><div class="line">           <span class="string">'upIn'</span>: [<span class="string">'.p3-title|on|add'</span>, <span class="string">'.recommend|on|add|100'</span>, <span class="string">'.recommend-name|on|add|100'</span>, <span class="string">'.recommend-tel|on|add|100'</span>, <span class="string">'.recommend-mail|on|add|100'</span>, <span class="string">'.be-recommend|on|add|100'</span>, <span class="string">'.be-recommend-name|on|add|100'</span>, <span class="string">'.be-recommend-job|on|add|100'</span>, <span class="string">'.be-recommend-resume|on|add|100'</span>],</div><div class="line">           <span class="string">'upOut'</span>: [<span class="string">'.p3-title|next|add|200'</span>, <span class="string">'.recommend|next|add|200'</span>, [<span class="string">'.recommend-name|next|add|200'</span>, <span class="string">'.recommend-tel|next|add|200'</span>, <span class="string">'.recommend-mail|next|add|200'</span>], <span class="string">'.be-recommend|next|add|200'</span>, [<span class="string">'.be-recommend-name|next|add|200'</span>, <span class="string">'.be-recommend-job|next|add|200'</span>, <span class="string">'.be-recommend-resume|next|add|200'</span>]],</div><div class="line">           <span class="string">'downIn'</span>: [<span class="string">'.be-recommend-resume|next|remove|200'</span>, <span class="string">'.be-recommend-job|next|remove|200'</span>, <span class="string">'.be-recommend-name|next|remove|200'</span>, <span class="string">'.be-recommend|next|remove|200'</span>, <span class="string">'.recommend-mail|next|remove|200'</span>, <span class="string">'.recommend-tel|next|remove|200'</span>, <span class="string">'.recommend-name|next|remove|200'</span>, <span class="string">'.recommend|next|remove|200'</span>, <span class="string">'.p3-title|next|remove|200'</span>],</div><div class="line">           <span class="string">'downOut'</span>: [<span class="string">'.be-recommend-resume|on|remove|200'</span>, <span class="string">'.be-recommend-job|on|remove|200'</span>, <span class="string">'.be-recommend-name|on|remove|200'</span>, <span class="string">'.be-recommend|on|remove|200'</span>, <span class="string">'.recommend-mail|on|remove|200'</span>, <span class="string">'.recommend-tel|on|remove|200'</span>, <span class="string">'.recommend-name|on|remove|200'</span>, <span class="string">'.recommend|on|remove|200'</span>, <span class="string">'.p3-title|on|remove|200'</span>]</div><div class="line">       &#125;,</div><div class="line">       &#123;       //page4</div><div class="line">           <span class="string">'upIn'</span>: [<span class="string">'.p4-title|on|add'</span>, <span class="string">'.java|on|add|100'</span>, <span class="string">'.android|on|add|100'</span>, <span class="string">'.ios|on|add|100'</span>, <span class="string">'.view-design|on|add|100'</span>, <span class="string">'.marketing|on|add|100'</span>, <span class="string">'.product|on|add|100'</span>, <span class="string">'.query-btn|on|add'</span>, <span class="string">'.email|on|add'</span>],</div><div class="line">           <span class="string">'upOut'</span>: [],</div><div class="line">           <span class="string">'downIn'</span>: [],</div><div class="line">           <span class="string">'downOut'</span>: [<span class="string">'.email|on|remove|100'</span>, <span class="string">'.query-btn|on|remove|100'</span>, <span class="string">'.product|on|remove|100'</span>, <span class="string">'.marketing|on|remove|100'</span>, <span class="string">'.view-design|on|remove|100'</span>, <span class="string">'.ios|on|remove|100'</span>, <span class="string">'.android|on|remove|100'</span>, <span class="string">'.java|on|remove|100'</span>, <span class="string">'.p4-title|on|remove'</span>]</div><div class="line">       &#125;</div><div class="line">   ];</div><div class="line"></div><div class="line">   /**</div><div class="line">    * css动画就是添加和删除class</div><div class="line">    * @param information</div><div class="line">    * @param container</div><div class="line">    */</div><div class="line">   <span class="keyword">function</span> handleClass(information, container)&#123;</div><div class="line">       var infos = information.split(<span class="string">'|'</span>);</div><div class="line">       //如果元素不在该page中,全documen查找</div><div class="line">       var target = container.find(infos[0]);</div><div class="line">       <span class="keyword">if</span>(target.length == 0)&#123;</div><div class="line">           infos[2] == <span class="string">'add'</span> ? $(infos[0]).addClass(infos[1]) : $(infos[0]).removeClass(infos[1]) ;</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           infos[2] == <span class="string">'add'</span> ? target.addClass(infos[1]) : target.removeClass(infos[1]) ;</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   var prevTimer;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * 显示动画</div><div class="line">    * @param container page容器</div><div class="line">    * @param aniArr 动画信息数组</div><div class="line">    * @param index 递归标记</div><div class="line">    */</div><div class="line">   <span class="keyword">function</span> showAnimation(container, aniArr, index, endCall)&#123;</div><div class="line">       clearTimeout(prevTimer);</div><div class="line">       <span class="keyword">if</span>(index &gt;= aniArr.length)&#123; //递归结束条件</div><div class="line">           endCall = endCall || <span class="function"><span class="title">function</span></span>()&#123;&#125;;</div><div class="line">           endCall();</div><div class="line">           <span class="built_in">return</span>;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       var information = aniArr[index];</div><div class="line">       var tmpl;   //标记自定义时间，数组中的默认第一个元素</div><div class="line">       <span class="keyword">if</span>( typeof information == <span class="string">'string'</span>)&#123;</div><div class="line">           handleClass(information, container);</div><div class="line">           tmpl = information.split(<span class="string">'|'</span>)[3];</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           //infos是数组</div><div class="line">           <span class="keyword">for</span>(var j= 0,jLen=information.length; j&lt;jLen; j++)&#123;</div><div class="line">               handleClass(information[j], container);</div><div class="line">           &#125;</div><div class="line">           tmpl = information.length &gt; 0 ? information[0].split(<span class="string">'|'</span>)[3] : undefined;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       prevTimer = <span class="built_in">set</span>Timeout(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">           showAnimation(container, aniArr, ++index, endCall);</div><div class="line">       &#125;, !!tmpl&amp;&amp;tmpl.trim().length&gt;0 ? parseInt(tmpl) : 500);   //没有自定义时间</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * 初次载入动画</div><div class="line">    */</div><div class="line">   showAnimation($(<span class="string">'.page1'</span>), pages[0][<span class="string">'upIn'</span>], 0);</div></pre></td></tr></table></figure></p>
+<p>看到数据结构自然就懂了，“选择器|类|操作（add或者remove）|自定义下个动画时间（可以不写默认500ms）”，对于有多个同时触发的，采用一个子数组出现。<br>这样剩下的就是解析字符串了，当时我还在想，字符串还好，如果是子数组，里面又有子数组怎么办？<br>这tm岂不是一个多维数组遍历问题，肯定要用递归，递归也行。关键这里是采用的setTimeout，一个异步回调+递归将是一个难以解决的蛋疼问题。<br>不对。。。。这tm不是多维的最多是二维，明显同一个时间里面就那几个，不能同一个时间里面还有第三维吧，好吧，这是物理问题。<br>这样问题就好办了，通过setTimeout动态改变间隔时间来调整速度，每次取消上次的计时器，再根据当前参数新建新的计时器，递归解决，就是这样。</p>
+<p>这应该算是比较完美解决连续多个css3动画不同速度不同方向不同顺序播放的问题吧：css+js</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/18/20160118/" data-id="ciu72xg8e000becdl7lf4xvtv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动画/">动画</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20160107" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/07/20160107/" class="article-date">
+  <time datetime="2016-01-06T16:00:00.000Z" itemprop="datePublished">2016-01-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/基础/">基础</a>►<a class="article-category-link" href="/categories/基础/css/">css</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/07/20160107/">css3 3d动画</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近做项目越来越追求美了，难道做前端都会慢慢变得有艺术。反正看着静态页面连做下去的欲望都没有了</p>
+<h2 id="css3两种动画"><a href="#css3两种动画" class="headerlink" title="css3两种动画"></a>css3两种动画</h2><h3 id="1-transition动画"><a href="#1-transition动画" class="headerlink" title="1.transition动画"></a>1.transition动画</h3><p>transition动画用起来简单顺手，感觉很轻量<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">li</span>.radio&#123;</div><div class="line">    -webkit-<span class="built_in">transform</span>: perspective(300px) <span class="built_in">scale</span>(<span class="number">0.9</span>) rotateX(-20deg) translateZ(-40px);</div><div class="line">    <span class="built_in">opacity</span>: <span class="number">0</span>;</div><div class="line">   // -webkit-transition: all <span class="number">0.</span>5s <span class="built_in">linear</span> <span class="number">0s</span>;</div><div class="line">   	-webkit-transition: -webkit-<span class="built_in">transform</span> <span class="number">0.</span>5s <span class="built_in">linear</span> <span class="number">0s</span>, <span class="built_in">opacity</span> <span class="number">0.</span>5s <span class="built_in">linear</span> <span class="number">0s</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">li</span>.radio.on&#123;</div><div class="line">    -webkit-<span class="built_in">transform</span>: perspective(<span class="number">0px</span>) <span class="built_in">scale</span>(<span class="number">1</span>) rotateX(<span class="number">0deg</span>) translateZ(<span class="number">0px</span>);</div><div class="line">    <span class="built_in">opacity</span>: <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>transition动画在css属性变化时激发，一般常用就是绑定一个新的class名，通过js动态添加和去掉类名（.on）实现动画。书写方式就不解释了，重点关注下第三个参数时间函数，使用这个贝塞尔曲线函数cubic-bezier(n,n,n,n)变化很多，可以找个在线网站去动态创建自己想要的事件函数</p>
+<h3 id="2-key-frames动画"><a href="#2-key-frames动画" class="headerlink" title="2.@key-frames动画"></a>2.@key-frames动画</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.car-run</span> <span class="selector-class">.car-suite</span>&#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">150px</span>;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">bottom</span>: <span class="number">6px</span>;</div><div class="line">    <span class="attribute">-webkit-animation</span>: car-shake <span class="number">0.5s</span> infinite;</div><div class="line"></div><div class="line">&#125;</div><div class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> car-shake &#123;</div><div class="line">    0&#123;</div><div class="line">        <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(0.97,1.03);</div><div class="line">    &#125;</div><div class="line">    50%&#123;</div><div class="line">        <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(1,1);</div><div class="line">    &#125;</div><div class="line">    100%&#123;</div><div class="line">        <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(0.97,1.03);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>key-frames动画更加强大，激发条件也很简单。当该属性出现时就开始了动画，当然可是可以设置延迟的。它的属性更多，无疑可以进行更为精确的控制，比如，可以设置动画执行的次数，可以具体控制属性的变化</p>
+<p>###总结<br>小动画，一次之后不会再次运行用transition；复杂细致控制，多次执行用animation</p>
+<h2 id="css3-3d动画"><a href="#css3-3d动画" class="headerlink" title="css3 3d动画"></a>css3 3d动画</h2><p>要使得图像看起来立体，我们首先了解x,y,z轴<br>在css中，z轴是指向观察者的，可以想象面前一条横线是x轴，竖线为y轴；这样就很容易理解rotateX,rotateY,rotateZ和translateX,translateY,translateZ</p>
+<p>还要了解perspective和perspective-origin属性，这是创造3d视图的关键。perspective调整元素距离视图的距离。<br>有两种设置方式：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.stage</span> &#123;	<span class="comment">//写在舞台元素（一般是父元素）</span></div><div class="line">    <span class="attribute">perspective</span>: <span class="number">600px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#stage</span> <span class="selector-class">.box</span> &#123;	<span class="comment">//写在自己身上</span></div><div class="line">    <span class="attribute">transform</span>: perspective(<span class="number">600px</span>) rotateY(<span class="number">45deg</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当动画元素（即box）只有一个时，效果是一样的。为什么我们没有perspective时没有3d效果，可以这样理解：现在眼睛或者说舞台父元素与动画元素距离为0，贴的太近看不出效果；当视线逐渐变远，就可以看到3d效果了。当变得很远，又会看不到效果了，而translateZ也就是可以改变元素这个方向上距离的属性。</p>
+<p>当动画元素有多个时，效果就不一样了。第一个在父元素中设置perspective，相当于只有一个视角，这是看到多个相同的动画元素的倾斜角是不同的。但如果直接在元素本身这是perspective，则会发现多个元素的倾斜角依然相同，因为这相当于创建了多个视角</p>
+<p>详细请看大神博客<a href="http://www.zhangxinxu.com/wordpress/2012/09/css3-3d-transform-perspective-animate-transition/" target="_blank" rel="external">css3d动画</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/07/20160107/" data-id="ciu72xg8b0007ecdlrcp7e4po" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/3d动画/">3d动画</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/单页应用中的按需加载/">单页应用中的按需加载</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/">算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/排序算法/">排序算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/爬虫/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/进阶/">进阶</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/">基础</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/基础/css/">css</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/js/">js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/">进阶</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/css/">css</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/js/">js</a><span class="category-list-count">4</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3d动画/">3d动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/">angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientHeight/">clientHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientLeft/">clientLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientTop/">clientTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetHeight/">offsetHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetLeft/">offsetLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetTop/">offsetTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollHeight/">scrollHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollLeft/">scrollLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollTop/">scrollTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spa/">spa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/切图/">切图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动画/">动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/瀑布流/">瀑布流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点击/">点击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/盒子模型/">盒子模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动/">移动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/路由/">路由</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3d动画/" style="font-size: 10px;">3d动画</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/clientHeight/" style="font-size: 10px;">clientHeight</a> <a href="/tags/clientLeft/" style="font-size: 10px;">clientLeft</a> <a href="/tags/clientTop/" style="font-size: 10px;">clientTop</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/offsetHeight/" style="font-size: 10px;">offsetHeight</a> <a href="/tags/offsetLeft/" style="font-size: 10px;">offsetLeft</a> <a href="/tags/offsetTop/" style="font-size: 10px;">offsetTop</a> <a href="/tags/scrollHeight/" style="font-size: 10px;">scrollHeight</a> <a href="/tags/scrollLeft/" style="font-size: 10px;">scrollLeft</a> <a href="/tags/scrollTop/" style="font-size: 10px;">scrollTop</a> <a href="/tags/spa/" style="font-size: 10px;">spa</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/切图/" style="font-size: 10px;">切图</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/瀑布流/" style="font-size: 10px;">瀑布流</a> <a href="/tags/点击/" style="font-size: 10px;">点击</a> <a href="/tags/盒子模型/" style="font-size: 10px;">盒子模型</a> <a href="/tags/移动/" style="font-size: 10px;">移动</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/路由/" style="font-size: 10px;">路由</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/12/20161012/">node实现爬虫抓取淘宝商品图文详情</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/07/20160707/">几种基本排序算法的理解</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/30/20160530/">单页应用中的按需加载</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/02/20160402/">js实现图片切图</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/15/20160215/">offsetHeight,clientHeight和scrollHeight的区别</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 卓凌云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

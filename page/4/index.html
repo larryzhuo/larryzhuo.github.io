@@ -62,6 +62,59 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-20160107" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/07/20160107/" class="article-date">
+  <time datetime="2016-01-06T16:00:00.000Z" itemprop="datePublished">2016-01-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/基础/">基础</a>►<a class="article-category-link" href="/categories/基础/css/">css</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/07/20160107/">css3 3d动画</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近做项目越来越追求美了，难道做前端都会慢慢变得有艺术。反正看着静态页面连做下去的欲望都没有了</p>
+<h2 id="css3两种动画"><a href="#css3两种动画" class="headerlink" title="css3两种动画"></a>css3两种动画</h2><h3 id="1-transition动画"><a href="#1-transition动画" class="headerlink" title="1.transition动画"></a>1.transition动画</h3><p>transition动画用起来简单顺手，感觉很轻量<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">li</span>.radio&#123;</div><div class="line">    -webkit-<span class="built_in">transform</span>: perspective(300px) <span class="built_in">scale</span>(<span class="number">0.9</span>) rotateX(-20deg) translateZ(-40px);</div><div class="line">    <span class="built_in">opacity</span>: <span class="number">0</span>;</div><div class="line">   // -webkit-transition: all <span class="number">0.</span>5s <span class="built_in">linear</span> <span class="number">0s</span>;</div><div class="line">   	-webkit-transition: -webkit-<span class="built_in">transform</span> <span class="number">0.</span>5s <span class="built_in">linear</span> <span class="number">0s</span>, <span class="built_in">opacity</span> <span class="number">0.</span>5s <span class="built_in">linear</span> <span class="number">0s</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">li</span>.radio.on&#123;</div><div class="line">    -webkit-<span class="built_in">transform</span>: perspective(<span class="number">0px</span>) <span class="built_in">scale</span>(<span class="number">1</span>) rotateX(<span class="number">0deg</span>) translateZ(<span class="number">0px</span>);</div><div class="line">    <span class="built_in">opacity</span>: <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>transition动画在css属性变化时激发，一般常用就是绑定一个新的class名，通过js动态添加和去掉类名（.on）实现动画。书写方式就不解释了，重点关注下第三个参数时间函数，使用这个贝塞尔曲线函数cubic-bezier(n,n,n,n)变化很多，可以找个在线网站去动态创建自己想要的事件函数</p>
+<h3 id="2-key-frames动画"><a href="#2-key-frames动画" class="headerlink" title="2.@key-frames动画"></a>2.@key-frames动画</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.car-run</span> <span class="selector-class">.car-suite</span>&#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">150px</span>;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">bottom</span>: <span class="number">6px</span>;</div><div class="line">    <span class="attribute">-webkit-animation</span>: car-shake <span class="number">0.5s</span> infinite;</div><div class="line"></div><div class="line">&#125;</div><div class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> car-shake &#123;</div><div class="line">    0&#123;</div><div class="line">        <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(0.97,1.03);</div><div class="line">    &#125;</div><div class="line">    50%&#123;</div><div class="line">        <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(1,1);</div><div class="line">    &#125;</div><div class="line">    100%&#123;</div><div class="line">        <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(0.97,1.03);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>key-frames动画更加强大，激发条件也很简单。当该属性出现时就开始了动画，当然可是可以设置延迟的。它的属性更多，无疑可以进行更为精确的控制，比如，可以设置动画执行的次数，可以具体控制属性的变化</p>
+<p>###总结<br>小动画，一次之后不会再次运行用transition；复杂细致控制，多次执行用animation</p>
+<h2 id="css3-3d动画"><a href="#css3-3d动画" class="headerlink" title="css3 3d动画"></a>css3 3d动画</h2><p>要使得图像看起来立体，我们首先了解x,y,z轴<br>在css中，z轴是指向观察者的，可以想象面前一条横线是x轴，竖线为y轴；这样就很容易理解rotateX,rotateY,rotateZ和translateX,translateY,translateZ</p>
+<p>还要了解perspective和perspective-origin属性，这是创造3d视图的关键。perspective调整元素距离视图的距离。<br>有两种设置方式：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.stage</span> &#123;	<span class="comment">//写在舞台元素（一般是父元素）</span></div><div class="line">    <span class="attribute">perspective</span>: <span class="number">600px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#stage</span> <span class="selector-class">.box</span> &#123;	<span class="comment">//写在自己身上</span></div><div class="line">    <span class="attribute">transform</span>: perspective(<span class="number">600px</span>) rotateY(<span class="number">45deg</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当动画元素（即box）只有一个时，效果是一样的。为什么我们没有perspective时没有3d效果，可以这样理解：现在眼睛或者说舞台父元素与动画元素距离为0，贴的太近看不出效果；当视线逐渐变远，就可以看到3d效果了。当变得很远，又会看不到效果了，而translateZ也就是可以改变元素这个方向上距离的属性。</p>
+<p>当动画元素有多个时，效果就不一样了。第一个在父元素中设置perspective，相当于只有一个视角，这是看到多个相同的动画元素的倾斜角是不同的。但如果直接在元素本身这是perspective，则会发现多个元素的倾斜角依然相同，因为这相当于创建了多个视角</p>
+<p>详细请看大神博客<a href="http://www.zhangxinxu.com/wordpress/2012/09/css3-3d-transform-perspective-animate-transition/" target="_blank" rel="external">css3d动画</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/07/20160107/" data-id="ciu8dl1gz000404dlhauy377u" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/3d动画/">3d动画</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-20151231" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/31/20151231/" class="article-date">
@@ -102,7 +155,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/31/20151231/" data-id="ciu72xg820006ecdlgx16z2uo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/31/20151231/" data-id="ciu8dl1he000q04dljdb3wgid" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/盒子模型/">盒子模型</a></li></ul>
@@ -155,66 +208,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/29/20151229/" data-id="ciu72xg7z0005ecdlprizttzm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/29/20151229/" data-id="ciu8dl1gj000004dlgw57kn07" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/点击/">点击</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动/">移动</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-20151210" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/10/20151210/" class="article-date">
-  <time datetime="2015-12-09T16:00:00.000Z" itemprop="datePublished">2015-12-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/进阶/">进阶</a>►<a class="article-category-link" href="/categories/进阶/js/">js</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/10/20151210/">单页应用中的路由控制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-以往的浏览器历史跳转"><a href="#1-以往的浏览器历史跳转" class="headerlink" title="1.以往的浏览器历史跳转"></a>1.以往的浏览器历史跳转</h2><p>在普通的通过window.location.href的跳转时实际上是直接改变了地址栏地址，对服务器发送了请求，至于<br>请求的文件的位置，这种路由的查找则是由服务器端完成的</p>
-<h2 id="2-spa单页应用的不同"><a href="#2-spa单页应用的不同" class="headerlink" title="2.spa单页应用的不同"></a>2.spa单页应用的不同</h2><p>之前用angular写过几个移动app，一直没有考虑过其路由的问题。因为是使用了ionic和ui-router，所以之前一直以为是ionic<br>实现的单页应用而不是angular</p>
-<p>![ionic code]{ioniccode.png}</p>
-<p>ionic实现了模板的缓存，类似栈的形式，不断将新的页面压入栈顶（class=”active”）,而之前的页面(class=”cached”)则是<br>拥有display:none而隐藏</p>
-<p>实际上angular的ng-route模块同ui-router一样都提供了客户端路由，使得spa应用成为可能</p>
-<p>那么我们自己如何实现这种路由机制呢，方法有两种</p>
-<p>1.location.hash  window.onhashchange事件<br>    优点： 兼容性好，ie8中支持</p>
-<p>2.history.state pushState replaceState两种方法 window.popstate事件<br>    优点：h5中引入的新特性，可以传递参数对象</p>
-<p>如下是我实现的一个pjax小测试<br>    <a href="https://github.com/uniquezhuo/spa-client-router" target="_blank" rel="external">基于location.hash实现的客户端路由</a><br>    至于pjax，后续我会研究类似于director.js这样的路由库或者ng-route和ui-router进行更深度的分析，毕竟在实际应用中，我们不敢也不用去造轮子</p>
-<p>那么有一个问题产生了，修改location为什么没有发生跳转呢</p>
-<p>这就设计到锚标记的问题了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;a href=<span class="string">"#point"</span>&gt;&lt;/a&gt;</div><div class="line">&lt;p id=<span class="string">'point'</span>&gt;&lt;/p&gt;</div></pre></td></tr></table></figure>
-<p>这就是a标签锚点的应用，常用于在很长的一张网页中进行导航，点击a会跳转到p的位置，可见当location<br>遇到#号后面的hash部分发生变化时不会跳转，而仅仅是在本页面中查找相应位置</p>
-<p>这也是所有客户端路由库的原理，改变hash骗过浏览器的历史导航，而实际使用ajax请求模板，替换页面中的内容，这种技术成为pjax</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/10/20151210/" data-id="ciu72xg7q0002ecdlfog2gwcf" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/路由/">路由</a></li></ul>
 
     </footer>
   </div>
@@ -236,7 +233,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/单页应用中的按需加载/">单页应用中的按需加载</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/">算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/排序算法/">排序算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/爬虫/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/进阶/">进阶</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/">基础</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/基础/css/">css</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/js/">js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/">进阶</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/css/">css</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/js/">js</a><span class="category-list-count">4</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/vue/">vue</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/vue/IScroller/">IScroller</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/单页应用中的按需加载/">单页应用中的按需加载</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/">算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/算法/排序算法/">排序算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/js/网络/爬虫/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/进阶/">进阶</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/">基础</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/基础/css/">css</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础/js/">js</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/">进阶</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/css/">css</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/进阶/js/">js</a><span class="category-list-count">4</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -245,7 +242,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3d动画/">3d动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/">angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientHeight/">clientHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientLeft/">clientLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientTop/">clientTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetHeight/">offsetHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetLeft/">offsetLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetTop/">offsetTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollHeight/">scrollHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollLeft/">scrollLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollTop/">scrollTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spa/">spa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/切图/">切图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动画/">动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/瀑布流/">瀑布流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点击/">点击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/盒子模型/">盒子模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动/">移动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/路由/">路由</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3d动画/">3d动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/">angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientHeight/">clientHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientLeft/">clientLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientTop/">clientTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetHeight/">offsetHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetLeft/">offsetLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetTop/">offsetTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollHeight/">scrollHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollLeft/">scrollLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollTop/">scrollTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spa/">spa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下拉刷新-上拉加载/">下拉刷新+上拉加载</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/切图/">切图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动画/">动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/瀑布流/">瀑布流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点击/">点击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/盒子模型/">盒子模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动/">移动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/路由/">路由</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -254,7 +251,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3d动画/" style="font-size: 10px;">3d动画</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/clientHeight/" style="font-size: 10px;">clientHeight</a> <a href="/tags/clientLeft/" style="font-size: 10px;">clientLeft</a> <a href="/tags/clientTop/" style="font-size: 10px;">clientTop</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/offsetHeight/" style="font-size: 10px;">offsetHeight</a> <a href="/tags/offsetLeft/" style="font-size: 10px;">offsetLeft</a> <a href="/tags/offsetTop/" style="font-size: 10px;">offsetTop</a> <a href="/tags/scrollHeight/" style="font-size: 10px;">scrollHeight</a> <a href="/tags/scrollLeft/" style="font-size: 10px;">scrollLeft</a> <a href="/tags/scrollTop/" style="font-size: 10px;">scrollTop</a> <a href="/tags/spa/" style="font-size: 10px;">spa</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/切图/" style="font-size: 10px;">切图</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/瀑布流/" style="font-size: 10px;">瀑布流</a> <a href="/tags/点击/" style="font-size: 10px;">点击</a> <a href="/tags/盒子模型/" style="font-size: 10px;">盒子模型</a> <a href="/tags/移动/" style="font-size: 10px;">移动</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/路由/" style="font-size: 10px;">路由</a>
+      <a href="/tags/3d动画/" style="font-size: 10px;">3d动画</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/clientHeight/" style="font-size: 10px;">clientHeight</a> <a href="/tags/clientLeft/" style="font-size: 10px;">clientLeft</a> <a href="/tags/clientTop/" style="font-size: 10px;">clientTop</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/offsetHeight/" style="font-size: 10px;">offsetHeight</a> <a href="/tags/offsetLeft/" style="font-size: 10px;">offsetLeft</a> <a href="/tags/offsetTop/" style="font-size: 10px;">offsetTop</a> <a href="/tags/scrollHeight/" style="font-size: 10px;">scrollHeight</a> <a href="/tags/scrollLeft/" style="font-size: 10px;">scrollLeft</a> <a href="/tags/scrollTop/" style="font-size: 10px;">scrollTop</a> <a href="/tags/spa/" style="font-size: 10px;">spa</a> <a href="/tags/下拉刷新-上拉加载/" style="font-size: 10px;">下拉刷新+上拉加载</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/切图/" style="font-size: 10px;">切图</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/瀑布流/" style="font-size: 10px;">瀑布流</a> <a href="/tags/点击/" style="font-size: 10px;">点击</a> <a href="/tags/盒子模型/" style="font-size: 10px;">盒子模型</a> <a href="/tags/移动/" style="font-size: 10px;">移动</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/路由/" style="font-size: 10px;">路由</a>
     </div>
   </div>
 
@@ -263,7 +260,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -273,6 +270,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/10/13/20161013/">iscroll源码解析及vue下拉刷新与上拉加载组件实现</a>
+          </li>
         
           <li>
             <a href="/2016/10/12/20161012/">node实现爬虫抓取淘宝商品图文详情</a>
@@ -288,10 +289,6 @@
         
           <li>
             <a href="/2016/04/02/20160402/">js实现图片切图</a>
-          </li>
-        
-          <li>
-            <a href="/2016/02/15/20160215/">offsetHeight,clientHeight和scrollHeight的区别</a>
           </li>
         
       </ul>

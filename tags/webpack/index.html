@@ -3,21 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>css3 3d动画 | vanquish blog</title>
+  <title>Tag: webpack | vanquish blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近做项目越来越追求美了，难道做前端都会慢慢变得有艺术。反正看着静态页面连做下去的欲望都没有了
-css3两种动画1.transition动画transition动画用起来简单顺手，感觉很轻量12345678910li.radio&amp;#123;    -webkit-transform: perspective(300px) scale(0.9) rotateX(-20deg) translateZ(">
-<meta property="og:type" content="article">
-<meta property="og:title" content="css3 3d动画">
-<meta property="og:url" content="http://yoursite.com/2016/01/07/20160107/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="vanquish blog">
+<meta property="og:url" content="http://yoursite.com/tags/webpack/index.html">
 <meta property="og:site_name" content="vanquish blog">
-<meta property="og:description" content="最近做项目越来越追求美了，难道做前端都会慢慢变得有艺术。反正看着静态页面连做下去的欲望都没有了
-css3两种动画1.transition动画transition动画用起来简单顺手，感觉很轻量12345678910li.radio&amp;#123;    -webkit-transform: perspective(300px) scale(0.9) rotateX(-20deg) translateZ(">
-<meta property="og:updated_time" content="2016-10-13T13:48:59.932Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="css3 3d动画">
-<meta name="twitter:description" content="最近做项目越来越追求美了，难道做前端都会慢慢变得有艺术。反正看着静态页面连做下去的欲望都没有了
-css3两种动画1.transition动画transition动画用起来简单顺手，感觉很轻量12345678910li.radio&amp;#123;    -webkit-transform: perspective(300px) scale(0.9) rotateX(-20deg) translateZ(">
+<meta name="twitter:title" content="vanquish blog">
   
     <link rel="alternative" href="/atom.xml" title="vanquish blog" type="application/atom+xml">
   
@@ -67,78 +60,39 @@ css3两种动画1.transition动画transition动画用起来简单顺手，感觉
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-20160107" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/01/07/20160107/" class="article-date">
-  <time datetime="2016-01-06T16:00:00.000Z" itemprop="datePublished">2016-01-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/css/">css</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      css3 3d动画
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/10/15/20161015/" class="archive-article-date">
+  <time datetime="2016-10-14T16:00:00.000Z" itemprop="datePublished">Oct 15</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/10/15/20161015/">vue+webpack单页应用及多页应用实现</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近做项目越来越追求美了，难道做前端都会慢慢变得有艺术。反正看着静态页面连做下去的欲望都没有了</p>
-<h2 id="css3两种动画"><a href="#css3两种动画" class="headerlink" title="css3两种动画"></a>css3两种动画</h2><h3 id="1-transition动画"><a href="#1-transition动画" class="headerlink" title="1.transition动画"></a>1.transition动画</h3><p>transition动画用起来简单顺手，感觉很轻量<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">li</span>.radio&#123;</div><div class="line">    -webkit-<span class="built_in">transform</span>: perspective(300px) <span class="built_in">scale</span>(<span class="number">0.9</span>) rotateX(-20deg) translateZ(-40px);</div><div class="line">    <span class="built_in">opacity</span>: <span class="number">0</span>;</div><div class="line">   // -webkit-transition: all <span class="number">0.</span>5s <span class="built_in">linear</span> <span class="number">0s</span>;</div><div class="line">   	-webkit-transition: -webkit-<span class="built_in">transform</span> <span class="number">0.</span>5s <span class="built_in">linear</span> <span class="number">0s</span>, <span class="built_in">opacity</span> <span class="number">0.</span>5s <span class="built_in">linear</span> <span class="number">0s</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">li</span>.radio.on&#123;</div><div class="line">    -webkit-<span class="built_in">transform</span>: perspective(<span class="number">0px</span>) <span class="built_in">scale</span>(<span class="number">1</span>) rotateX(<span class="number">0deg</span>) translateZ(<span class="number">0px</span>);</div><div class="line">    <span class="built_in">opacity</span>: <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>transition动画在css属性变化时激发，一般常用就是绑定一个新的class名，通过js动态添加和去掉类名（.on）实现动画。书写方式就不解释了，重点关注下第三个参数时间函数，使用这个贝塞尔曲线函数cubic-bezier(n,n,n,n)变化很多，可以找个在线网站去动态创建自己想要的事件函数</p>
-<h3 id="2-key-frames动画"><a href="#2-key-frames动画" class="headerlink" title="2.@key-frames动画"></a>2.@key-frames动画</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.car-run</span> <span class="selector-class">.car-suite</span>&#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">150px</span>;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">bottom</span>: <span class="number">6px</span>;</div><div class="line">    <span class="attribute">-webkit-animation</span>: car-shake <span class="number">0.5s</span> infinite;</div><div class="line"></div><div class="line">&#125;</div><div class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> car-shake &#123;</div><div class="line">    0&#123;</div><div class="line">        <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(0.97,1.03);</div><div class="line">    &#125;</div><div class="line">    50%&#123;</div><div class="line">        <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(1,1);</div><div class="line">    &#125;</div><div class="line">    100%&#123;</div><div class="line">        <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(0.97,1.03);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>key-frames动画更加强大，激发条件也很简单。当该属性出现时就开始了动画，当然可是可以设置延迟的。它的属性更多，无疑可以进行更为精确的控制，比如，可以设置动画执行的次数，可以具体控制属性的变化</p>
-<p>###总结<br>小动画，一次之后不会再次运行用transition；复杂细致控制，多次执行用animation</p>
-<h2 id="css3-3d动画"><a href="#css3-3d动画" class="headerlink" title="css3 3d动画"></a>css3 3d动画</h2><p>要使得图像看起来立体，我们首先了解x,y,z轴<br>在css中，z轴是指向观察者的，可以想象面前一条横线是x轴，竖线为y轴；这样就很容易理解rotateX,rotateY,rotateZ和translateX,translateY,translateZ</p>
-<p>还要了解perspective和perspective-origin属性，这是创造3d视图的关键。perspective调整元素距离视图的距离。<br>有两种设置方式：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.stage</span> &#123;	<span class="comment">//写在舞台元素（一般是父元素）</span></div><div class="line">    <span class="attribute">perspective</span>: <span class="number">600px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#stage</span> <span class="selector-class">.box</span> &#123;	<span class="comment">//写在自己身上</span></div><div class="line">    <span class="attribute">transform</span>: perspective(<span class="number">600px</span>) rotateY(<span class="number">45deg</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>当动画元素（即box）只有一个时，效果是一样的。为什么我们没有perspective时没有3d效果，可以这样理解：现在眼睛或者说舞台父元素与动画元素距离为0，贴的太近看不出效果；当视线逐渐变远，就可以看到3d效果了。当变得很远，又会看不到效果了，而translateZ也就是可以改变元素这个方向上距离的属性。</p>
-<p>当动画元素有多个时，效果就不一样了。第一个在父元素中设置perspective，相当于只有一个视角，这是看到多个相同的动画元素的倾斜角是不同的。但如果直接在元素本身这是perspective，则会发现多个元素的倾斜角依然相同，因为这相当于创建了多个视角</p>
-<p>详细请看大神博客<a href="http://www.zhangxinxu.com/wordpress/2012/09/css3-3d-transform-perspective-animate-transition/" target="_blank" rel="external">css3d动画</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/07/20160107/" data-id="ciufn070l000higdl14obosm3" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/3d动画/">3d动画</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/01/18/20160118/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          css3复杂连续动画控制
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/12/31/20151231/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">css盒子模型</div>
-    </a>
-  
-</nav>
-
-  
 </article>
-
+  
+  
+    </div></section>
+  
 </section>
         
           <aside id="sidebar">

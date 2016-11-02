@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>webpack热更新调试的几种方法 | vanquish blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="项目背景最近做的几个vue项目都使用的webpack构建，也了解了下webpack其中调试的方法，主要有以下几种：
+
+devtool configuration option
+webpack-dev-server
+webpack-dev-middleware这里重点说下2和3的使用。
+
+webpack-dev-server这是一个小型的node.js express服务器，它使用webpack-d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack热更新调试的几种方法">
+<meta property="og:url" content="http://yoursite.com/2016/11/02/20161102/index.html">
+<meta property="og:site_name" content="vanquish blog">
+<meta property="og:description" content="项目背景最近做的几个vue项目都使用的webpack构建，也了解了下webpack其中调试的方法，主要有以下几种：
+
+devtool configuration option
+webpack-dev-server
+webpack-dev-middleware这里重点说下2和3的使用。
+
+webpack-dev-server这是一个小型的node.js express服务器，它使用webpack-d">
+<meta property="og:updated_time" content="2016-11-02T15:34:38.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack热更新调试的几种方法">
+<meta name="twitter:description" content="项目背景最近做的几个vue项目都使用的webpack构建，也了解了下webpack其中调试的方法，主要有以下几种：
+
+devtool configuration option
+webpack-dev-server
+webpack-dev-middleware这里重点说下2和3的使用。
+
+webpack-dev-server这是一个小型的node.js express服务器，它使用webpack-d">
+  
+    <link rel="alternative" href="/atom.xml" title="vanquish blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">vanquish blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">make progress every day</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-20161102" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/02/20161102/" class="article-date">
+  <time datetime="2016-11-01T16:00:00.000Z" itemprop="datePublished">2016-11-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      webpack热更新调试的几种方法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h3><p>最近做的几个vue项目都使用的webpack构建，也了解了下webpack其中调试的方法，主要有以下几种：</p>
+<ol>
+<li>devtool configuration option</li>
+<li>webpack-dev-server</li>
+<li>webpack-dev-middleware<br>这里重点说下2和3的使用。</li>
+</ol>
+<h3 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h3><p>这是一个小型的node.js express服务器，它使用webpack-dev-middleware去处理webpack bundle。</p>
+<blockquote>
+<p>The server emits information about the compilation state to the client, which reacts to those events. You can choose between different modes, depending on your needs.</p>
+</blockquote>
+<p>它支持两种自动刷新方式</p>
+<ol>
+<li><p>iframe模式（使用iframe模式很简单，只要启动dev-server之后直接访问类似<a href="http://localhost:8080/webpack-dev-server/index.html路径就可以了。这是页面会被嵌入到iframe）。它有这几个特点" target="_blank" rel="external">http://localhost:8080/webpack-dev-server/index.html路径就可以了。这是页面会被嵌入到iframe）。它有这几个特点</a></p>
+<blockquote>
+<p>-.No configuration change needed.<br>-.Nice information bar on top of your app.<br>-.URL changes in the app are not reflected in the browser’s URL bar.</p>
+</blockquote>
+</li>
+<li><p>inline模式<br>inline模式又分为命令行模式和node api模式</p>
+</li>
+</ol>
+<h4 id="命令行模式"><a href="#命令行模式" class="headerlink" title="命令行模式"></a>命令行模式</h4><p>直接在package.json中的script字段中加入webpack命令。比如vue-cli中simple模板生成的就是这种格式<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="string">"scripts"</span>: &#123;</div><div class="line">  <span class="string">"dev"</span>: <span class="string">"webpack-dev-server --inline --hot --no-info --port 8081"</span>,</div><div class="line">  <span class="string">"build"</span>: <span class="string">"cross-env NODE_ENV=production webpack --progress --hide-modules"</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看出dev模式下，只需要加入–inline参数启动就可以了，需要Hot Module Replacement也就是直接加上–hot参数，十分简单方便。这种情况下，都会默认去执行webpack.config.js文件</p>
+<h4 id="node-api模式"><a href="#node-api模式" class="headerlink" title="node api模式"></a>node api模式</h4><p>这种模式比cli方式要复杂。一言不合直接上已经实践的代码吧。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//package.json</span></div><div class="line"><span class="string">"scripts"</span>: &#123;</div><div class="line">  <span class="string">"dev:index"</span>: <span class="string">"node build/webpack.index.conf.js -d"</span>,</div><div class="line">  <span class="string">"build:index"</span>: <span class="string">"node build/webpack.index.conf.js -p"</span>,</div><div class="line">  <span class="string">"dev:producer"</span>: <span class="string">"node build/webpack.producer.conf.js -d"</span>,</div><div class="line">  <span class="string">"build:producer"</span>: <span class="string">"node build/webpack.producer.conf.js -p"</span></div><div class="line">&#125;,</div><div class="line"></div><div class="line"><span class="comment">//webpack.producer.conf.js</span></div><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> WebpackDevServer = <span class="built_in">require</span>(<span class="string">'webpack-dev-server'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> isprd = process.argv[<span class="number">2</span>] === <span class="string">'-p'</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: &#123;</div><div class="line">    <span class="attr">app</span>: <span class="string">'./producerSrc/main.js'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">output</span>: &#123;</div><div class="line">    <span class="attr">publicPath</span>: <span class="string">'http://localhost:8080/static/'</span>,</div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'../static'</span>),</div><div class="line">    <span class="attr">filename</span>: <span class="string">'producerBuild.js'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">module</span>: &#123;</div><div class="line">    <span class="attr">noParse</span>: <span class="regexp">/es6-promise\.js$/</span>,</div><div class="line">    <span class="attr">loaders</span>: [</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.vue$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'vue'</span></div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">        <span class="attr">exclude</span>: <span class="regexp">/node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'babel'</span></div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.(png|jpg)$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'url-loader?limit=8192'</span></div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">babel</span>: &#123;</div><div class="line">    <span class="attr">presets</span>: [<span class="string">'es2015'</span>],</div><div class="line">    <span class="attr">plugins</span>: [<span class="string">'transform-runtime'</span>]</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">plugins</span>: [],</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> compiler;</div><div class="line"><span class="keyword">if</span> (isprd) &#123;</div><div class="line">  config.plugins.push(</div><div class="line">    <span class="keyword">new</span> webpack.DefinePlugin(&#123;</div><div class="line">      <span class="string">'process.env'</span>: &#123;</div><div class="line">        <span class="attr">NODE_ENV</span>: <span class="string">'"production"'</span></div><div class="line">      &#125;</div><div class="line">    &#125;),</div><div class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(&#123;</div><div class="line">      <span class="attr">compress</span>: &#123;</div><div class="line">        <span class="attr">warnings</span>: <span class="literal">false</span></div><div class="line">      &#125;</div><div class="line">    &#125;),</div><div class="line">    <span class="keyword">new</span> webpack.optimize.OccurenceOrderPlugin()</div><div class="line">  );</div><div class="line">  compiler = webpack(config);</div><div class="line">  compiler.run(<span class="function"><span class="keyword">function</span>(<span class="params">err,stats</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(!err)</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">"build success"</span>)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="built_in">module</span>.exports.devtool = <span class="string">'#source-map'</span></div><div class="line">  config.entry.app = [<span class="string">"webpack-dev-server/client?http://localhost:8080/"</span>, <span class="string">"webpack/hot/dev-server"</span>].concat(config.entry.app);</div><div class="line">  config.plugins.push(</div><div class="line">    <span class="keyword">new</span> webpack.HotModuleReplacementPlugin()</div><div class="line">  );</div><div class="line">  compiler = webpack(config);</div><div class="line">  <span class="keyword">var</span> server = <span class="keyword">new</span> WebpackDevServer(compiler, &#123;</div><div class="line">    <span class="attr">hot</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">noInfo</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">filename</span>: config.output.filename,</div><div class="line">    <span class="attr">publicPath</span>: config.output.publicPath</div><div class="line">  &#125;);</div><div class="line">  server.listen(<span class="number">8080</span>, <span class="string">'127.0.0.1'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Listening at http://127.0.0.1:8080'</span>);</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>首先要使用node api inline模式，需要将webpack-dev-server/client?<a href="http://localhost:8080/加入到所有的entry" target="_blank" rel="external">http://localhost:8080/加入到所有的entry</a> point。<br>要支持Hot Module Replacement，则需要</p>
+<ol>
+<li>在entry point中加入”webpack/hot/dev-server”</li>
+<li>在plugin中加入new webpack.HotModuleReplacementPlugin()</li>
+<li>在WebpackDevServer构造方法中设置hot:true<br>这里的publicPath一定要设置<a href="http://localhost:8080/static/，否则生成不了bundle.js文件" target="_blank" rel="external">http://localhost:8080/static/，否则生成不了bundle.js文件</a>.<br>另外也要注意到这里prd生成compiler之后还要调用一次run方法。</li>
+</ol>
+<h3 id="webpack-dev-middleware"><a href="#webpack-dev-middleware" class="headerlink" title="webpack-dev-middleware"></a>webpack-dev-middleware</h3><blockquote>
+<p>The webpack-dev-middleware is a small middleware for a connect-based middleware stack. It uses webpack to compile assets in-memory and serve them. When a compilation is running every request to the served webpack assets is blocked until we have a stable bundle.</p>
+</blockquote>
+<p>webpack-dev-server就是使用它作为中间件，这里当然也可以单独剥离这个中间件出来使用。vue-cli的标准模板生成的代码使用的就是webpack-dev-middleware+express.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/02/20161102/" data-id="civ136dqf0015qgdlxcum9z97" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack-dev-server/">webpack-dev-server</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/15/20161015/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vue+webpack单页应用及多页应用实现</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-20161102" data-title="webpack热更新调试的几种方法" data-url="http://yoursite.com/2016/11/02/20161102/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'uniquezhuo'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">12</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3d动画/">3d动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IScroller/">IScroller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/">angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientHeight/">clientHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientLeft/">clientLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientTop/">clientTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetHeight/">offsetHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetLeft/">offsetLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetTop/">offsetTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollHeight/">scrollHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollLeft/">scrollLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollTop/">scrollTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spa/">spa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-router/">vue-router</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack-dev-server/">webpack-dev-server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下拉刷新-上拉加载/">下拉刷新+上拉加载</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/切图/">切图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动画/">动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单页/">单页</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单页应用中的按需加载/">单页应用中的按需加载</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多页/">多页</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序算法/">排序算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/瀑布流/">瀑布流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点击/">点击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/盒子模型/">盒子模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动/">移动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/路由/">路由</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3d动画/" style="font-size: 10px;">3d动画</a> <a href="/tags/IScroller/" style="font-size: 10px;">IScroller</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/clientHeight/" style="font-size: 10px;">clientHeight</a> <a href="/tags/clientLeft/" style="font-size: 10px;">clientLeft</a> <a href="/tags/clientTop/" style="font-size: 10px;">clientTop</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/offsetHeight/" style="font-size: 10px;">offsetHeight</a> <a href="/tags/offsetLeft/" style="font-size: 10px;">offsetLeft</a> <a href="/tags/offsetTop/" style="font-size: 10px;">offsetTop</a> <a href="/tags/scrollHeight/" style="font-size: 10px;">scrollHeight</a> <a href="/tags/scrollLeft/" style="font-size: 10px;">scrollLeft</a> <a href="/tags/scrollTop/" style="font-size: 10px;">scrollTop</a> <a href="/tags/spa/" style="font-size: 10px;">spa</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/vue-router/" style="font-size: 10px;">vue-router</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/webpack-dev-server/" style="font-size: 10px;">webpack-dev-server</a> <a href="/tags/下拉刷新-上拉加载/" style="font-size: 10px;">下拉刷新+上拉加载</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/切图/" style="font-size: 10px;">切图</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/单页/" style="font-size: 10px;">单页</a> <a href="/tags/单页应用中的按需加载/" style="font-size: 10px;">单页应用中的按需加载</a> <a href="/tags/多页/" style="font-size: 10px;">多页</a> <a href="/tags/排序算法/" style="font-size: 10px;">排序算法</a> <a href="/tags/瀑布流/" style="font-size: 10px;">瀑布流</a> <a href="/tags/点击/" style="font-size: 10px;">点击</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/盒子模型/" style="font-size: 10px;">盒子模型</a> <a href="/tags/移动/" style="font-size: 10px;">移动</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/路由/" style="font-size: 10px;">路由</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/02/20161102/">webpack热更新调试的几种方法</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/15/20161015/">vue+webpack单页应用及多页应用实现</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/13/20161013/">iscroll源码解析及vue下拉刷新与上拉加载组件实现</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/12/20161012/">node实现爬虫抓取淘宝商品图文详情</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/07/20160707/">几种基本排序算法的理解</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 卓凌云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

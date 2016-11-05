@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>vanquish blog</title>
+  <title>卓凌云的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="vanquish blog">
+<meta property="og:title" content="卓凌云的博客">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="vanquish blog">
+<meta property="og:site_name" content="卓凌云的博客">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vanquish blog">
+<meta name="twitter:title" content="卓凌云的博客">
   
-    <link rel="alternative" href="/atom.xml" title="vanquish blog" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="卓凌云的博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -30,7 +30,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">vanquish blog</a>
+        <a href="/" id="logo">卓凌云的博客</a>
       </h1>
       
         <h2 id="subtitle-wrap">
@@ -88,7 +88,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h3><p>最近又做了个<a href="http://testsaas-1014-100001.m.izhuazhua.com/lindu/dist/home.html" target="_blank" rel="external">企业官网的项目</a>;基本都是些静态界面，对于这种看起来没什么难度的项目，这个时候就要追求点有难度的，才能学习到东西。所以摒弃了常规的一个一个html写的方式，vue组件化+响应式布局才有点意思，正好之前也做过一个自己公司的响应式的<a href="www.izhuazhua.com">官网</a>，这次更加加深了理解。</p>
+        <h3 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h3><p>最近又做了个<a href="http://testsaas-1014-100001.m.izhuazhua.com/lindu/dist/home.html" target="_blank" rel="external">企业官网的项目</a>;基本都是些静态界面，对于这种看起来没什么难度的项目，这个时候就要追求点有难度的，才能学习到东西。所以摒弃了常规的一个一个html写的方式，vue组件化+响应式布局才有点意思，正好之前也做过一个自己公司的响应式的<a href="http://www.izhuazhua.com" target="_blank" rel="external">官网</a>，这次更加加深了理解。</p>
 <h3 id="架构想法"><a href="#架构想法" class="headerlink" title="架构想法"></a>架构想法</h3><p>基本的想法都已经确定过了，css配合media query引入，js则根据screen.width动态处理逻辑。这个有鉴于张鑫旭的<a href="http://www.zhangxinxu.com/wordpress/2016/06/pseudo-response-layout-base-on-screen-width/" target="_blank" rel="external">基于screen.width的伪响应式开发</a>,这篇文章也解释了使用screen.width可以明确地区分不同的js逻辑，而不会耦合在一起。如果为了实现动态拉伸窗口切换样式的需求，可以监听window.resize事件，但是实际这没有什么必要，因为用户不会无聊到不断改变浏览器窗口大小。</p>
 <p>对于在不同屏幕下的适配问题，首选自然是rem。以往我们公司采用的却不是这种方式。<br>1.设计师给750宽的图，我们也设定页面宽度为750。<br>2.动态调整viewport的值，代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="handlebars"><span class="xml"></span></span></div><div class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line">			<span class="selector-tag">html</span>,<span class="selector-tag">body</span>&#123;<span class="attribute">margin</span>:<span class="number">0</span>;&#125;</div><div class="line">		<span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">			<span class="keyword">var</span> w = <span class="built_in">document</span>.documentElement.getBoundingClientRect().width;</div><div class="line">			<span class="keyword">var</span> meta = <span class="built_in">document</span>.createElement(<span class="string">'meta'</span>);</div><div class="line">			meta.name=<span class="string">"viewport"</span>;</div><div class="line">			meta.content=<span class="string">"initial-scale="</span> + w/<span class="number">750</span> + <span class="string">",maximum-scale="</span> + w/<span class="number">750</span> + <span class="string">",user-scalable=no"</span>;</div><div class="line">			<span class="keyword">var</span> head = <span class="built_in">document</span>.querySelector(<span class="string">'head'</span>);</div><div class="line">			head.appendChild(meta);</div><div class="line">		<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>想法很简单，取物理像素（比如iphone6设备像素750px，物理像素375px，devicePixelRatio为2；这些就不解释了）除750。得到百分比。这样在不同的屏幕上永远固定页面宽度为750像素。其实这里有几个问题：<br>1.使用getBoundingClientRect()，而不使用screen.width。因为在实际测试发现：有些机型screen.width取得是设备像素，有些取的又是物理像素，兼容性很差；这个在张鑫旭的<a href="http://www.zhangxinxu.com/wordpress/2012/08/window-devicepixelratio/" target="_blank" rel="external">设备像素比devicePixelRatio简单介绍</a>里面也有体现。<br>这个时候查看淘宝聚划算（这个网站就是一个典型的rem网站）的源码发现如下代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">~<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">e</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		r.innerText=<span class="string">"html&#123;font-size:"</span>+(a.style.fontSize=a.getBoundingClientRect().width/o*d+<span class="string">"px"</span>)+<span class="string">" !important;&#125;"</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">var</span> t=navigator.userAgent,</div><div class="line">	n=(t.match(<span class="regexp">/(iPhone|iPad|iPod)/</span>),t.match(<span class="regexp">/Android/i</span>),<span class="built_in">window</span>),</div><div class="line">	i=<span class="built_in">document</span>,</div><div class="line">	a=i.documentElement,</div><div class="line">	o=(n.devicePixelRatio||<span class="number">1</span>,<span class="number">375</span>),</div><div class="line">	d=<span class="number">100</span>,</div><div class="line">	r=(i.head.querySelector(<span class="string">'[name="viewport"]'</span>),</div><div class="line">	i.createElement(<span class="string">"style"</span>));</div><div class="line">	r.innerText=<span class="string">"html&#123;font-size:100px !important&#125;"</span>,</div><div class="line">	i.head.appendChild(r),</div><div class="line">	e(),</div><div class="line">	n.addEventListener(<span class="string">"resize"</span>,e,!<span class="number">1</span>),</div><div class="line">	a.className+=t.match(<span class="regexp">/ucbrowser/i</span>)?<span class="string">" app-uc "</span>:<span class="string">""</span></div><div class="line">&#125;();</div></pre></td></tr></table></figure></p>
@@ -99,12 +99,12 @@
 <p>总结下来就是几点：<br>1.动态设置html的font-size：其实也就是动态设置1rem的值，当然这里也是有相关规律的，就是永远设置为设备像素/10;以iphone6为例，这里的font-size会被设置为750px/10 = 75px。这样就保证了10rem永远是整个屏幕的设备像素，刚好占满整个屏幕。</p>
 <p>2.因为是按照设备像素设计和写的css所以，设置viewport缩放1/devicePixelRatio,刚好就是物理像素。</p>
 <p>3.这样也就很好的解决了1px设备像素的问题和图片高清问题。</p>
-<p>实际处理还有点小技巧，我们不可能总是去计算所有的rem，这样太累。幸好有css预处理器，比如saas，写个自定义函数自动转换px到rem。就可以完全按照设计图来写css了<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">	@function px2rem(<span class="variable">$px</span>)&#123;</div><div class="line">		<span class="variable">$rem</span>: <span class="number">75px</span>;</div><div class="line">		@return <span class="variable">$px</span>/<span class="variable">$rem</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="selector-tag">body</span>&#123;</div><div class="line">		<span class="attribute">font-size</span>: px2rem(<span class="number">10px</span>);		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实际处理还有点小技巧，我们不可能总是去计算所有的rem，这样太累。幸好有css预处理器，比如saas，写个自定义函数自动转换px到rem。就可以完全按照设计图来写css了<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@function px2rem(<span class="variable">$px</span>)&#123;</div><div class="line">	<span class="variable">$rem</span>: <span class="number">75px</span>;</div><div class="line">	@return <span class="variable">$px</span>/<span class="variable">$rem</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-tag">body</span>&#123;</div><div class="line">	<span class="attribute">font-size</span>: px2rem(<span class="number">10px</span>);		</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/04/20161104/" data-id="civ5cmeu0001970dlqmq8vzwu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/04/20161104/" data-id="civ5cqv2k0014ksdlycbny3nc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rem/">rem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/viewport/">viewport</a></li></ul>
@@ -181,7 +181,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/02/20161102/" data-id="civ5cmeuc001h70dlllyw9tk2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/02/20161102/" data-id="civ5cqv2c000yksdlqmmypl4k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack-dev-server/">webpack-dev-server</a></li></ul>
@@ -253,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/15/20161015/" data-id="civ5cmeu7001c70dlcrhvdya3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/15/20161015/" data-id="civ5cqv2i0012ksdlnt1qg7zs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue-router/">vue-router</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/单页/">单页</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多页/">多页</a></li></ul>
@@ -322,7 +322,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/13/20161013/" data-id="civ5cmeu9001e70dl06690yvb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/13/20161013/" data-id="civ5cqv24000tksdlw3ea21lr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IScroller/">IScroller</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/下拉刷新-上拉加载/">下拉刷新+上拉加载</a></li></ul>
@@ -384,7 +384,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/12/20161012/" data-id="civ5cmetr001370dlph55jtwt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/12/20161012/" data-id="civ5cqv1y000oksdlws8pqann" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
@@ -440,7 +440,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/07/20160707/" data-id="civ5cmetg000x70dluwyiiz3r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/07/20160707/" data-id="civ5cqv29000wksdl2tn7vy9q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/排序算法/">排序算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
@@ -497,7 +497,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/30/20160530/" data-id="civ5cmetw001670dlipif631v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/30/20160530/" data-id="civ5cqv1m000fksdlsckqdsti" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spa/">spa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/单页应用中的按需加载/">单页应用中的按需加载</a></li></ul>
@@ -548,7 +548,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/02/20160402/" data-id="civ5cmet7000t70dln0gjgmo0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/04/02/20160402/" data-id="civ5cqv1o000hksdl18qscv9x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/canvas/">canvas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/切图/">切图</a></li></ul>
@@ -602,7 +602,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/02/15/20160215/" data-id="civ5cmeto001170dlcedo01rx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/02/15/20160215/" data-id="civ5cqv1w000lksdliy5tb7xk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/clientHeight/">clientHeight</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/clientLeft/">clientLeft</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/clientTop/">clientTop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/offsetHeight/">offsetHeight</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/offsetLeft/">offsetLeft</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/offsetTop/">offsetTop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrollHeight/">scrollHeight</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrollLeft/">scrollLeft</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrollTop/">scrollTop</a></li></ul>
@@ -682,7 +682,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/02/14/20160214/" data-id="civ5cmeta000v70dlqny9rtf5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/02/14/20160214/" data-id="civ5cqv1i000cksdlhnq2ed3y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/瀑布流/">瀑布流</a></li></ul>
@@ -735,7 +735,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/26/20160126/" data-id="civ5cmes5000470dlt1odflsi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/26/20160126/" data-id="civ5cqv1f000aksdl15u9335n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li></ul>
@@ -798,7 +798,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/18/20160118/" data-id="civ5cmet5000r70dl3z6kukoo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/18/20160118/" data-id="civ5cqv1a0006ksdldztxbos0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动画/">动画</a></li></ul>
@@ -853,7 +853,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/07/20160107/" data-id="civ5cmet2000q70dliot819no" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/07/20160107/" data-id="civ5cqv140005ksdlj8gopjgb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/3d动画/">3d动画</a></li></ul>
@@ -907,7 +907,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/31/20151231/" data-id="civ5cmese000670dll258e51r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/31/20151231/" data-id="civ5cqv130004ksdlyczdwjtg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/盒子模型/">盒子模型</a></li></ul>
@@ -962,7 +962,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/29/20151229/" data-id="civ5cmes8000570dlpsenzl5k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/29/20151229/" data-id="civ5cqv0u0001ksdlu1q70170" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/点击/">点击</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动/">移动</a></li></ul>
@@ -1020,7 +1020,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/10/20151210/" data-id="civ5cmeru000170dldhyzwhnv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/10/20151210/" data-id="civ5cqv0n0000ksdl0zjjkm5m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/路由/">路由</a></li></ul>
@@ -1110,7 +1110,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/03/20151103/" data-id="civ5cmerm000070dlcyzeqj3n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/03/20151103/" data-id="civ5cqv2o0017ksdlraykxkax" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/严格模式/">严格模式</a></li></ul>

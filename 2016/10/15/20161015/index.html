@@ -5,12 +5,12 @@
   
   <title>vue+webpack单页应用及多页应用实现 | 卓凌云的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="项目背景最近做了两个vue的项目，一个是商城供货商端，做的是vue单页；另一个是商城用户端，做的是vue多页。事实上，现在的前端框架如angular，react，vue等的出现都是服务于web应用的，一般的实践也都是做spa。但是考虑到商城页面较多，图片较多，如果spa，可能占用内存过高，另外观察京东，淘宝web版本，也都是多页实现。所以还是选多页吧。在这里忍不住要赞下vue。语法清晰简单；我之前">
+  <meta name="description" content="vue, vue-router, webpack, 单页, 多页">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue+webpack单页应用及多页应用实现">
 <meta property="og:url" content="http://yoursite.com/2016/10/15/20161015/index.html">
 <meta property="og:site_name" content="卓凌云的博客">
-<meta property="og:description" content="项目背景最近做了两个vue的项目，一个是商城供货商端，做的是vue单页；另一个是商城用户端，做的是vue多页。事实上，现在的前端框架如angular，react，vue等的出现都是服务于web应用的，一般的实践也都是做spa。但是考虑到商城页面较多，图片较多，如果spa，可能占用内存过高，另外观察京东，淘宝web版本，也都是多页实现。所以还是选多页吧。在这里忍不住要赞下vue。语法清晰简单；我之前">
+<meta property="og:description" content="vue, vue-router, webpack, 单页, 多页">
 <meta property="og:image" content="http://ww1.sinaimg.cn/mw690/a5e2541bgw1f8svtku3nfj20a70l0q4b.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/mw690/a5e2541bgw1f8sw4kf7sdj20bv0dlgmc.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/mw690/a5e2541bgw1f8sw4x0qv6j20ce0kx0ua.jpg">
@@ -18,10 +18,10 @@
 <meta property="og:image" content="http://ww4.sinaimg.cn/mw690/a5e2541bgw1f8wl0ca1mdj20ai0mbmym.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/mw690/a5e2541bgw1f8wl0dchp9j20dm0m8diz.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/mw690/a5e2541bgw1f8wl0dizrlj20dn0lymz5.jpg">
-<meta property="og:updated_time" content="2016-10-18T15:24:17.283Z">
+<meta property="og:updated_time" content="2016-11-24T14:27:46.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue+webpack单页应用及多页应用实现">
-<meta name="twitter:description" content="项目背景最近做了两个vue的项目，一个是商城供货商端，做的是vue单页；另一个是商城用户端，做的是vue多页。事实上，现在的前端框架如angular，react，vue等的出现都是服务于web应用的，一般的实践也都是做spa。但是考虑到商城页面较多，图片较多，如果spa，可能占用内存过高，另外观察京东，淘宝web版本，也都是多页实现。所以还是选多页吧。在这里忍不住要赞下vue。语法清晰简单；我之前">
+<meta name="twitter:description" content="vue, vue-router, webpack, 单页, 多页">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/mw690/a5e2541bgw1f8svtku3nfj20a70l0q4b.jpg">
   
     <link rel="alternative" href="/atom.xml" title="卓凌云的博客" type="application/atom+xml">
@@ -130,7 +130,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/15/20161015/" data-id="civwf6izq001bu4dlyzavl7tj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/15/20161015/" data-id="civwfuou400127kdlmy7a40u2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue-router/">vue-router</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/单页/">单页</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多页/">多页</a></li></ul>
@@ -190,7 +190,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redux/">redux</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redux/">redux</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 

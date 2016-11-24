@@ -5,16 +5,16 @@
   
   <title>react-redux源码解析 | 卓凌云的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言react-redux与redux密切相关，建议看看前一篇redux源码解析，上一篇中还有一个redux api bindActionCreators没说，也在这里讲解；当然它的使用并不限于这里。你可以直接使用redux而不使用react-redux，因为redux作为flux思想的一种实现，你还可以和Angular，Ember等其他框架使用。如果要使用就要先理解下容器组件(container">
+  <meta name="description" content="react-redux源码解析,redux,react-redux,react">
 <meta property="og:type" content="article">
 <meta property="og:title" content="react-redux源码解析">
 <meta property="og:url" content="http://yoursite.com/2016/11/24/20161124/index.html">
 <meta property="og:site_name" content="卓凌云的博客">
-<meta property="og:description" content="前言react-redux与redux密切相关，建议看看前一篇redux源码解析，上一篇中还有一个redux api bindActionCreators没说，也在这里讲解；当然它的使用并不限于这里。你可以直接使用redux而不使用react-redux，因为redux作为flux思想的一种实现，你还可以和Angular，Ember等其他框架使用。如果要使用就要先理解下容器组件(container">
-<meta property="og:updated_time" content="2016-11-24T13:56:01.258Z">
+<meta property="og:description" content="react-redux源码解析,redux,react-redux,react">
+<meta property="og:updated_time" content="2016-11-24T14:16:08.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react-redux源码解析">
-<meta name="twitter:description" content="前言react-redux与redux密切相关，建议看看前一篇redux源码解析，上一篇中还有一个redux api bindActionCreators没说，也在这里讲解；当然它的使用并不限于这里。你可以直接使用redux而不使用react-redux，因为redux作为flux思想的一种实现，你还可以和Angular，Ember等其他框架使用。如果要使用就要先理解下容器组件(container">
+<meta name="twitter:description" content="react-redux源码解析,redux,react-redux,react">
   
     <link rel="alternative" href="/atom.xml" title="卓凌云的博客" type="application/atom+xml">
   
@@ -112,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/24/20161124/" data-id="civwf6j06001ju4dlnjgz2dgt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/24/20161124/" data-id="civwfuoun001h7kdl1y5y8lhp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react-redux/">react-redux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redux/">redux</a></li></ul>
@@ -163,7 +163,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redux/">redux</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redux/">redux</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 

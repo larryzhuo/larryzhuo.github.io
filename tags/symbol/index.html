@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>angular1回顾 | 卓凌云的博客</title>
+  <title>Tag: symbol | 卓凌云的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="angular1">
-<meta property="og:type" content="article">
-<meta property="og:title" content="angular1回顾">
-<meta property="og:url" content="http://yoursite.com/2016/01/26/20160126/index.html">
+  <meta name="description" content="卓凌云,web前端博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="卓凌云的博客">
+<meta property="og:url" content="http://yoursite.com/tags/symbol/index.html">
 <meta property="og:site_name" content="卓凌云的博客">
-<meta property="og:description" content="angular1">
-<meta property="og:updated_time" content="2016-11-24T14:20:21.914Z">
+<meta property="og:description" content="卓凌云,web前端博客">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="angular1回顾">
-<meta name="twitter:description" content="angular1">
+<meta name="twitter:title" content="卓凌云的博客">
+<meta name="twitter:description" content="卓凌云,web前端博客">
   
     <link rel="alternative" href="/atom.xml" title="卓凌云的博客" type="application/atom+xml">
   
@@ -64,97 +63,41 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-20160126" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/01/26/20160126/" class="article-date">
-  <time datetime="2016-01-25T16:00:00.000Z" itemprop="datePublished">2016-01-26</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/js/">js</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      angular1回顾
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/11/25/20161125/" class="archive-article-date">
+  <time datetime="2016-11-24T16:00:00.000Z" itemprop="datePublished">Nov 25</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/11/25/20161125/">私有变量与私有方法实现</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>angular1自2009年出来之后一直很火，但也有不少弊端：比如十分影响性能的dirty check;所以google对angular2的设计可谓是完全颠覆，和vue.js，react.js类似，都跟上了组件化开发的新趋势，angular1确实是处于一种完全尴尬的境地； 这里就只当“温故”吧</p>
-<h3 id="directive"><a href="#directive" class="headerlink" title="directive"></a>directive</h3><p>angular1被人吐槽的一点就是太多新的概念，学习曲线太陡。要说其中最常用也比较难以运用的就是directive了，directive实际上就是一种组件化的思想，一个指令封装dom操作和相应逻辑，达到封装一次，到处使用的目的<br>这个很实用，比如之前做的一个ionic的app。有多个列表页，当时为了赶时间就没有进行指令化，连续写了四个很类似的页面，修改起来也很麻烦。<br>以下贴一个例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'docsTransclusionExample'</span>, [])</div><div class="line">	.controller(<span class="string">'Controller'</span>, [<span class="string">'$scope'</span>, <span class="keyword">function</span>(<span class="variable">$scope</span>) &#123;</div><div class="line">	  <span class="variable">$scope</span>.name = <span class="string">'Tobias'</span>;</div><div class="line">	  <span class="variable">$scope</span>.list = [];</div><div class="line">	&#125;])</div><div class="line">	.directive(<span class="string">'myDialog'</span>, <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">	  <span class="built_in">return</span> &#123;</div><div class="line">	    restrict: <span class="string">'E'</span>,</div><div class="line">	    transclude: <span class="literal">true</span>,</div><div class="line">	    scope: &#123;</div><div class="line">	    	list: <span class="string">'=li'</span>，</div><div class="line">	    	id: <span class="string">'@'</span>,</div><div class="line">	    	onSend: <span class="string">'&amp;'</span></div><div class="line">	    &#125;,</div><div class="line">	    templateUrl: <span class="string">'my-dialog.html'</span>,</div><div class="line">	    link: <span class="keyword">function</span> (scope, element) &#123;</div><div class="line">	      scope.name = <span class="string">'Jeff'</span>;</div><div class="line">	    &#125;,</div><div class="line">	    controller: <span class="string">'SomeController'</span>,</div><div class="line">	    controller: <span class="keyword">function</span>(<span class="variable">$scope</span>, <span class="variable">$element</span>, <span class="variable">$attr</span> <span class="variable">$transclude</span>)&#123;</div><div class="line"></div><div class="line">		&#125;</div><div class="line">	  &#125;;</div><div class="line">	&#125;);</div><div class="line"></div><div class="line"></div><div class="line">//my-dialog.html</div><div class="line">&lt;div class=<span class="string">"alert"</span> ng-transclude&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">//index.html</div><div class="line">&lt;div ng-controller=<span class="string">"Controller"</span>&gt;</div><div class="line">  &lt;my-dialog li=<span class="string">"list"</span> on-send=<span class="string">"sendMail()"</span> from-name=<span class="string">""</span>&gt;Check out the contents, &#123;&#123;name&#125;&#125;!&lt;/my-dialog&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>其中scope就是指令内的作用域，一旦定义scope属性，就隔离了外部作用域。如果不定义这个，那么指令作用域就会自动继承父级作用域，这里就是controller的作用域scope<br>scope中可以用来接收外部传参,’=’是双向绑定，@是单向绑定，&amp;是绑定方法</p>
-<p>transclude的使用也是一个重点。比如上述代码，那么最终会被解析为‘Tobias’，因为transclude：true，和ng-transclude的配合使用使得指令作用域中包含的html拥有了指令外部的作用域（也就是controller作用域）而不是指令内部的作用域。<br>The transclude option changes the way scopes are nested. It makes it so that the contents of a transcluded directive have whatever scope is outside the directive, rather than whatever scope is on the inside.<br>这一点还是改变不了的。其实这是有必要的，因为内部元素要独立出来，证明是想获得外部作用域的，否则完全可以直接放在template模板中</p>
-<p>controller属性可以是一个字符串或者一个函数，如果值为字符串，会以字符串的值为名字来查找注册在应用中的控制器的构造函数，<br>如果为匿名函数则与link函数类似，但link只能在当前指令中定义行为，无法在指令间复用，而<a href="http://docs.angularjs.cn/guide/directive" target="_blank" rel="external">controller却可以复用</a></p>
-<h3 id="config和run"><a href="#config和run" class="headerlink" title="config和run"></a>config和run</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myApp'</span>, [])</div><div class="line">	.config(<span class="keyword">function</span>(<span class="variable">$routeProvider</span>)&#123;</div><div class="line"></div><div class="line">	&#125;)</div><div class="line">	.run(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line"></div><div class="line">	&#125;);</div></pre></td></tr></table></figure>
-<p>config方法是唯一能在应用启动之前修改的部分，config只支持部分的类型注入：provider和constant。这证明只有通过provider自定义的service和.constant声明的常量才能够被注入<br>run方法则是在注入器创建之后被执行。它是angularjs应用中第一个被运行的方法，运行块常用于注册全局的时间监听器</p>
-<h3 id="services"><a href="#services" class="headerlink" title="services"></a>services</h3><p>服务也是angular的重要组成部分，与controller每次被销毁和新建不同，service是单例的，且是懒加载。并且一旦被创建不会被销毁，知道应用结束。<br>除常用的factory创建服务之外，还有：<br>service()<br>constant()<br>value()<br>provider()<br>几种创建服务的方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myApp'</span>)</div><div class="line">	.factory(<span class="string">'indexService'</span>, <span class="keyword">function</span>(<span class="variable">$http</span>)&#123;</div><div class="line">		<span class="built_in">return</span> &#123;</div><div class="line">			getName: <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line"></div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">	&#125;)</div><div class="line"></div><div class="line">	//service可以注册一个支持构造函数的服务</div><div class="line">	.service(<span class="string">'serviceService'</span>, <span class="keyword">function</span>(<span class="variable">$http</span>)&#123;</div><div class="line">		this.getName = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line"></div><div class="line">		&#125;</div><div class="line">	&#125;)</div><div class="line"></div><div class="line">	//provider注册服务必须提供一个<span class="variable">$get</span>方法</div><div class="line">	.provider(<span class="string">'providerService'</span>, &#123;</div><div class="line">		<span class="variable">$get</span>: <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">			<span class="built_in">return</span> &#123;</div><div class="line">				<span class="string">'username'</span>: <span class="string">'auser'</span></div><div class="line">			&#125;;</div><div class="line">		&#125;</div><div class="line">	&#125;);</div></pre></td></tr></table></figure></p>
-<p>factory实际是provider方法注册服务的简写方式。<br>但有一点区别，provider生成的服务可以被注入到config方法中，但是factory则不行</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/26/20160126/" data-id="civxyn6qx000a8gdl4nww32ht" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/02/14/20160214/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          瀑布流布局插件的实现
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/01/18/20160118/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">css3复杂连续动画控制</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
 
-
-
-  <section id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-20160126" data-title="angular1回顾" data-url="http://yoursite.com/2016/01/26/20160126/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:'uniquezhuo'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-    <!-- 多说公共JS代码 end -->
-  </section>
 </section>
         
           <aside id="sidebar">

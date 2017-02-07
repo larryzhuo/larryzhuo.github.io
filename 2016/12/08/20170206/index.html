@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>基于openstf minicap实现的屏幕投影客户端 | 卓凌云的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="minicap, javaminicap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于openstf minicap实现的屏幕投影客户端">
+<meta property="og:url" content="http://yoursite.com/2016/12/08/20170206/index.html">
+<meta property="og:site_name" content="卓凌云的博客">
+<meta property="og:description" content="minicap, javaminicap">
+<meta property="og:updated_time" content="2017-02-06T16:26:53.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于openstf minicap实现的屏幕投影客户端">
+<meta name="twitter:description" content="minicap, javaminicap">
+  
+    <link rel="alternative" href="/atom.xml" title="卓凌云的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">卓凌云的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">make progress every day</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-20170206" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/08/20170206/" class="article-date">
+  <time datetime="2016-12-07T16:00:00.000Z" itemprop="datePublished">2016-12-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基于openstf minicap实现的屏幕投影客户端
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>上个文章介绍了stf项目，最后制作出来发现性能太差，研究了下性能瓶颈主要有两个：</p>
+<ol>
+<li>node服务器通过socket推出的数据在浏览器端回调函数中解析占用资源，因为频率太高；</li>
+<li>浏览器端canvas太多绘制太频繁；<br>以开秒表为例，基本5台设备，一秒绘制一次，都不流畅，而且cpu内存占用都近100%。为此我也特地去提过<a href="https://github.com/openstf/stf/issues/497" target="_blank" rel="external">issue</a>，似乎也是表明b/s模式性能有限，只有尝试c/s模式。</li>
+</ol>
+<p>考虑到之前学过java swing。另外minicap项目是继续linux的，java跨平台编写客户端很方便，所以就用java来编写。最终项目和效果我已经放到<a href="https://github.com/larryzhuo/JavaMinicap" target="_blank" rel="external">github</a>上了。性能有了大幅度提升，21台设备100ms刷新一次，cpu只占用50%，内存只占用20%。</p>
+<h3 id="minicap"><a href="#minicap" class="headerlink" title="minicap"></a>minicap</h3><p><a href="https://github.com/openstf/minicap" target="_blank" rel="external">minicap</a>是openstf组织开源的另外一个项目，是用于stf项目获取屏幕截图的一个ndk库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adb forward tcp:1313 localabstract:minicap</div><div class="line">adb shell LD_LIBRARY_PATH=/data/<span class="built_in">local</span>/tmp /data/<span class="built_in">local</span>/tmp/minicap -P 1080x1920@1080x1920/0 -t</div></pre></td></tr></table></figure></p>
+<p>abd forward命令将手机中的minicap生成的数据映射到电脑端的tcp 1313接口。java的socket就是基于Tcp协议的，所以创建socket客户端监听1313端口就可以获取到minicap输出的屏幕数据。<br>这种数据的协议，minicap也定出来了，就不多说了，贴下我的java解析代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.awt.image.BufferedImage;</div><div class="line"><span class="keyword">import</span> java.io.ByteArrayInputStream;</div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.net.Socket;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.imageio.ImageIO;</div><div class="line"></div><div class="line"><span class="keyword">import</span> main.MainFrame;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SelfParse</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_FRAME = <span class="number">50000</span>;</div><div class="line">	<span class="keyword">private</span> BufferedImage bi1;</div><div class="line">	<span class="keyword">private</span> String serial;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> port;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SelfParse</span><span class="params">(String serial, <span class="keyword">int</span> port)</span></span>&#123;			<span class="comment">//startConnect函数一直没有结束，所以SelfParse实例一直为null</span></div><div class="line">		<span class="keyword">this</span>.bi1 = <span class="keyword">new</span> BufferedImage(MainFrame.AREA_WIDTH, MainFrame.AREA_HEIGHT, BufferedImage.TYPE_INT_RGB);</div><div class="line">		<span class="keyword">this</span>.serial = serial;</div><div class="line">		<span class="keyword">this</span>.port = port;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;			<span class="comment">//startConnect一直执行不完，所以需要单独一个线程来处理；否则会阻塞主线程</span></div><div class="line">		<span class="comment">// TODO Auto-generated method stub</span></div><div class="line">		startConnect();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 拷贝数组</div><div class="line">	 * 返回下次该插入的index</div><div class="line">	 * <span class="doctag">@param</span> sour</div><div class="line">	 * <span class="doctag">@param</span> dest</div><div class="line">	 * <span class="doctag">@param</span> sourSt　原数组开始index</div><div class="line">	 * <span class="doctag">@param</span> destSt 目标数组开始index</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">copyByteArray</span><span class="params">(<span class="keyword">byte</span>[] sour, <span class="keyword">byte</span>[] dest, <span class="keyword">int</span> sourSt, <span class="keyword">int</span> sourEn, <span class="keyword">int</span> destSt)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> k=<span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=sourSt; i&lt;=sourEn; i++)&#123;</div><div class="line">			<span class="keyword">if</span>(destSt+k &gt;= dest.length) <span class="keyword">continue</span>;</div><div class="line">			dest[destSt+k] = sour[i];</div><div class="line">			k++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> destSt+k;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startConnect</span><span class="params">()</span></span>&#123;</div><div class="line">		Socket socket;</div><div class="line">		<span class="keyword">int</span> actualFrameSize = <span class="number">0</span>;					<span class="comment">//记录每个ｆｒａｍｅ的实际大小</span></div><div class="line">		<span class="keyword">byte</span>[] frameArr = <span class="keyword">new</span> <span class="keyword">byte</span>[MAX_FRAME];</div><div class="line">		<span class="keyword">boolean</span> HEAD_ONCE_FLAG = <span class="keyword">true</span>;</div><div class="line">		</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="comment">//create a local forward，把minicap中的数据转发到pc机1313接口</span></div><div class="line">			Util.runCommand(Util.ADB+<span class="string">" -s "</span>+<span class="keyword">this</span>.serial+<span class="string">" forward tcp:"</span>+<span class="keyword">this</span>.port+<span class="string">" localabstract:minicap"</span>);</div><div class="line">			<span class="comment">//start minicap</span></div><div class="line">			Util.runCommand(Util.ADB+<span class="string">" -s "</span>+<span class="keyword">this</span>.serial+<span class="string">" shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P 1080x1920@"</span>+MainFrame.AREA_WIDTH+<span class="string">"x"</span>+MainFrame.AREA_HEIGHT+<span class="string">"/0"</span>);</div><div class="line">			</div><div class="line">			<span class="comment">//创建socket连接</span></div><div class="line">			socket = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>, <span class="keyword">this</span>.port);</div><div class="line">			System.out.println(<span class="keyword">this</span>.port+<span class="string">"端口连接成功"</span>);</div><div class="line">			InputStream is = socket.getInputStream();</div><div class="line">			<span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[Util.FRAME_SIZE];</div><div class="line">			<span class="keyword">byte</span>[] fourbts = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4</span>];</div><div class="line">			<span class="keyword">int</span> hasread = <span class="number">0</span>, destSt = <span class="number">0</span>;</div><div class="line">			<span class="keyword">while</span>((hasread = is.read(bytes)) &gt; <span class="number">0</span>)&#123;</div><div class="line">				<span class="keyword">if</span>(HEAD_ONCE_FLAG)&#123;		<span class="comment">//第一次只接收header,bytes[24]为空</span></div><div class="line">					HEAD_ONCE_FLAG = <span class="keyword">false</span>;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;			<span class="comment">//不是第一次发送，就不含有ｈｅａｄｅｒ，头四个字节直接表示Frame size</span></div><div class="line">					<span class="keyword">if</span>(destSt &lt;= <span class="number">0</span>)&#123;</div><div class="line">						fourbts[<span class="number">0</span>] = bytes[<span class="number">3</span>];</div><div class="line">						fourbts[<span class="number">1</span>] = bytes[<span class="number">2</span>];</div><div class="line">						fourbts[<span class="number">2</span>] = bytes[<span class="number">1</span>];</div><div class="line">						fourbts[<span class="number">3</span>] = bytes[<span class="number">0</span>];</div><div class="line">						actualFrameSize = Util.bytes2int(fourbts);</div><div class="line">						<span class="keyword">if</span>(actualFrameSize &gt; MAX_FRAME || actualFrameSize &lt;= <span class="number">0</span>)</div><div class="line">							<span class="keyword">continue</span>;</div><div class="line">						destSt = <span class="keyword">this</span>.copyByteArray(bytes, frameArr, <span class="number">4</span>, hasread-<span class="number">1</span>, <span class="number">0</span>);</div><div class="line">						</div><div class="line">					&#125; <span class="keyword">else</span> &#123;</div><div class="line">						destSt = <span class="keyword">this</span>.copyByteArray(bytes, frameArr, <span class="number">0</span>, hasread-<span class="number">1</span>, destSt);</div><div class="line">						<span class="keyword">if</span>(destSt &gt;= actualFrameSize)&#123;		<span class="comment">//已经记录完成一帧</span></div><div class="line">							ByteArrayInputStream bais = <span class="keyword">new</span> ByteArrayInputStream(frameArr, <span class="number">0</span>, actualFrameSize-<span class="number">1</span>);      </div><div class="line">							<span class="keyword">this</span>.bi1 =ImageIO.read(bais);</div><div class="line">							bais.close();</div><div class="line">							destSt = <span class="number">0</span>;</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> BufferedImage <span class="title">getFrame</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.bi1;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>minicap发送数据分为如下部分:</p>
+<ol>
+<li>header部分socket连接成功之后只发送一次，包含24byte。</li>
+<li>以后每次发送frame数据。每个frame包含4byte的头部信息，表示frame size。<br>4byte总共32位，minicap用c++编写，使用的是uint。所以最大会有2^32个byte大小的frame。这在java中只有用long来存储，但是这显然太消耗内存。为了提升性能，最后1080x1920的屏幕肯定要压缩，这里最终选择压缩到180x320。观察下180x320这种大小下frame size大概在10000byte左右。所以完全可以用int来表示，这里最终每个frame的size大小变量actualFrameSize就是int类型。<br>对应的存储帧数据的byte[] frameArr也可以设置一个长度为50000，这样保证了完全足够存储下每个frame数据。<br>最终在每帧数据结束时(destSt &gt;= actualFrameSize)生成bufferImage输出，就得到了屏幕数据。</li>
+</ol>
+<p>另外起一个读取线程，可以控制读取bufferImage的频率</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/12/08/20170206/" data-id="ciyvlrhpi002qocvrjjb7lt6m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/minicap/">minicap</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/08/20161208/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">stf源码解读</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-20170206" data-title="基于openstf minicap实现的屏幕投影客户端" data-url="http://yoursite.com/2016/12/08/20170206/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'uniquezhuo'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redux/">redux</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3d动画/">3d动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IScroller/">IScroller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/">angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientHeight/">clientHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientLeft/">clientLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientTop/">clientTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minicap/">minicap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetHeight/">offsetHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetLeft/">offsetLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetTop/">offsetTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-redux/">react-redux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redux/">redux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rem/">rem</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollHeight/">scrollHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollLeft/">scrollLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollTop/">scrollTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spa/">spa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stf/">stf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/symbol/">symbol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/viewport/">viewport</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-router/">vue-router</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack-dev-server/">webpack-dev-server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下拉刷新-上拉加载/">下拉刷新+上拉加载</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/切图/">切图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动画/">动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单页/">单页</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单页应用中的按需加载/">单页应用中的按需加载</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多页/">多页</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序算法/">排序算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/瀑布流/">瀑布流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点击/">点击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/盒子模型/">盒子模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动/">移动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/路由/">路由</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/闭包/">闭包</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3d动画/" style="font-size: 10px;">3d动画</a> <a href="/tags/IScroller/" style="font-size: 10px;">IScroller</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/clientHeight/" style="font-size: 10px;">clientHeight</a> <a href="/tags/clientLeft/" style="font-size: 10px;">clientLeft</a> <a href="/tags/clientTop/" style="font-size: 10px;">clientTop</a> <a href="/tags/cookie/" style="font-size: 10px;">cookie</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/minicap/" style="font-size: 10px;">minicap</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/offsetHeight/" style="font-size: 10px;">offsetHeight</a> <a href="/tags/offsetLeft/" style="font-size: 10px;">offsetLeft</a> <a href="/tags/offsetTop/" style="font-size: 10px;">offsetTop</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/react-redux/" style="font-size: 10px;">react-redux</a> <a href="/tags/redux/" style="font-size: 20px;">redux</a> <a href="/tags/rem/" style="font-size: 10px;">rem</a> <a href="/tags/scrollHeight/" style="font-size: 10px;">scrollHeight</a> <a href="/tags/scrollLeft/" style="font-size: 10px;">scrollLeft</a> <a href="/tags/scrollTop/" style="font-size: 10px;">scrollTop</a> <a href="/tags/spa/" style="font-size: 10px;">spa</a> <a href="/tags/stf/" style="font-size: 10px;">stf</a> <a href="/tags/symbol/" style="font-size: 10px;">symbol</a> <a href="/tags/viewport/" style="font-size: 10px;">viewport</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/vue-router/" style="font-size: 10px;">vue-router</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/webpack-dev-server/" style="font-size: 10px;">webpack-dev-server</a> <a href="/tags/下拉刷新-上拉加载/" style="font-size: 10px;">下拉刷新+上拉加载</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/切图/" style="font-size: 10px;">切图</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/单页/" style="font-size: 10px;">单页</a> <a href="/tags/单页应用中的按需加载/" style="font-size: 10px;">单页应用中的按需加载</a> <a href="/tags/多页/" style="font-size: 10px;">多页</a> <a href="/tags/排序算法/" style="font-size: 10px;">排序算法</a> <a href="/tags/瀑布流/" style="font-size: 10px;">瀑布流</a> <a href="/tags/点击/" style="font-size: 10px;">点击</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/盒子模型/" style="font-size: 10px;">盒子模型</a> <a href="/tags/移动/" style="font-size: 10px;">移动</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/路由/" style="font-size: 10px;">路由</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/12/08/20170206/">基于openstf minicap实现的屏幕投影客户端</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/08/20161208/">stf源码解读</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/25/20161125/">私有变量与私有方法实现</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/24/20161124/">react-redux源码解析</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/19/20161119/">redux源码解析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 卓凌云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

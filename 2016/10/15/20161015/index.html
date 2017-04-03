@@ -1,13 +1,43 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>vue+webpack单页应用及多页应用实现 | 卓凌云的博客</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="vue, vue-router, webpack, 单页, 多页">
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="vue, vue-router, webpack, 单页, 多页"/>
+
+
+
+
+  <meta name="keywords" content="vue,vue-router,webpack,单页,多页," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="卓凌云的博客">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2016/10/15/20161015/"/>
+
+
+<meta name="description" content="vue, vue-router, webpack, 单页, 多页">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue+webpack单页应用及多页应用实现">
+<meta property="og:title" content="Vue+webpack单页应用及多页应用实现">
 <meta property="og:url" content="http://yoursite.com/2016/10/15/20161015/index.html">
 <meta property="og:site_name" content="卓凌云的博客">
 <meta property="og:description" content="vue, vue-router, webpack, 单页, 多页">
@@ -20,85 +50,93 @@
 <meta property="og:image" content="http://ww2.sinaimg.cn/mw690/a5e2541bgw1f8wl0dizrlj20dn0lymz5.jpg">
 <meta property="og:updated_time" content="2016-11-24T14:27:46.200Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vue+webpack单页应用及多页应用实现">
+<meta name="twitter:title" content="Vue+webpack单页应用及多页应用实现">
 <meta name="twitter:description" content="vue, vue-router, webpack, 单页, 多页">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/mw690/a5e2541bgw1f8svtku3nfj20a70l0q4b.jpg">
-  
-    <link rel="alternative" href="/atom.xml" title="卓凌云的博客" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
   
 
-</head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">卓凌云的博客</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">make progress every day</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-20161015" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/15/20161015/" class="article-date">
-  <time datetime="2016-10-14T16:00:00.000Z" itemprop="datePublished">2016-10-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/js/">js</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      vue+webpack单页应用及多页应用实现
+
+    <title> Vue+webpack单页应用及多页应用实现 - 卓凌云的博客 </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">卓凌云的博客</a>
     </h1>
-  
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
 
       </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Vue+webpack单页应用及多页应用实现
+        
+      </h1>
+
+      <time class="post-time">
+          Oct 15 2016
+      </time>
+    </header>
+
+
+
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h3><p>最近做了两个vue的项目，一个是商城供货商端，做的是vue单页；另一个是商城用户端，做的是vue多页。事实上，现在的前端框架如angular，react，vue等的出现都是服务于web应用的，一般的实践也都是做spa。但是考虑到商城页面较多，图片较多，如果spa，可能占用内存过高，另外观察京东，淘宝web版本，也都是多页实现。所以还是选多页吧。<br>在这里忍不住要赞下vue。语法清晰简单；我之前也用过angular1，相比之下，vue的轻量化的组件化开发，模板渲染，单文件编写，丰富的生命周期hook，完善的文档；让人写起代码来都很爽，可以看作是吸收了angular和react的优点。如果是小的web应用或者是小的团队开发，我肯定优先选择vue。</p>
+            <div class="post-content">
+            <h3 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h3><p>最近做了两个vue的项目，一个是商城供货商端，做的是vue单页；另一个是商城用户端，做的是vue多页。事实上，现在的前端框架如angular，react，vue等的出现都是服务于web应用的，一般的实践也都是做spa。但是考虑到商城页面较多，图片较多，如果spa，可能占用内存过高，另外观察京东，淘宝web版本，也都是多页实现。所以还是选多页吧。<br>在这里忍不住要赞下vue。语法清晰简单；我之前也用过angular1，相比之下，vue的轻量化的组件化开发，模板渲染，单文件编写，丰富的生命周期hook，完善的文档；让人写起代码来都很爽，可以看作是吸收了angular和react的优点。如果是小的web应用或者是小的团队开发，我肯定优先选择vue。</p>
 <h3 id="供货商端单页实现"><a href="#供货商端单页实现" class="headerlink" title="供货商端单页实现"></a>供货商端单页实现</h3><p>先看下目录结构和最终的效果图：</p>
 <p><div><br><img src="http://ww1.sinaimg.cn/mw690/a5e2541bgw1f8svtku3nfj20a70l0q4b.jpg" style="font-size:0; width:33%"><br><img src="http://ww4.sinaimg.cn/mw690/a5e2541bgw1f8sw4kf7sdj20bv0dlgmc.jpg" style="font-size:0; width:33%"><br><img src="http://ww1.sinaimg.cn/mw690/a5e2541bgw1f8sw4x0qv6j20ce0kx0ua.jpg" style="font-size:0; width:33%"><br></div><br>项目链接:<a href="http://saas-1014-100001.m.izhuazhua.com/appProducer/producerIndex.jsp" target="_blank" rel="external">http://saas-1014-100001.m.izhuazhua.com/appProducer/producerIndex.jsp</a></p>
 <p>webpack代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">entry</span>: <span class="string">'./src/main.js'</span>,</div><div class="line">  <span class="attr">output</span>: &#123;</div><div class="line">    <span class="attr">path</span>: <span class="string">'./static'</span>,</div><div class="line">    <span class="attr">publicPath</span>: <span class="string">'/static/'</span>,</div><div class="line">    <span class="attr">filename</span>: <span class="string">'build.js'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">module</span>: &#123;</div><div class="line">    <span class="attr">noParse</span>: <span class="regexp">/es6-promise\.js$/</span>,</div><div class="line">    <span class="attr">loaders</span>: [</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.vue$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'vue'</span></div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">        <span class="attr">exclude</span>: <span class="regexp">/node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'babel'</span></div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.(png|jpg)$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'url-loader?limit=8192'</span></div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">babel</span>: &#123;</div><div class="line">    <span class="attr">presets</span>: [<span class="string">'es2015'</span>],</div><div class="line">    <span class="attr">plugins</span>: [<span class="string">'transform-runtime'</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'production'</span>) &#123;</div><div class="line">  <span class="built_in">module</span>.exports.plugins = [</div><div class="line">    <span class="keyword">new</span> webpack.DefinePlugin(&#123;</div><div class="line">      <span class="string">'process.env'</span>: &#123;</div><div class="line">        <span class="attr">NODE_ENV</span>: <span class="string">'"production"'</span></div><div class="line">      &#125;</div><div class="line">    &#125;),</div><div class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(&#123;</div><div class="line">      <span class="attr">compress</span>: &#123;</div><div class="line">        <span class="attr">warnings</span>: <span class="literal">false</span></div><div class="line">      &#125;</div><div class="line">    &#125;),</div><div class="line">    <span class="keyword">new</span> webpack.optimize.OccurenceOrderPlugin()</div><div class="line">  ]</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="built_in">module</span>.exports.devtool = <span class="string">'#source-map'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -127,163 +165,93 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//webpack.config.js</span></div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">var</span> ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>); <span class="comment">// 将样式提取到单独的css文件中，而不是打包到js文件或使用style标签插入在head标签中</span></div><div class="line"><span class="keyword">var</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">// 生成自动引用js文件的HTML</span></div><div class="line"><span class="keyword">var</span> glob = <span class="built_in">require</span>(<span class="string">'glob'</span>);</div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 根据项目具体需求，具体可以看上面的项目目录，输出正确的js和html路径</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getEntry</span>(<span class="params">globPath</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> entries = &#123;&#125;, basename, tmp, pathname;</div><div class="line">  glob.sync(globPath).forEach(<span class="function"><span class="keyword">function</span> (<span class="params">entry</span>) </span>&#123;</div><div class="line">    basename = path.basename(entry, path.extname(entry));</div><div class="line">    tmp = entry.split(<span class="string">'/'</span>).splice(<span class="number">-3</span>);</div><div class="line">    pathname = tmp.splice(<span class="number">0</span>, <span class="number">1</span>) + <span class="string">'/'</span> + basename; <span class="comment">// 正确输出js和html的路径</span></div><div class="line">    entries[pathname] = entry;</div><div class="line">  &#125;);</div><div class="line">  <span class="keyword">return</span> entries;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> entries = getEntry(<span class="string">'./src/containers/*.js'</span>); <span class="comment">// 获得入口js文件</span></div><div class="line"><span class="keyword">var</span> chunks = <span class="built_in">Object</span>.keys(entries);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">entry</span>: entries,</div><div class="line"></div><div class="line">  <span class="attr">resolve</span>: &#123;</div><div class="line">    <span class="attr">extensions</span>: [<span class="string">''</span>, <span class="string">'.js'</span>, <span class="string">'.vue'</span>]</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="attr">module</span>: &#123;</div><div class="line">    <span class="attr">loaders</span>: [</div><div class="line">      <span class="comment">//&#123;</span></div><div class="line">      <span class="comment">//  test: /\.css$/,</span></div><div class="line">        <span class="comment">// 使用提取css文件的插件，能帮我们提取webpack中引用的和vue组件中使用的样式</span></div><div class="line">      <span class="comment">//  loader: ExtractTextPlugin.extract('style-loader', 'css-loader')</span></div><div class="line">      <span class="comment">//&#125;,</span></div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.vue$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'vue'</span>     <span class="comment">//vue-loader</span></div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'babel'</span>,</div><div class="line">        <span class="attr">exclude</span>: <span class="regexp">/node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//</span>,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.(png|jpg|gif|svg)$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'url'</span>,</div><div class="line">        <span class="attr">query</span>: &#123;</div><div class="line">          <span class="attr">limit</span>: <span class="number">10000</span>,</div><div class="line">          <span class="attr">name</span>: <span class="string">'./imgs/[name].[ext]?[hash:7]'</span></div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="comment">// vue: &#123;      //这里是对vue-loader的配置，http://vue-loader.vuejs.org/en/configurations/extract-css.html</span></div><div class="line">  <span class="comment">//   loaders: &#123;</span></div><div class="line">  <span class="comment">//     css: ExtractTextPlugin.extract('css'),</span></div><div class="line">  <span class="comment">//     // you can also include &lt;style lang="less"&gt; or other langauges</span></div><div class="line">  <span class="comment">//     less: ExtractTextPlugin.extract("css!less")</span></div><div class="line">  <span class="comment">//   &#125;</span></div><div class="line">  <span class="comment">// &#125;,</span></div><div class="line"></div><div class="line">  babel: &#123;</div><div class="line">    <span class="attr">presets</span>: [<span class="string">'es2015'</span>],</div><div class="line">    <span class="attr">plugins</span>: [<span class="string">'transform-runtime'</span>]</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="attr">plugins</span>: [</div><div class="line">    <span class="comment">// 提取公共模块</span></div><div class="line">    <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">      <span class="attr">name</span>: <span class="string">'vendors'</span>, <span class="comment">// 公共模块的名称</span></div><div class="line">      chunks: chunks,  <span class="comment">// chunks是需要提取的模块</span></div><div class="line">      minChunks: chunks.length</div><div class="line">    &#125;)</div><div class="line">    <span class="comment">// 配置提取出的样式文件</span></div><div class="line">    <span class="comment">// new ExtractTextPlugin('css/style.css')</span></div><div class="line">  ]</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">var</span> prod = process.env.NODE_ENV === <span class="string">'prod'</span>;     <span class="comment">//run dev. prod为prodution</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'process.env.NODE_ENV-------------------：'</span>+process.env.NODE_ENV);</div><div class="line"><span class="keyword">if</span> (prod) &#123;</div><div class="line">  <span class="comment">//chunkhash不支持热更新。但是和chunk本身有关； hash则每次编译都不一样，但是它支持热更新</span></div><div class="line">  <span class="built_in">module</span>.exports.output = &#123;</div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>),            <span class="comment">// html,css,js,图片等资源文件的输出路径，将所有资源文件放在Public目录</span></div><div class="line">    filename: <span class="string">'js/[name].[chunkhash:8].js'</span>           <span class="comment">// 每个入口js文件的生成配置  js/[name].[hash].js</span></div><div class="line">  &#125;;</div><div class="line">  <span class="built_in">module</span>.exports.plugins = <span class="built_in">module</span>.exports.plugins.concat([</div><div class="line">    <span class="keyword">new</span> webpack.DefinePlugin(&#123;</div><div class="line">      <span class="string">'process.env'</span>: &#123;</div><div class="line">        <span class="attr">NODE_ENV</span>: <span class="string">'"production"'</span></div><div class="line">      &#125;</div><div class="line">    &#125;),</div><div class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(&#123;</div><div class="line">      <span class="attr">compress</span>: &#123;</div><div class="line">        <span class="attr">warnings</span>: <span class="literal">false</span></div><div class="line">      &#125;</div><div class="line">    &#125;),</div><div class="line">    <span class="keyword">new</span> webpack.optimize.OccurenceOrderPlugin(),</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">this</span>.plugin(<span class="string">'done'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">stats</span>)</span>&#123;        <span class="comment">//可以获取hash之后的filename</span></div><div class="line">        <span class="comment">// console.log(stats.toJson().assetsByChunkName);</span></div><div class="line">        <span class="keyword">var</span> chunkhashname = stats.toJson().assetsByChunkName;</div><div class="line">        <span class="keyword">var</span> text, key, hashname, filename;</div><div class="line">        <span class="keyword">for</span>(key <span class="keyword">in</span> chunkhashname)&#123;</div><div class="line">          <span class="keyword">if</span>(key != <span class="string">'vendors'</span>)&#123;</div><div class="line">            text = fs.readFileSync(key+<span class="string">'.jsp'</span>).toString();</div><div class="line"></div><div class="line">            hashname = chunkhashname[key];</div><div class="line">            filename = hashname.match(<span class="regexp">/\S*\/([^.]*)/i</span>)[<span class="number">1</span>];</div><div class="line">            text = text.replace(<span class="string">'js/vendors.js'</span>, chunkhashname[<span class="string">'vendors'</span>]);     <span class="comment">//替换vendors</span></div><div class="line">            text = text.replace(hashname.split(<span class="string">'.'</span>)[<span class="number">0</span>]+<span class="string">'.js'</span>, hashname);</div><div class="line">            fs.writeFileSync(<span class="string">'dist/'</span>+filename+<span class="string">'.jsp'</span>, text, <span class="string">'utf-8'</span>);</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">        fs.writeFileSync(<span class="string">'dist/common.jsp'</span>, fs.readFileSync(<span class="string">'src/common.jsp'</span>).toString(), <span class="string">'utf-8'</span>);</div><div class="line">        fs.writeFileSync(<span class="string">'dist/checklogin.jsp'</span>, fs.readFileSync(<span class="string">'src/checklogin.jsp'</span>).toString(), <span class="string">'utf-8'</span>);</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line">  ]);</div><div class="line"></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="built_in">module</span>.exports.output = &#123;</div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>),            <span class="comment">// html,css,js,图片等资源文件的输出路径，将所有资源文件放在Public目录</span></div><div class="line">    filename: <span class="string">'js/[name].js'</span>           <span class="comment">// 每个入口js文件的生成配置  js/[name].[hash].js</span></div><div class="line">  &#125;;</div><div class="line">  <span class="built_in">module</span>.exports.devtool = <span class="string">'source-map'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> pages = getEntry(<span class="string">'./src/*.html'</span>);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> pathname <span class="keyword">in</span> pages) &#123;</div><div class="line">    <span class="keyword">if</span>(pathname.indexOf(<span class="string">'common'</span>)==<span class="number">-1</span>)&#123;</div><div class="line">      <span class="comment">// 配置生成的html文件。chunks限制插入html的chunk，可以直接打印chunks数组查看</span></div><div class="line">      <span class="keyword">var</span> conf = &#123;</div><div class="line">        <span class="attr">filename</span>: prod?  pathname + <span class="string">'.html'</span> : pathname + <span class="string">'.html'</span>,</div><div class="line">        <span class="attr">template</span>: pages[pathname],   <span class="comment">// 模板路径</span></div><div class="line">        inject: <span class="string">'body'</span>,              <span class="comment">// js插入位置</span></div><div class="line">        minify: &#123;</div><div class="line">          <span class="attr">removeComments</span>: <span class="literal">true</span>,</div><div class="line">          <span class="attr">collapseWhitespace</span>: <span class="literal">false</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">chunks</span>: [<span class="string">'vendors'</span>, <span class="string">'src/'</span>+pathname.slice(<span class="number">2</span>)],</div><div class="line">        <span class="attr">hash</span>: <span class="literal">false</span></div><div class="line">      &#125;;</div><div class="line">      <span class="comment">// 需要生成几个html文件，就配置几个HtmlWebpackPlugin对象</span></div><div class="line">      <span class="built_in">module</span>.exports.plugins.push(<span class="keyword">new</span> HtmlWebpackPlugin(conf));</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// src/containers/home.js</span></div><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'../components/home.vue'</span></div><div class="line"><span class="keyword">import</span> LoginUtil <span class="keyword">from</span> <span class="string">'../utils/login.js'</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> ut = <span class="keyword">new</span> LoginUtil();</div><div class="line">ut.checkLogin().then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">new</span> Vue(&#123;</div><div class="line">        <span class="attr">el</span>: <span class="string">'body'</span>,</div><div class="line">        <span class="attr">components</span>: &#123; Home &#125;</div><div class="line">    &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 <p>整体就是这样，每个页面都有一个主component渲染页面，而这个主要的component又是由很多小的component组成。</p>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/15/20161015/" data-id="ciyvlrhok0024ocvr6inzramm" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue-router/">vue-router</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/单页/">单页</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多页/">多页</a></li></ul>
+            </div>
+          
 
-    </footer>
-  </div>
-  
     
-<nav id="article-nav">
-  
-    <a href="/2016/11/02/20161102/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/vue/">vue</a>
+          
+            <a href="/tags/vue-router/">vue-router</a>
+          
+            <a href="/tags/webpack/">webpack</a>
+          
+            <a href="/tags/单页/">单页</a>
+          
+            <a href="/tags/多页/">多页</a>
+          
+        </div>
+
         
-          webpack热更新调试的几种方法
         
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/11/02/20161102/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Webpack热更新调试的几种方法</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/10/13/20161013/">
+        <span class="next-text nav-default">Iscroll源码解析及vue下拉刷新与上拉加载组件实现</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
       </div>
-    </a>
-  
-  
-    <a href="/2016/10/13/20161013/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">iscroll源码解析及vue下拉刷新与上拉加载组件实现</div>
-    </a>
-  
-</nav>
 
-  
-</article>
-
-
-
-
-  <section id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-20161015" data-title="vue+webpack单页应用及多页应用实现" data-url="http://yoursite.com/2016/10/15/20161015/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:'uniquezhuo'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-    <!-- 多说公共JS代码 end -->
-  </section>
-</section>
-        
-          <aside id="sidebar">
-  
+      <footer id="colophon"><span class="copyright-year">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redux/">redux</a><span class="category-list-count">2</span></li></ul>
-    </div>
-  </div>
-
-  
+        &copy;
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3d动画/">3d动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IScroller/">IScroller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/">angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientHeight/">clientHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientLeft/">clientLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/clientTop/">clientTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minicap/">minicap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetHeight/">offsetHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetLeft/">offsetLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/offsetTop/">offsetTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-redux/">react-redux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redux/">redux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rem/">rem</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollHeight/">scrollHeight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollLeft/">scrollLeft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrollTop/">scrollTop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spa/">spa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stf/">stf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/symbol/">symbol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/viewport/">viewport</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-router/">vue-router</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack-dev-server/">webpack-dev-server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下拉刷新-上拉加载/">下拉刷新+上拉加载</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/严格模式/">严格模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/切图/">切图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动画/">动画</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单页/">单页</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单页应用中的按需加载/">单页应用中的按需加载</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多页/">多页</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序算法/">排序算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/瀑布流/">瀑布流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点击/">点击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/盒子模型/">盒子模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动/">移动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/路由/">路由</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/闭包/">闭包</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-  
+        2014 -
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/3d动画/" style="font-size: 10px;">3d动画</a> <a href="/tags/IScroller/" style="font-size: 10px;">IScroller</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/clientHeight/" style="font-size: 10px;">clientHeight</a> <a href="/tags/clientLeft/" style="font-size: 10px;">clientLeft</a> <a href="/tags/clientTop/" style="font-size: 10px;">clientTop</a> <a href="/tags/cookie/" style="font-size: 10px;">cookie</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/minicap/" style="font-size: 10px;">minicap</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/offsetHeight/" style="font-size: 10px;">offsetHeight</a> <a href="/tags/offsetLeft/" style="font-size: 10px;">offsetLeft</a> <a href="/tags/offsetTop/" style="font-size: 10px;">offsetTop</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/react-redux/" style="font-size: 10px;">react-redux</a> <a href="/tags/redux/" style="font-size: 20px;">redux</a> <a href="/tags/rem/" style="font-size: 10px;">rem</a> <a href="/tags/scrollHeight/" style="font-size: 10px;">scrollHeight</a> <a href="/tags/scrollLeft/" style="font-size: 10px;">scrollLeft</a> <a href="/tags/scrollTop/" style="font-size: 10px;">scrollTop</a> <a href="/tags/spa/" style="font-size: 10px;">spa</a> <a href="/tags/stf/" style="font-size: 10px;">stf</a> <a href="/tags/symbol/" style="font-size: 10px;">symbol</a> <a href="/tags/viewport/" style="font-size: 10px;">viewport</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/vue-router/" style="font-size: 10px;">vue-router</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/webpack-dev-server/" style="font-size: 10px;">webpack-dev-server</a> <a href="/tags/下拉刷新-上拉加载/" style="font-size: 10px;">下拉刷新+上拉加载</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/切图/" style="font-size: 10px;">切图</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/单页/" style="font-size: 10px;">单页</a> <a href="/tags/单页应用中的按需加载/" style="font-size: 10px;">单页应用中的按需加载</a> <a href="/tags/多页/" style="font-size: 10px;">多页</a> <a href="/tags/排序算法/" style="font-size: 10px;">排序算法</a> <a href="/tags/瀑布流/" style="font-size: 10px;">瀑布流</a> <a href="/tags/点击/" style="font-size: 10px;">点击</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/盒子模型/" style="font-size: 10px;">盒子模型</a> <a href="/tags/移动/" style="font-size: 10px;">移动</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/路由/" style="font-size: 10px;">路由</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
-    </div>
-  </div>
+    2017
+    <span class="footer-author">卓凌云.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
+      </footer>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2016/12/08/20170206/">基于openstf minicap实现的屏幕投影客户端</a>
-          </li>
-        
-          <li>
-            <a href="/2016/12/08/20161208/">stf源码解读</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/25/20161125/">私有变量与私有方法实现</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/24/20161124/">react-redux源码解析</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/19/20161119/">redux源码解析</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 卓凌云<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js"></script>
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
 
-  </div>
-</body>
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
 </html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="vue, 源码"/>
+
+
+
+
+  <meta name="keywords" content="vue," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="卓凌云的博客">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/04/04/20170404/"/>
+
+
+<meta name="description" content="vue, 源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue2.0源码学习(1)">
+<meta property="og:url" content="http://yoursite.com/2017/04/04/20170404/index.html">
+<meta property="og:site_name" content="卓凌云的博客">
+<meta property="og:description" content="vue, 源码">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/a5e2541bgy1fear02a20aj20xc25sq6a.jpg">
+<meta property="og:updated_time" content="2017-04-04T09:52:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue2.0源码学习(1)">
+<meta name="twitter:description" content="vue, 源码">
+<meta name="twitter:image" content="http://wx1.sinaimg.cn/mw690/a5e2541bgy1fear02a20aj20xc25sq6a.jpg">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> vue2.0源码学习(1) - 卓凌云的博客 </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">卓凌云的博客</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          vue2.0源码学习(1)
+        
+      </h1>
+
+      <time class="post-time">
+          Apr 4 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3 id="构建线"><a href="#构建线" class="headerlink" title="构建线"></a>构建线</h3><p>在拿到一个js项目的时候，我觉得有两条思考线路要抓住：构建和执行。先从打包构建来看，从package.json中看起，一开始就发现vue打包使用到了rollup，作为一个新的打包构建工具，就不多介绍了。虽然不太了解也可以大概看出来是运行config.js中的任务。config.js中定义了很多的任务，比如只打包compiler，只打包runtime,两者一起打包的完整包。之所以要拆分开，是为了提取出公共的与环境无关的compiler，这样同一段模板代码，在不同的终端中都可以编译成一段相同的js代码。这样也就支撑了weex的出现，使用js编写业务逻辑，用native渲染页面。<br>这里还是以/entries/web-runtime-with-compiler.js打包入口为例，这个入口打包出来的是最终的我们常常用到的vue代码。</p>
+<h3 id="执行线"><a href="#执行线" class="headerlink" title="执行线"></a>执行线</h3><p>下面看执行线，先给个helloWorld的例子和官方的生命周期图:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;div id="app"&gt;</div><div class="line">    &#123;&#123; message &#125;&#125;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;script&gt;</div><div class="line">    new Vue(&#123;</div><div class="line">        el: '#app',</div><div class="line">        data: &#123;</div><div class="line">            message: 'hello world'</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p><img src="http://wx1.sinaimg.cn/mw690/a5e2541bgy1fear02a20aj20xc25sq6a.jpg"><br>Vue肯定就是一个类，在core/instance/index中，可以很容易的找到这个类。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Vue</span> (<span class="params">options</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span> &amp;&amp;</div><div class="line">    !(<span class="keyword">this</span> <span class="keyword">instanceof</span> Vue)) &#123;</div><div class="line">    warn(<span class="string">'Vue is a constructor and should be called with the `new` keyword'</span>)</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">this</span>._init(options)</div><div class="line">&#125;</div><div class="line"></div><div class="line">initMixin(Vue)</div><div class="line">stateMixin(Vue)</div><div class="line">eventsMixin(Vue)</div><div class="line">lifecycleMixin(Vue)</div><div class="line">renderMixin(Vue)</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Vue</div></pre></td></tr></table></figure></p>
+<p>new Vue的时候调用了_init方法，这个是在initMixin中被定义在Vue原型上的。_init方法中主要做了如下事情：</p>
+<ol>
+<li>定义vm对象，这实际就是新生成的vue实例；</li>
+<li>initInternalComponent，这个没怎么看懂；</li>
+<li>定义_renderProxy,这个在initRender中会用到;</li>
+<li>initLifecycle;</li>
+<li>initEvents;</li>
+<li>beforeCreate hook的调用;</li>
+<li>initState;</li>
+<li>created hook的调用;</li>
+<li>调用vm.$mount;<br>不用于上面的多个mixin主要是定义Vue.prototype。这里的多个init主要定义vm对象的属性。那怎么办，似乎还是不清不楚，重点就剩下vm.$mount方法了，这个方法其实是在entries/web-runtime-with-compiler.js中被定义在Vue.prototype上的，因为vm实际就是Vue构造方法的实例，所以可以直接vm.$mount调用。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> mount = Vue.prototype.$mount</div><div class="line">Vue.prototype.$mount = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> (!options.render) &#123;</div><div class="line">        <span class="keyword">if</span> (template) &#123;</div><div class="line"></div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el) &#123;                    <span class="comment">//拥有el元素就直接取outHtml</span></div><div class="line">            template = getOuterHTML(el)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (template) &#123;</div><div class="line">            <span class="keyword">const</span> &#123; render, staticRenderFns &#125; = compileToFunctions(template, &#123;</div><div class="line">                <span class="attr">warn</span>: <span class="function"><span class="params">msg</span> =&gt;</span> warn(msg, <span class="keyword">this</span>),</div><div class="line">                shouldDecodeNewlines,</div><div class="line">                <span class="attr">delimiters</span>: options.delimiters</div><div class="line">            &#125;, <span class="keyword">this</span>)</div><div class="line">            options.render = render</div><div class="line">            options.staticRenderFns = staticRenderFns</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mount.call(<span class="keyword">this</span>, el, hydrating)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这里实际先保存了Vue.prototype.$mount到局部变量mount中后续使用；而这个方法是在entries/web-runtime.js中定义的,之后再覆盖这个方法：<br>这里有个优先级在：render&gt;template&gt;el。如果options中出现了render,也就是使用了render函数(思想上与react的jsx有点类似，利用js增加html模板的表达力)，就直接mount；如果没有，就看有没有template属性，如果有直接取template的innerHTML解析；如果没有就看有没有el，也就是模板根元素，取它的outHTML就可以拿到模板的代码了。<br>只要有template，就需要compiler进行解析，compiler这一块下次再说，主要就是解析template构建ast语法生成树。最终返回一段js代码（主要目前我也每太搞懂这一块）。</p>
+<p>接着看最终调用的mount函数就是在web-runtime.js中定义的mount。而它直接调用了lifecycleMixin中定义在Vue.prototype上的mount方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">callHook(vm, <span class="string">'beforeMount'</span>)</div><div class="line">vm._watcher = <span class="keyword">new</span> Watcher(vm, <span class="function"><span class="keyword">function</span> <span class="title">updateComponent</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  vm._update(vm._render(), hydrating)               <span class="comment">//调用render.js中定义的render方法，返回vnode。在virtual dom中利用vnode比较更新</span></div><div class="line">&#125;, noop)</div><div class="line">hydrating = <span class="literal">false</span></div><div class="line"><span class="comment">// manually mounted instance, call mounted on self</span></div><div class="line"><span class="comment">// mounted is called for render-created child components in its inserted hook</span></div><div class="line"><span class="keyword">if</span> (vm.$vnode == <span class="literal">null</span>) &#123;</div><div class="line">  vm._isMounted = <span class="literal">true</span></div><div class="line">  callHook(vm, <span class="string">'mounted'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里就已将看到了beforeMount和mounted两个hook的调用了。重点在Watcher实例的建立（这种全局的实例不多，目前也就只有vm，再加上一个watcher）。大概能猜出来是做数据监控的，但肯定没这么简单，因为到现在dom还没有出现在页面里。先看Watch的构造函数，发现其中真正向下执行的只有this.get方法，在get方法中调用了updateComponent()方法，参数_render方法是在renderMixin中定义在Vue.prototype上的：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> &#123;</div><div class="line">  render,</div><div class="line">  staticRenderFns,</div><div class="line">  _parentVnode</div><div class="line">&#125; = vm.$options</div><div class="line"></div><div class="line">vnode = render.call(vm._renderProxy, vm.$createElement)</div><div class="line"></div><div class="line"><span class="keyword">return</span> vnode</div></pre></td></tr></table></figure></p>
+<p>这里就用到了之前compiler模块返回的render和staticRenderFns两个方法，直接执行render方法，就可以获取到vnode，打印出来可以看到vnode实际就是类似于dom中node的一个对象,包含了一个元素的一些属性，可以理解为一个html元素，不过没有生成到页面上而已。拿到vnode，在Vue.prototype._update中：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">if</span> (!prevVnode) &#123;</div><div class="line">    <span class="comment">// initial render</span></div><div class="line">    vm.$el = vm.__patch__(</div><div class="line">    vm.$el, vnode, hydrating, <span class="literal">false</span> <span class="comment">/* removeOnly */</span>,</div><div class="line">    vm.$options._parentElm,</div><div class="line">    vm.$options._refElm</div><div class="line">    )</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// updates</span></div><div class="line">    vm.$el = vm.__patch__(prevVnode, vnode)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>仅从这里就可以大概猜出，这是vue2.0新加入的virtual dom比较，如果第一次执行没有prevVnode，应该就是新生成之后插入到页面中了。也可以看出来virtual dom实际比较的基础单位就是compiler解析生成的vnode实例。接着看vm.<strong>patch</strong>方法，这个方法是在web-runtime.js中定义的,顺着找，最终定义位置就是core/vdom/patch.js。这里已经到了runtime部分了，是仅仅适用于web的runtime。而之前看到的compiler其实都是可以独立与浏览器执行的，因为没有使用到dom api。这也是vue和react这类视图库的设计巧妙之处，使得react-native和weex，服务器端渲染等的出现成为可能。</p>
+<p>vdom实际就是virtual dom，涉及到一些树的比较，下一篇再讲。</p>
+<p>总结下运行过程：</p>
+<ol>
+<li>创建Vue实例；</li>
+<li>解析模板生成ast最终生成vnode；</li>
+<li>watcher监听vm实例，也就是监听数据变动;</li>
+<li>virtual dom比较前后两次vnode书的变化，将变化更新到页面。</li>
+</ol>
+<p>几个问题没说清楚的，等弄清楚了再写下来：</p>
+<ol>
+<li>compiler的工作原理</li>
+<li>virtual dom的工作原理</li>
+</ol>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/vue/">vue</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2016/12/08/20161208/">
+        <span class="next-text nav-default">Stf源码解读</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+      <!-- 多说评论框 start -->
+      <div class="ds-thread" data-thread-key="<%= post.layout %>-<%= post.slug %>" data-title="<%= post.title %>" data-url="<%= page.permalink %>"></div>
+      <!-- 多说评论框 end -->
+      <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:'<%= config.duoshuo_shortname %>'};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- 多说公共JS代码 end -->
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2017
+    <span class="footer-author">卓凌云.</span>
+    <span class="power-by">
+        由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a> 强力驱动
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"uniquezhuo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

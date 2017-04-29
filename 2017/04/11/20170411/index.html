@@ -12,10 +12,12 @@
 
 
 
-  <meta name="description" content="卓凌云,web前端博客"/>
+  <meta name="description" content="vue, 源码"/>
 
 
 
+
+  <meta name="keywords" content="vue," />
 
 
 
@@ -30,18 +32,19 @@
 
 
 
-<link rel="canonical" href="http://yoursite.com/categories/js/page/2/"/>
+<link rel="canonical" href="http://yoursite.com/2017/04/11/20170411/"/>
 
 
-<meta name="description" content="卓凌云,web前端博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="卓凌云的博客">
-<meta property="og:url" content="http://yoursite.com/categories/js/page/2/index.html">
+<meta name="description" content="vue, 源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue2.0源码学习(2)">
+<meta property="og:url" content="http://yoursite.com/2017/04/11/20170411/index.html">
 <meta property="og:site_name" content="卓凌云的博客">
-<meta property="og:description" content="卓凌云,web前端博客">
+<meta property="og:description" content="vue, 源码">
+<meta property="og:updated_time" content="2017-04-11T15:22:18.937Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="卓凌云的博客">
-<meta name="twitter:description" content="卓凌云,web前端博客">
+<meta name="twitter:title" content="vue2.0源码学习(2)">
+<meta name="twitter:description" content="vue, 源码">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -66,11 +69,7 @@
 
 
 
-    <title>
-  
-    js - 卓凌云的博客
-  
-</title>
+    <title> vue2.0源码学习(2) - 卓凌云的博客 </title>
   </head>
 
   <body>
@@ -110,117 +109,85 @@
       </header>
       <div id="content">
         
-  
-<div id="primary">
-  <section id="archive" class="archive">
-    
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          vue2.0源码学习(2)
+        
+      </h1>
+
+      <time class="post-time">
+          Apr 11 2017
+      </time>
+    </header>
+
+
 
     
-      
+            <div class="post-content">
+            <h3 id="virtual-dom实现"><a href="#virtual-dom实现" class="headerlink" title="virtual dom实现"></a>virtual dom实现</h3><p>续上一篇，vue2.0引入了virtual dom，因此也有了多端渲染的能力，virtual dom核心在于diff算法，vue使用了基于<a href="https://github.com/snabbdom/snabbdom" target="_blank" rel="external">snabbdom</a>的dom比较算法，本次重点看下这里。</p>
 
-      <div class="archive-post">
-        <span class="archive-post-time">
+            </div>
           
-            2016-4-2
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2016/04/02/20160402/" class="archive-post-link">
-            Js实现图片切图
-          </a>
-        </span>
-      </div>
-    
-      
 
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            2016-2-14
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2016/02/14/20160214/" class="archive-post-link">
-            瀑布流布局插件的实现
-          </a>
-        </span>
-      </div>
     
-      
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/vue/">vue</a>
+          
+        </div>
 
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            2016-1-26
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2016/01/26/20160126/" class="archive-post-link">
-            Angular1回顾
-          </a>
-        </span>
-      </div>
+        
+        
+  <nav class="post-nav">
     
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            2015-12-29
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2015/12/29/20151229/" class="archive-post-link">
-            移动设备中的点击事件
-          </a>
-        </span>
-      </div>
-    
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            2015-12-10
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2015/12/10/20151210/" class="archive-post-link">
-            单页应用中的路由控制
-          </a>
-        </span>
-      </div>
-    
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            2015-11-3
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2015/11/03/20151103/" class="archive-post-link">
-            Js严格模式与非严格模式
-          </a>
-        </span>
-      </div>
-    
-  </section>
- </div>
-
-  
-  <nav class="pagination">
-    
-      <a class="prev" href="/categories/js/">
+      <a class="prev" href="/2017/04/29/20170429/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text">Prev</span>
+        <span class="prev-text nav-default">Koa2源码学习(2)</span>
+        <span class="prev-text nav-mobile">Prev</span>
       </a>
     
     
+      <a class="next" href="/2017/04/04/20170404/">
+        <span class="next-text nav-default">vue2.0源码学习(1)</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
   </nav>
 
+        
+  <div class="comments" id="comments">
+    
+      <!-- 多说评论框 start -->
+      <div class="ds-thread" data-thread-key="<%= post.layout %>-<%= post.slug %>" data-title="<%= post.title %>" data-url="<%= page.permalink %>"></div>
+      <!-- 多说评论框 end -->
+      <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:'<%= config.duoshuo_shortname %>'};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- 多说公共JS代码 end -->
+    
+  </div>
 
+
+      </footer>
+    
+  </article>
+
+    </div>
 
       </div>
 

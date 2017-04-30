@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="koa, 源码"/>
+
+
+
+
+  <meta name="keywords" content="koa,co," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="卓凌云的博客">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/04/30/20170430/"/>
+
+
+<meta name="description" content="koa, 源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Koa1源码学习+co源码学习">
+<meta property="og:url" content="http://yoursite.com/2017/04/30/20170430/index.html">
+<meta property="og:site_name" content="卓凌云的博客">
+<meta property="og:description" content="koa, 源码">
+<meta property="og:updated_time" content="2017-04-30T12:33:43.635Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Koa1源码学习+co源码学习">
+<meta name="twitter:description" content="koa, 源码">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Koa1源码学习+co源码学习 - 卓凌云的博客 </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">卓凌云的博客</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Koa1源码学习+co源码学习
+        
+      </h1>
+
+      <time class="post-time">
+          Apr 30 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3 id="koa1-x"><a href="#koa1-x" class="headerlink" title="koa1.x"></a>koa1.x</h3><p>上一篇简要分析了koa2的源码，这一篇分析koa1的源码，koa1主要推荐使用generator function的中间件写法，由于generator function不具备自执行能力，所以还引入了tj大神的co库，我看的koa版本是1.2.5</p>
+<h3 id="generator"><a href="#generator" class="headerlink" title="generator"></a>generator</h3><p>generator是es2015中定义的一个新特性，已经写入到规范中。用法如下<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">idMaker</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> index = <span class="number">0</span>;</div><div class="line">  <span class="keyword">while</span> (index &lt; <span class="number">2</span>)</div><div class="line">    <span class="keyword">yield</span> index++;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> gen = idMaker();</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(gen.next()); <span class="comment">// &#123;value：0， done：false&#125;</span></div><div class="line"><span class="built_in">console</span>.log(gen.next()); <span class="comment">// &#123;value: 1, done: false&#125;</span></div><div class="line"><span class="built_in">console</span>.log(gen.next()); <span class="comment">// &#123;value: undefined, done: true&#125;</span></div></pre></td></tr></table></figure></p>
+<p>generator函数一般和yield配合使用。idMaker()调用函数的时候并不是立即执行函数，而是类似返回一个内部的指针，调用next内部指针就从函数头部或上一次停下来的地方开始执行，直到遇到下一个yield表达式（或return语句）为止。<br>这里每次next方法的返回值中的value都是yield表达式的值，done表示内部流程是否执行完成。<br>这里对比async函数可以发现两个问题：</p>
+<ol>
+<li>generator没有自执行能力，需要不断调用next方法</li>
+<li>next方法的调用时机要自己把握，才能完成异步操作；不像await，可以直接接受promise，通过等待promise状态改变，就很方便的执行一个个异步操作。<br>从这里看，确实async函数要方便很多</li>
+</ol>
+<h3 id="koa中间件"><a href="#koa中间件" class="headerlink" title="koa中间件"></a>koa中间件</h3><p>回到koa1.x上面，给个例子说下，如何编写中间件：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">var</span> app = koa();</div><div class="line"></div><div class="line"><span class="comment">// x-response-time</span></div><div class="line">app.use(<span class="function"><span class="keyword">function</span> *(<span class="params">next</span>)</span>&#123;</div><div class="line">  <span class="comment">// (1) 进入路由</span></div><div class="line">  <span class="keyword">var</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>;</div><div class="line">  <span class="keyword">yield</span> next;</div><div class="line">  <span class="comment">// (5) 再次进入 x-response-time 中间件，记录2次通过此中间件「穿越」的时间</span></div><div class="line">  <span class="keyword">var</span> ms = <span class="keyword">new</span> <span class="built_in">Date</span> - start;</div><div class="line">  <span class="keyword">this</span>.set(<span class="string">'X-Response-Time'</span>, ms + <span class="string">'ms'</span>);</div><div class="line">  <span class="comment">// (6) 返回 this.body</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// logger</span></div><div class="line">app.use(<span class="function"><span class="keyword">function</span> *(<span class="params">next</span>)</span>&#123;</div><div class="line">  <span class="comment">// (2) 进入 logger 中间件</span></div><div class="line">  <span class="keyword">var</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>;</div><div class="line">  <span class="keyword">yield</span> next;</div><div class="line">  <span class="comment">// (4) 再次进入 logger 中间件，记录2次通过此中间件「穿越」的时间</span></div><div class="line">  <span class="keyword">var</span> ms = <span class="keyword">new</span> <span class="built_in">Date</span> - start;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'%s %s - %s'</span>, <span class="keyword">this</span>.method, <span class="keyword">this</span>.url, ms);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// response</span></div><div class="line">app.use(<span class="function"><span class="keyword">function</span> *(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="comment">// (3) 进入 response 中间件，没有捕获到下一个符合条件的中间件，传递到 upstream</span></div><div class="line">  <span class="keyword">this</span>.body = <span class="string">'Hello World'</span>;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">app.listen(<span class="number">3000</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"listen on 3000"</span>);</div></pre></td></tr></table></figure></p>
+<p>这里的执行流程和koa2是一致的。把中间件想作一个栈，请求会从顶部的第一个中间件开始处理，遇到yield next调用，就会进入下一个中间件中，直到最后没有yield next调用，再从栈底反弹，一个一个执行之前next之后的代码。</p>
+<h3 id="koa源码"><a href="#koa源码" class="headerlink" title="koa源码"></a>koa源码</h3><p>koa源码不长，也很简洁漂亮，先看package.json，”main”：”lib/application.js”表明入口就是application.js,这里简单截取了几个重要的代码片段<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Application prototype.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">var</span> app = Application.prototype;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Expose `Application`.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = Application;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * Initialize a new `Application`.</div><div class="line"> *</div><div class="line"> * @api public</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Application</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Application)) <span class="keyword">return</span> <span class="keyword">new</span> Application;</div><div class="line">  <span class="keyword">this</span>.env = process.env.NODE_ENV || <span class="string">'development'</span>;</div><div class="line">  <span class="keyword">this</span>.subdomainOffset = <span class="number">2</span>;</div><div class="line">  <span class="keyword">this</span>.middleware = [];</div><div class="line">  <span class="keyword">this</span>.proxy = <span class="literal">false</span>;</div><div class="line">  <span class="keyword">this</span>.context = <span class="built_in">Object</span>.create(context);</div><div class="line">  <span class="keyword">this</span>.request = <span class="built_in">Object</span>.create(request);</div><div class="line">  <span class="keyword">this</span>.response = <span class="built_in">Object</span>.create(response);</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * Inherit from `Emitter.prototype`.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.setPrototypeOf(Application.prototype, Emitter.prototype);</div><div class="line"></div><div class="line"><span class="comment">/**/</span></div><div class="line">app.listen = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  debug(<span class="string">'listen'</span>);</div><div class="line">  <span class="keyword">var</span> server = http.createServer(<span class="keyword">this</span>.callback());</div><div class="line">  <span class="keyword">return</span> server.listen.apply(server, <span class="built_in">arguments</span>);</div><div class="line">&#125;;</div><div class="line"><span class="comment">/**/</span></div><div class="line">app.use = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.experimental) &#123;</div><div class="line">    <span class="comment">// es7 async functions are not allowed,</span></div><div class="line">    <span class="comment">// so we have to make sure that `fn` is a generator function</span></div><div class="line">    assert(fn &amp;&amp; <span class="string">'GeneratorFunction'</span> == fn.constructor.name, <span class="string">'app.use() requires a generator function'</span>);</div><div class="line">  &#125;</div><div class="line">  debug(<span class="string">'use %s'</span>, fn._name || fn.name || <span class="string">'-'</span>);</div><div class="line">  <span class="keyword">this</span>.middleware.push(fn);</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;;</div><div class="line"><span class="comment">/**/</span></div><div class="line">app.callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.experimental) &#123;</div><div class="line">    <span class="built_in">console</span>.error(<span class="string">'Experimental ES7 Async Function support is deprecated. Please look into Koa v2 as the middleware signature has changed.'</span>)</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.experimental</div><div class="line">    ? compose_es7(<span class="keyword">this</span>.middleware)</div><div class="line">    : co.wrap(compose(<span class="keyword">this</span>.middleware));</div><div class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.listeners(<span class="string">'error'</span>).length) <span class="keyword">this</span>.on(<span class="string">'error'</span>, <span class="keyword">this</span>.onerror);</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">handleRequest</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">    res.statusCode = <span class="number">404</span>;</div><div class="line">    <span class="keyword">var</span> ctx = self.createContext(req, res);</div><div class="line">    onFinished(res, ctx.onerror);</div><div class="line">    fn.call(ctx).then(<span class="function"><span class="keyword">function</span> <span class="title">handleResponse</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      respond.call(ctx);</div><div class="line">    &#125;).catch(ctx.onerror);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这里直接exports的就是Application方法。我们使用var app = new koa()，可见app就是Application的实例。通过原型继承让Application继承自Emitter。<br>app.listen(3000)在koa中用来创建httpServer,实际和所有的node服务器框架一样，还是基于http.createServer的封装，这里的参数this.callback()作为参数正好来处理request和response。在callback中，流程会走co.wrap(compose(this.middleware))，middleware中存放的正是使用app.use注册的一个个中间件，在use的api中，直接将多个generator方法push进入middleware数组中。</p>
+<p>接着看compose内部代码，compose来源自koa-compose包：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Expose compositor.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = compose;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Compose `middleware` returning</div><div class="line"> * a fully valid middleware comprised</div><div class="line"> * of all those which are passed.</div><div class="line"> *</div><div class="line"> * @param &#123;Array&#125; middleware</div><div class="line"> * @return &#123;Function&#125;</div><div class="line"> * @api public</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span>(<span class="params">middleware</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> *(<span class="params">next</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> (!next) next = noop();</div><div class="line"></div><div class="line">    <span class="keyword">var</span> i = middleware.length;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (i--) &#123;</div><div class="line">      next = middleware[i].call(<span class="keyword">this</span>, next);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">yield</span> *next;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Noop.</div><div class="line"> *</div><div class="line"> * @api private</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> *<span class="title">noop</span>(<span class="params"></span>)</span>&#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>compose执行完成返回了一个generator函数，虽然这个函数没有执行，但是看出来，这里对middleware数组从最后一个元素进行执行，但是generator function的执行只是返回pointer，并不是走内部代码逻辑，所以这里主要就是给每个中间件进行传参，越是前面定义的中间件，next中就包含了其后定义的中间件的pointer（每个middleware的next参数是不同的）；架设while第一次执行返回的是lastPointer,那么循环执行结束，最终得到的是firstPointer；最终yield <em>next,实际就是开始运行firstPointer的内部逻辑，整个中间件的串链就开始执行了。<br>yield </em>的用法是在一个generator内部执行另一个generator的写法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">g1</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">yield</span> <span class="string">'a'</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="string">'b'</span>;  </div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">g2</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">yield</span> <span class="string">'x'</span></div><div class="line">  <span class="keyword">yield</span> * g1();</div><div class="line">  <span class="keyword">yield</span> <span class="string">'y'</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> g2i = g2();</div><div class="line">g2i.next(); <span class="comment">//x</span></div><div class="line">g2i.next(); <span class="comment">//a</span></div><div class="line">g2i.next(); <span class="comment">//b</span></div><div class="line">g2i.next(); <span class="comment">//y</span></div></pre></td></tr></table></figure></p>
+<p>从这里可以看出整个执行链已经组装完毕，只是等待执行了。下面看下co库的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = co[<span class="string">'default'</span>] = co.co = co;</div><div class="line"><span class="comment">/**/</span></div><div class="line">co.wrap = <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123;</div><div class="line">  createPromise.__generatorFunction__ = fn;</div><div class="line">  <span class="keyword">return</span> createPromise;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">createPromise</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> co.call(<span class="keyword">this</span>, fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>));</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">/**/</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">co</span>(<span class="params">gen</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> ctx = <span class="keyword">this</span>;</div><div class="line">  <span class="keyword">var</span> args = slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>)</div><div class="line"></div><div class="line">  <span class="comment">// we wrap everything in a promise to avoid promise chaining,</span></div><div class="line">  <span class="comment">// which leads to memory leak errors.</span></div><div class="line">  <span class="comment">// see https://github.com/tj/co/issues/180</span></div><div class="line">  <span class="comment">/*</span></div><div class="line">    1.promise对象一旦建立就立即执行</div><div class="line">    2.then方法返回的是一个新的promise实例，因此可以链式调用</div><div class="line">  */</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> gen === <span class="string">'function'</span>) gen = gen.apply(ctx, args);</div><div class="line">    <span class="keyword">if</span> (!gen || <span class="keyword">typeof</span> gen.next !== <span class="string">'function'</span>) <span class="keyword">return</span> resolve(gen);</div><div class="line"></div><div class="line">    onFulfilled();</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * @param &#123;Mixed&#125; res</div><div class="line">     * @return &#123;Promise&#125;</div><div class="line">     * @api private</div><div class="line">     */</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">onFulfilled</span>(<span class="params">res</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> ret;</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        ret = gen.next(res);</div><div class="line">      &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">        <span class="keyword">return</span> reject(e);</div><div class="line">      &#125;</div><div class="line">      next(ret);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * @param &#123;Error&#125; err</div><div class="line">     * @return &#123;Promise&#125;</div><div class="line">     * @api private</div><div class="line">     */</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">onRejected</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> ret;</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        ret = gen.throw(err);</div><div class="line">      &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">        <span class="keyword">return</span> reject(e);</div><div class="line">      &#125;</div><div class="line">      next(ret);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Get the next value in the generator,</div><div class="line">     * return a promise.</div><div class="line">     *</div><div class="line">     * @param &#123;Object&#125; ret</div><div class="line">     * @return &#123;Promise&#125;</div><div class="line">     * @api private</div><div class="line">     */</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">ret</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (ret.done) <span class="keyword">return</span> resolve(ret.value);</div><div class="line">      <span class="keyword">var</span> value = toPromise.call(ctx, ret.value);</div><div class="line">      <span class="keyword">if</span> (value &amp;&amp; isPromise(value)) <span class="keyword">return</span> value.then(onFulfilled, onRejected);</div><div class="line">      <span class="keyword">return</span> onRejected(<span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'You may only yield a function, promise, generator, array, or object, '</span></div><div class="line">        + <span class="string">'but the following object was passed: "'</span> + <span class="built_in">String</span>(ret.value) + <span class="string">'"'</span>));</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>co.wrap执行是直接返回了一个createPromise函数，所以fn.call(ctx)就是直接在执行createPromise。co(gen)中的参数gen就是直接执行的compose返回的匿名generator函数。同样这个匿名generator执行只是返回了它的执行指针，gen就是这个执行指针。<br>co返回的是一个promise对象，promise对象是创建即执行，typeof gen === ‘function’为false，因为typeof gen===’object’并且typeof gen.next == ‘function’。在onFulfilled中，这个匿名generator真正开始执行，看下next函数中，重点就是toPromise.call(ctx, ret.value)，主要就是将yield之后的值转化为promise。ret.value就是yield之后的值。转换成promise之后，再根据then调用下次的gen.next使得匿名generator中的逻辑进一步执行。<br>实际co就是一个generator函数的自执行器。</p>
+<h3 id="toPromise"><a href="#toPromise" class="headerlink" title="toPromise"></a>toPromise</h3><p>toPromise函数可以详细看看，代码就在co库中<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Convert a `yield`ed value into a promise.</div><div class="line"> *</div><div class="line"> * @param &#123;Mixed&#125; obj</div><div class="line"> * @return &#123;Promise&#125;</div><div class="line"> * @api private</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">toPromise</span>(<span class="params">obj</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (!obj) <span class="keyword">return</span> obj;</div><div class="line">  <span class="keyword">if</span> (isPromise(obj)) <span class="keyword">return</span> obj;</div><div class="line">  <span class="keyword">if</span> (isGeneratorFunction(obj) || isGenerator(obj)) <span class="keyword">return</span> co.call(<span class="keyword">this</span>, obj);</div><div class="line">  <span class="keyword">if</span> (<span class="string">'function'</span> == <span class="keyword">typeof</span> obj) <span class="keyword">return</span> thunkToPromise.call(<span class="keyword">this</span>, obj);</div><div class="line">  <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(obj)) <span class="keyword">return</span> arrayToPromise.call(<span class="keyword">this</span>, obj);</div><div class="line">  <span class="keyword">if</span> (isObject(obj)) <span class="keyword">return</span> objectToPromise.call(<span class="keyword">this</span>, obj);</div><div class="line">  <span class="keyword">return</span> obj;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Convert a thunk to a promise.</div><div class="line"> *</div><div class="line"> * @param &#123;Function&#125;</div><div class="line"> * @return &#123;Promise&#125;</div><div class="line"> * @api private</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">thunkToPromise</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> ctx = <span class="keyword">this</span>;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</div><div class="line">    fn.call(ctx, <span class="function"><span class="keyword">function</span> (<span class="params">err, res</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (err) <span class="keyword">return</span> reject(err);</div><div class="line">      <span class="keyword">if</span> (<span class="built_in">arguments</span>.length &gt; <span class="number">2</span>) res = slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>);</div><div class="line">      resolve(res);</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Convert an array of "yieldables" to a promise.</div><div class="line"> * Uses `Promise.all()` internally.</div><div class="line"> *</div><div class="line"> * @param &#123;Array&#125; obj</div><div class="line"> * @return &#123;Promise&#125;</div><div class="line"> * @api private</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayToPromise</span>(<span class="params">obj</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.all(obj.map(toPromise, <span class="keyword">this</span>));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Convert an object of "yieldables" to a promise.</div><div class="line"> * Uses `Promise.all()` internally.</div><div class="line"> *</div><div class="line"> * @param &#123;Object&#125; obj</div><div class="line"> * @return &#123;Promise&#125;</div><div class="line"> * @api private</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">objectToPromise</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> results = <span class="keyword">new</span> obj.constructor();</div><div class="line">  <span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(obj);</div><div class="line">  <span class="keyword">var</span> promises = [];</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; keys.length; i++) &#123;</div><div class="line">    <span class="keyword">var</span> key = keys[i];</div><div class="line">    <span class="keyword">var</span> promise = toPromise.call(<span class="keyword">this</span>, obj[key]);</div><div class="line">    <span class="keyword">if</span> (promise &amp;&amp; isPromise(promise)) defer(promise, key);</div><div class="line">    <span class="keyword">else</span> results[key] = obj[key];</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.all(promises).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">defer</span>(<span class="params">promise, key</span>) </span>&#123;</div><div class="line">    <span class="comment">// predefine the key in the result</span></div><div class="line">    results[key] = <span class="literal">undefined</span>;</div><div class="line">    promises.push(promise.then(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</div><div class="line">      results[key] = res;</div><div class="line">    &#125;));</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>处理里几种不同的情况</p>
+<ol>
+<li>obj为空，直接返回</li>
+<li>obj是promise直接返回</li>
+<li>obj是generation方法，或者是generator方法执行之后返回的pointer（这里叫generator）generator，就递归调用co方法</li>
+<li>obj是function，这种情况很常见，比如 yield readFile(); readFile是一个耗时操作，这里thunkToPromise改造readFile，返回promise，可以看出这时候readFile必须接受一个function (err, res) {}的参数</li>
+<li>obj是数组，转化为Promise.all</li>
+<li>obj是普通对象，拆分key，value。最后使用Promise.all</li>
+</ol>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/koa/">koa</a>
+          
+            <a href="/tags/co/">co</a>
+          
+        </div>
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2017/04/29/20170429/">
+        <span class="next-text nav-default">Koa2源码学习</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+      <!-- 多说评论框 start -->
+      <div class="ds-thread" data-thread-key="<%= post.layout %>-<%= post.slug %>" data-title="<%= post.title %>" data-url="<%= page.permalink %>"></div>
+      <!-- 多说评论框 end -->
+      <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:'<%= config.duoshuo_shortname %>'};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- 多说公共JS代码 end -->
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2017
+    <span class="footer-author">卓凌云.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"uniquezhuo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

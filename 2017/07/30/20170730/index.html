@@ -13,12 +13,12 @@
 
 
 
-  <meta name="description" content="spa,单页应用,路由"/>
+  <meta name="description" content="javascript字符编码"/>
 
 
 
 
-  <meta name="keywords" content="路由," />
+  <meta name="keywords" content="string,编码," />
 
 
 
@@ -33,19 +33,19 @@
 
 
 
-<link rel="canonical" href="http://yoursite.com/2015/12/10/20151210/"/>
+<link rel="canonical" href="http://yoursite.com/2017/07/30/20170730/"/>
 
 
-<meta name="description" content="spa,单页应用,路由">
+<meta name="description" content="javascript字符编码">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单页应用中的路由控制">
-<meta property="og:url" content="http://yoursite.com/2015/12/10/20151210/index.html">
+<meta property="og:title" content="Javascript字符编码">
+<meta property="og:url" content="http://yoursite.com/2017/07/30/20170730/index.html">
 <meta property="og:site_name" content="卓凌云的博客">
-<meta property="og:description" content="spa,单页应用,路由">
-<meta property="og:updated_time" content="2016-11-24T14:18:39.621Z">
+<meta property="og:description" content="javascript字符编码">
+<meta property="og:updated_time" content="2017-07-30T10:53:03.680Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="单页应用中的路由控制">
-<meta name="twitter:description" content="spa,单页应用,路由">
+<meta name="twitter:title" content="Javascript字符编码">
+<meta name="twitter:description" content="javascript字符编码">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -70,7 +70,7 @@
 
 
 
-    <title> 单页应用中的路由控制 - 卓凌云的博客 </title>
+    <title> Javascript字符编码 - 卓凌云的博客 </title>
   </head>
 
   <body>
@@ -116,12 +116,12 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          单页应用中的路由控制
+          Javascript字符编码
         
       </h1>
 
       <time class="post-time">
-          Dec 10 2015
+          Jul 30 2017
       </time>
     </header>
 
@@ -129,20 +129,16 @@
 
     
             <div class="post-content">
-            <h2 id="1-以往的浏览器历史跳转"><a href="#1-以往的浏览器历史跳转" class="headerlink" title="1.以往的浏览器历史跳转"></a>1.以往的浏览器历史跳转</h2><p>在普通的通过window.location.href的跳转时实际上是直接改变了地址栏地址，对服务器发送了请求，至于<br>请求的文件的位置，这种路由的查找则是由服务器端完成的</p>
-<h2 id="2-spa单页应用的不同"><a href="#2-spa单页应用的不同" class="headerlink" title="2.spa单页应用的不同"></a>2.spa单页应用的不同</h2><p>之前用angular写过几个移动app，一直没有考虑过其路由的问题。因为是使用了ionic和ui-router，所以之前一直以为是ionic<br>实现的单页应用而不是angular</p>
-<p>![ionic code]{ioniccode.png}</p>
-<p>ionic实现了模板的缓存，类似栈的形式，不断将新的页面压入栈顶（class=”active”）,而之前的页面(class=”cached”)则是<br>拥有display:none而隐藏</p>
-<p>实际上angular的ng-route模块同ui-router一样都提供了客户端路由，使得spa应用成为可能</p>
-<p>那么我们自己如何实现这种路由机制呢，方法有两种</p>
-<p>1.location.hash  window.onhashchange事件<br>    优点： 兼容性好，ie8中支持</p>
-<p>2.history.state pushState replaceState两种方法 window.popstate事件<br>    优点：h5中引入的新特性，可以传递参数对象</p>
-<p>如下是我实现的一个pjax小测试<br>    <a href="https://github.com/uniquezhuo/spa-client-router" target="_blank" rel="external">基于location.hash实现的客户端路由</a><br>    至于pjax，后续我会研究类似于director.js这样的路由库或者ng-route和ui-router进行更深度的分析，毕竟在实际应用中，我们不敢也不用去造轮子</p>
-<p>那么有一个问题产生了，修改location为什么没有发生跳转呢</p>
-<p>这就设计到锚标记的问题了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;a href=<span class="string">"#point"</span>&gt;&lt;/a&gt;</div><div class="line">&lt;p id=<span class="string">'point'</span>&gt;&lt;/p&gt;</div></pre></td></tr></table></figure>
-<p>这就是a标签锚点的应用，常用于在很长的一张网页中进行导航，点击a会跳转到p的位置，可见当location<br>遇到#号后面的hash部分发生变化时不会跳转，而仅仅是在本页面中查找相应位置</p>
-<p>这也是所有客户端路由库的原理，改变hash骗过浏览器的历史导航，而实际使用ajax请求模板，替换页面中的内容，这种技术成为pjax</p>
+            <h3 id="引发的疑问"><a href="#引发的疑问" class="headerlink" title="引发的疑问"></a>引发的疑问</h3><p>最近工作需要研究了qq web统一<a href="http://xui.ptlogin2.qq.com/cgi-bin/xlogin?appid=710023101&style=32&s_url=http%3A%2F%2Fop.open.qq.com%2Fgame_channel%2Flist" target="_blank" rel="external">登陆</a>的自动化。在一个接口中，看到这样的jsonp返回数据：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ptui_checkVC(<span class="string">'0'</span>,<span class="string">'!YAO'</span>,<span class="string">'\x2c\x99\xd1\x52\xaa\x4f\x79\xad'</span>,<span class="string">'454301401b2d23abdab402df0c3b01a2d9952fba2ef9638fd60b82bdbbed85defecef907aea290714d62f3098e6ed63bee77fda7acb5372b'</span>,<span class="string">'3'</span>);</div></pre></td></tr></table></figure></p>
+<p>这种\xXXX的字符表示方式从没见过，只听说过\u的unicode字符表示，所以查了下，顺便记录下来。</p>
+<h3 id="javascript表示字符的六种方式"><a href="#javascript表示字符的六种方式" class="headerlink" title="javascript表示字符的六种方式"></a>javascript表示字符的六种方式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//摘自阮老师的es6书籍</span></div><div class="line"><span class="string">'\z'</span> === <span class="string">'z'</span>  <span class="comment">// true</span></div><div class="line"><span class="string">'\172'</span> === <span class="string">'z'</span> <span class="comment">// true  八进制表示</span></div><div class="line"><span class="string">'\x7A'</span> === <span class="string">'z'</span> <span class="comment">// true	两字节十六进制表示</span></div><div class="line"><span class="string">'\u007A'</span> === <span class="string">'z'</span> <span class="comment">// true</span></div><div class="line"><span class="string">'\u&#123;7A&#125;'</span> === <span class="string">'z'</span> <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">//摘自mdn</span></div><div class="line"><span class="string">'\uXXXX'</span>	<span class="comment">//unicode codepoint</span></div><div class="line"><span class="string">'\u&#123;X&#125;'</span>		<span class="comment">//unicode codepoint </span></div><div class="line"><span class="string">'\xXX'</span>		<span class="comment">//the Latin-1 character</span></div></pre></td></tr></table></figure>
+<p>对于’\x’mdn说是拉丁字符表示，实际就是用单字节8位两个16进制数来表示。所以在ascii码中的字符才能使用\x这种十六进制表示方法。汉字是不行的。</p>
+<p>unicode统一字符集是使用最广泛也是最普遍的，我们熟悉的utf-8,utf-16,utf-32都属于其中。而javascript由于设计时这些编码集还未出现，所以使用的是UCS-2字符集,造成所有字符在这门语言中都是2个字节，如果是4个字节的字符，会当作两个双字节的字符处理。<br>这两篇博客写的比较详细:</p>
+<ol>
+<li><a href="http://www.ruanyifeng.com/blog/2014/12/unicode.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2014/12/unicode.html</a></li>
+<li><a href="https://mathiasbynens.be/notes/javascript-escapes" target="_blank" rel="external">https://mathiasbynens.be/notes/javascript-escapes</a></li>
+</ol>
+<p>总的来说，es6及其之后javascript同时支持UCS-2码点和utf-16码点。可以开始处理4字节长度的码点</p>
 
             </div>
           
@@ -151,7 +147,9 @@
       <footer class="post-footer">
         <div class="post-tags">
           
-            <a href="/tags/路由/">路由</a>
+            <a href="/tags/string/">string</a>
+          
+            <a href="/tags/编码/">编码</a>
           
         </div>
 
@@ -159,15 +157,9 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2015/12/29/20151229/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">移动设备中的点击事件</span>
-        <span class="prev-text nav-mobile">Prev</span>
-      </a>
     
-    
-      <a class="next" href="/2015/11/03/20151103/">
-        <span class="next-text nav-default">Js严格模式与非严格模式</span>
+      <a class="next" href="/2017/06/12/20170612/">
+        <span class="next-text nav-default">FastClick的一个bug</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
@@ -228,9 +220,9 @@
 
 <script type="text/javascript">
   var disqus_shortname = 'larryzhuodisqus';
-  var disqus_identifier = '2015/12/10/20151210/';
+  var disqus_identifier = '2017/07/30/20170730/';
 
-  var disqus_title = "单页应用中的路由控制";
+  var disqus_title = "Javascript字符编码";
 
 
   var disqus = {

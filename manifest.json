@@ -1,7 +1,7 @@
 {
     "name": "Larry Zhuo's blog",
     "short_name": "卓凌云博客",
-    "display": "minimal-ui",
+    "display": "fullscreen",
     "start_url": "/",
     "theme_color": "#000",
     "background_color": "#fff",

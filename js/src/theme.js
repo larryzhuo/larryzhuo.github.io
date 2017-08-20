@@ -39,4 +39,9 @@
   };
 
   this.Theme = Theme;
+
+  //注册serviceWork
+  navigator.serviceWorker && navigator.serviceWorker.register('./sw.js').then(function(registeration){
+    console.log('Excellent, registered with scope: ', registration.scope);
+  })
 }.call(this));

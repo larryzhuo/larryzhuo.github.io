@@ -1,0 +1,15 @@
+{
+    "name": "Larry Zhuo's blog",
+    "short_name": "卓凌云博客",
+    "display": "minimal-ui",
+    "start_url": "/",
+    "theme_color": "#000",
+    "background_color": "#fff",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "sizes": "200x200",
+            "type": "image/png"
+        }
+    ]
+}
